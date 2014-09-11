@@ -1,0 +1,50 @@
+<div class="content-links">
+	{% if write_access %}
+	<a href="/user/manager/add/local/">add local user manager</a>
+	| <a href="/user/manager/add/ldap/">add ldap user manager</a>
+	| <a href="/user/manager/add/ad/">add AD user manager</a>
+	{% endif %}
+</div>
+<div class="content-header" onclick="Element.toggle('display_user_managers'); Element.toggle('display_user_managers_hidden');">
+	User Managers
+</div>
+<div class="content-data">
+	<div id="display_user_managers">
+		<table class="infotable">
+			<tr>
+				<th class="infotable">Name</th>
+				<th class="infotable">Description</th>
+				<th class="infotable">Type</th>
+				<th class="infotable">Active</th>
+			</tr>
+			{% for user_manager in user_manager_list %}
+			{% if forloop.counter|divisibleby:"2" %}
+			<tr class="infotableeven">
+			{% else %}
+			<tr class="infotableodd">
+			{% endif %}
+				<td>
+					<a href="/user/manager/display/{{ user_manager.obj.oid|urlencode }}/">
+						{{ user_manager.obj.attributes.name|default:"[UNKNOWN]" }}
+					</a>
+				</td>
+				<td>
+					{{ user_manager.obj.attributes.description }}
+				</td>
+				<td>
+					{{ user_manager.type }}
+				</td>
+				<td>
+					{{ user_manager.active }}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+	<div id="display_user_managers_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_user_managers'); Element.toggle('display_user_managers_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>

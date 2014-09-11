@@ -1,0 +1,44 @@
+<div class="content-links">
+	{% if write_access %}
+	<a href="/network/range/add/{{ network.oid|urlencode }}/">add network range</a>
+	{% endif %}
+</div>
+<div class="content-header" onclick="Element.toggle('display_network_ranges'); Element.toggle('display_network_ranges_hidden');">
+	Network Ranges
+</div>
+<div class="content-data">
+	<div id="display_network_ranges">
+		{% if network_range_list %}
+		<table class="infotable">
+			<tr>
+				<th class="infotable">Start</th>
+				<th class="infotable">End</th>
+				<th class="infotable">Description</th>
+			</tr>
+			{% for cur_range in network_range_list %}
+			{% if forloop.counter|divisibleby:"2" %}
+			<tr class="infotableeven">
+			{% else %}
+			<tr class="infotableodd">
+			{% endif %}
+				<td>
+					<a href="/network/range/display/{{ cur_range.oid|urlencode }}/">{{ cur_range.strStart }}</a>
+				</td>
+				<td>
+					<a href="/network/range/display/{{ cur_range.oid|urlencode }}/">{{ cur_range.strEnd }}</a>
+				</td>
+				<td>
+					{{ cur_range.attributes.description }}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+		{% endif %}
+	</div>
+	<div id="display_network_ranges_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_network_ranges'); Element.toggle('display_network_ranges_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>

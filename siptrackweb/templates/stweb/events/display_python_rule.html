@@ -1,0 +1,59 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - display python rule{% endblock %}
+
+{% block content %}
+	<div class="content-links">
+		{% if admin %}
+		<a href="/event/trigger/rule/python/delete/{{ rule.oid|urlencode }}/">delete</a>
+		{% endif %}
+	</div>
+	<div class="content-header" onclick="Element.toggle('display_python_rule'); Element.toggle('display_python_rule_hidden');">
+		Python Rule Information
+		<div class="content-links">
+			<a href="/event/trigger/rule/python/update/{{ rule.oid|urlencode }}/">update</a>
+			| <a href="/event/trigger/rule/python/delete/{{ rule.oid|urlencode }}/">delete</a>
+		</div>
+	</div>
+	<div class="content-data">
+		<div id="display_python_rule">
+			<table class="faketable">
+				<tr>
+					<td>Name:</td>
+					<td>{{ rule.attributes.name }}</td>
+				</tr>
+				<tr>
+					<td>Error:</td>
+					<td>{{ rule.error }}</td>
+				</tr>
+				<tr>
+					<td>Error timestamp:</td>
+					<td>{{ rule.error_timestamp }}</td>
+				</tr>
+			</table>
+		</div>
+		<div id="display_python_rule_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_python_rule'); Element.toggle('display_python_rule_hidden');">
+			Hidden content, click to expand.
+		</div>
+	</div>
+	<br/>
+	<br/>
+	<br/>
+	<div class="content-header" onclick="Element.toggle('display_python_rule_code'); Element.toggle('display_python_rule_code_hidden');">
+		Source Code
+		<div class="content-links">
+		</div>
+	</div>
+	<div class="content-data">
+		<div id="display_python_rule_code">
+			<pre>{{ rule.code }}</pre>
+		</div>
+		<div id="display_python_rule_code_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_python_rule_code'); Element.toggle('display_python_rule_code_hidden');">
+			Hidden content, click to expand.
+		</div>
+	</div>
+	<br/>
+	<br/>
+	<br/>
+	{% include "stweb/attributes/display.html" %}
+{% endblock %}

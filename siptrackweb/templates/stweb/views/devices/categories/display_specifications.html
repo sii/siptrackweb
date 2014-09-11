@@ -1,0 +1,35 @@
+<div class="content-links">
+	{% if write_access %}
+	<a href="/device/specification/add/{{ device.oid|urlencode }}/">add</a>
+	{% endif %}
+</div>
+<div class="content-header">
+	Device Specifications
+</div>
+<div class="content-data">
+	{% if specification_list %}
+	<table class="infotable">
+		<tr>
+			<th class="infotable">Name</th>
+			<th class="infotable">Description</th>
+		</tr>
+		{% for cur_spec in specification_list %}
+			{% if forloop.counter|divisibleby:"2" %}
+			<tr class="infotableeven">
+			{% else %}
+			<tr class="infotableodd">
+			{% endif %}
+				<td>
+					<a href="/device/specification/display/{{ cur_spec.oid|urlencode }}/">{{ cur_spec.attributes.name|escape }}</a>
+				</td>
+				<td>
+					{{ cur_spec.attributes.description }}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	{% endif %}
+</div>
+<br/>
+<br/>
+<br/>

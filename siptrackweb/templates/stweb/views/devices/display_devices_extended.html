@@ -1,0 +1,59 @@
+<div class="content-links">
+	{% if write_access %}
+	<a href="/device/add/template/select/{{ device.oid|urlencode }}/">add device</a>
+	{% endif %}
+</div>
+<div class="content-header" onclick="Element.toggle('display_devices_ext'); Element.toggle('display_devices_ext_hidden');">
+	Devices
+</div>
+<div class="content-data">
+	<div id="display_devices_ext">
+		{% if device_list %}
+		<table class="infotable">
+			<tr>
+				<th class="infotable">Name</th>
+				<th class="infotable">Linked Devices</th>
+				<th class="infotable">Description</th>
+			</tr>
+			{% for cur_device in device_list %}
+				{% if forloop.counter|divisibleby:"2" %}
+				<tr class="infotableeven">
+				{% else %}
+				<tr class="infotableodd">
+				{% endif %}
+					<td>
+						{% if cur_device.attributes.name %}
+						<a {% if cur_device.attributes.disabled %} class="disabledbg" {% endif %} href="/device/display/{{ cur_device.oid|urlencode }}/">{{ cur_device.attributes.name|escape }}</a><br/>
+						{% else %}
+						<a {% if cur_device.attributes.disabled %} class="disabledbg" {% endif %} href="/device/display/{{ cur_device.oid|urlencode }}/">[UNKNOWN]</a><br/>
+						{% endif %}
+					</td>
+					<td>
+						{% for assoc_device in cur_device.links %}
+						{% for pathinfo in assoc_device.path %}
+						<a {% if pathinfo.disabled %} class="disabledbg" {% endif %} href="{{ pathinfo.path }}">{{ pathinfo.name }}</a>
+						{% if not forloop.last %}
+						/
+						{% endif %}
+						{% endfor %}
+						{% if not forloop.last %}
+						|
+						{% endif %}
+						{% endfor %}
+					</td>
+					<td>
+						{{ cur_device.attributes.description|escape }}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+		{% endif %}
+	</div>
+	<div id="display_devices_ext_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_devices_ext'); Element.toggle('display_devices_ext_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>
+

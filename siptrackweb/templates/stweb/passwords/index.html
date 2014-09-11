@@ -1,0 +1,9 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - passwords{% endblock %}
+
+{% block content %}
+	{% include "stweb/passwords/display_passwordkeys.html" %}
+	{% include "stweb/passwords/display_categories.html" %}
+	{% include "stweb/passwords/display_passwords.html" %}
+{% endblock %}

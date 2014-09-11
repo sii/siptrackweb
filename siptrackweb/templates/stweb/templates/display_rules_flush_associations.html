@@ -1,0 +1,44 @@
+{% if rules.TMPLRULEFLUSHASSOC %}
+<div class="content-header">
+	Flush Associations Rules
+</div>
+<div class="content-data">
+	<table class="infotable">
+		<tr>
+			<th class="infotable">Included association types</th>
+			<th class="infotable">Excluded association types</th>
+			<th class="infotable">Inherited From</th>
+			<th class="infotable">Action</th>
+		</tr>
+		{% for rule in rules.TMPLRULEFLUSHASSOC %}
+			{% if forloop.counter|divisibleby:"2" %}
+			<tr class="infotableeven">
+			{% else %}
+			<tr class="infotableodd">
+			{% endif %}
+				<td>
+					{{ rule.include }}</a>
+				</td>
+				<td>
+					{{ rule.exclude }}
+				</td>
+				<td>
+					{% if rule.inherited %}
+						<a href="/template/display/{{ rule.parent.oid|urlencode }}/">{{ rule.parent.attributes.name }}</a>
+					{% else %}
+						Local
+					{% endif %}
+				</td>
+				<td>
+					{% if not rule.inherited %}
+						<a href="/template/rule/delete/{{ rule.oid|urlencode }}/">delete</a>
+					{% endif %}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	<br/>
+	<br/>
+	<br/>
+</div>
+{% endif %}

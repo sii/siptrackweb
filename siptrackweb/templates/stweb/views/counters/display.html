@@ -1,0 +1,50 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - display counter{% endblock %}
+
+{% block content %}
+	<div class="content-links">
+		{% if write_access %}
+		<a href="/counter/update/{{ counter.oid|urlencode }}/">update</a>
+		| <a href="/counter/delete/{{ counter.oid|urlencode }}/">delete</a>
+		{% endif %}
+	</div>
+	<div class="content-header" onclick="Element.toggle('display_counter'); Element.toggle('display_counter_hidden');">
+		Counter Information
+	</div>
+	<div class="content-data">
+		<div id="display_counter">
+			<table class="faketable">
+				<tr>
+					<td>Name:</td>
+					<td>{{ counter.attributes.name }}</td>
+				</tr>
+				<tr>
+					<td>Description:</td>
+					<td>{{ counter.attributes.description }}</td>
+				</tr>
+				<tr>
+					<td>Current value:</td>
+					<td>{{ counter.value }}</td>
+				</tr>
+				{% ifequal counter.class_name "counter loop" %}
+				<tr>
+					<td>Loop values:</td>
+					<td>
+						{% for value in counter.values %}
+							{{ value }}<br/>
+						{% endfor %}
+					</td>
+				</tr>
+				{% endifequal %}
+			</table>
+		</div>
+		<div id="display_counter_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_counter'); Element.toggle('display_counter_hidden');">
+			Hidden content, click to expand.
+		</div>
+	</div>
+	<br/>
+	<br/>
+	<br/>
+	{% include "stweb/attributes/display.html" %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - browse devices{% endblock %}
+
+{% block content %}
+	{% include "stweb/views/devices/display_device.html" %}
+	{% include "stweb/attributes/display_attributes.html" %}
+	{% include "stweb/attributes/display_boxes.html" %}
+	{% include "stweb/views/devices/display_device_associations.html" %}
+	{% include "stweb/views/devices/display_devices_extended.html" %}
+	{% include "stweb/views/devices/display_networks.html" %}
+	{% include "stweb/passwords/display_passwords.html" %}
+	{% include "stweb/configs/display.html" %}
+	{% include "stweb/permissions/display_permissions.html" %}
+{% endblock %}

@@ -1,0 +1,46 @@
+<div class="content-links">
+	{% if write_access %}
+	<a href="/template/update/{{ template.oid|urlencode }}/">update</a>
+	| <a href="/template/delete/{{ template.oid|urlencode }}/">delete</a>
+	{% if valid_copy_target %}
+	| <a href="/template/copy/{{ template.oid|urlencode }}/">copy</a>
+	{% endif %}
+	{% endif %}
+</div>
+<div class="content-header">
+	Template Information
+</div>
+<div class="content-data">
+	<table class="faketable">
+		<tr>
+			<td>Name:</td>
+			<td>{{ template.attributes.name }}</td>
+		</tr>
+		<tr>
+			<td>Description:</td>
+			<td>{{ template.attributes.description }}</td>
+		</tr>
+		<tr>
+			<td>Inheritance only:</td>
+			<td>{{ template.inheritance_only }}</td>
+		</tr>
+		{% ifequal template.class_name "device template" %}
+		<tr>
+			<td>Used for device creation:</td>
+			<td>{{ template.attributes.device_creation }}</td>
+		</tr>
+		{% endifequal %}
+		<tr>
+			<td>Inherited Templates:</td>
+			<td>
+			{% for node in template.inherited_templates %}
+			<a href="/template/display/{{node.oid}}">{{node.attributes.name}}</a>{% if not forloop.last %},{% endif %}
+			{% endfor %}
+			</td>
+		</tr>
+	</table>
+</div>
+<br/>
+<br/>
+<br/>
+

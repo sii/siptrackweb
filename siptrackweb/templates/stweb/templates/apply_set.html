@@ -1,0 +1,41 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - {{ form.title }}{% endblock %}
+
+{% block content %}
+	<div class="content-header">
+		Applying template: {{ template.attributes.name }} {% if template.attributes.description %} - {{ template.attributes.description }}{% endif %}
+	</div>
+	<div class="content-data">
+		<form action="{{ form.action }}" {{ form.extraelements|safe }} method="post">
+			{% if form.message %}
+			{{ form.message|safe }}
+			<br/>
+			<br/>
+			{% endif %}
+			<table class="infotable">
+				<th class="infotable center">Apply Rule</th>
+				<th class="infotable">Name</th>
+				<th class="infotable">Value</th>
+				<th class="infotable">Help</th>
+				{% for field in form.form %}
+				<tr class="infotableeven">
+					<td class="center"><input checked="checked" type="checkbox" name="apply-{{field.html_name}}"/></td>
+					<td>{{ field.label }}</td>
+					<td>{% if field.is_hidden %}{{ field.initial }}{% else %}{{ field }}{% endif %}</td>
+					<td>{{ field.help_text }}</td>
+				</tr>
+				{% endfor %}
+				<tr>
+					<td colspan="4">&nbsp;</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="4" align="right">
+						<input type="submit" value="{{ form.submit }}"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+{% endblock %}

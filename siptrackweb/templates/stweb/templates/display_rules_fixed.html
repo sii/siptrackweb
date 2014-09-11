@@ -1,0 +1,52 @@
+{% if rules.TMPLRULEFIXED %}
+<div class="content-header">
+	Fixed Value Rules
+</div>
+<div class="content-data">
+	<table class="infotable">
+		<tr>
+			<th class="infotable">Apply to attribute</th>
+			<th class="infotable">Value</th>
+			<th class="infotable">Variable Expansion</th>
+			<th class="infotable">Versions</th>
+			<th class="infotable">Inherited From</th>
+			<th class="infotable">Action</th>
+		</tr>
+		{% for rule in rules.TMPLRULEFIXED %}
+			{% if forloop.counter|divisibleby:"2" %}
+			<tr class="infotableeven">
+			{% else %}
+			<tr class="infotableodd">
+			{% endif %}
+				<td>
+					{{ rule.attr_name }}</a>
+				</td>
+				<td>
+					{{ rule.value }}
+				</td>
+				<td>
+					{{ rule.variable_expansion }}
+				</td>
+				<td>
+					{{ rule.versions }}
+				</td>
+				<td>
+					{% if rule.inherited %}
+						<a href="/template/display/{{ rule.parent.oid|urlencode }}/">{{ rule.parent.attributes.name }}</a>
+					{% else %}
+						Local
+					{% endif %}
+				</td>
+				<td>
+					{% if not rule.inherited %}
+						<a href="/template/rule/delete/{{ rule.oid|urlencode }}/">delete</a>
+					{% endif %}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	<br/>
+	<br/>
+	<br/>
+</div>
+{% endif %}

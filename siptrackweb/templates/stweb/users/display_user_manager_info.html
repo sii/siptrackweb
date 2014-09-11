@@ -1,0 +1,76 @@
+<div class="content-links">
+	{% if write_access %}
+	<a href="/user/manager/delete/{{ user_manager.oid }}/">delete</a>
+	| <a href="/user/manager/update/{{ user_manager.oid }}/">update</a>
+	| <a href="/user/manager/activate/{{ user_manager.oid }}/">set as active user manager</a>
+	{% ifequal user_manager.class_name "user manager ldap" %}
+	| <a href="/user/manager/syncusers/ldap/{{ user_manager.oid }}/">sync users from ldap server</a>
+	{% endifequal %}
+	{% ifequal user_manager.class_name "user manager active directory" %}
+	| <a href="/user/manager/syncusers/ad/{{ user_manager.oid }}/">sync users from ad server</a>
+	{% endifequal %}
+	{% endif %}
+</div>
+<div class="content-header" onclick="Element.toggle('display_user_manager_info'); Element.toggle('display_user_manager_info_hidden');">
+	Users
+</div>
+<div class="content-data">
+	<div id="display_user_manager_info">
+		<table class="faketable">
+			<tr>
+				<td class="bold">Name:</td>
+				<td>{{ user_manager.attributes.name }}</td>
+			</tr>
+			<tr>
+				<td class="bold">Description:</td>
+				<td>{{ user_manager.attributes.description }}</td>
+			</tr>
+			{% ifequal user_manager.class_name "user manager ldap" %}
+			<tr>
+				<td class="bold">Connection type:</td>
+				<td>{{ user_manager.connection_type }}</td>
+			</tr>
+			<tr>
+				<td class="bold">LDAP server:</td>
+				<td>{{ user_manager.server }}</td>
+			</tr>
+			<tr>
+				<td class="bold">Server port:</td>
+				<td>{{ user_manager.port }}</td>
+			</tr>
+			<tr>
+				<td class="bold">Base DN:</td>
+				<td>{{ user_manager.base_dn }}</td>
+			</tr>
+			<tr>
+				<td class="bold">Valid Groups:</td>
+				<td>{{ user_manager.valid_groups }}</td>
+			</tr>
+			{% endifequal %}
+			{% ifequal user_manager.class_name "user manager active directory" %}
+			<tr>
+				<td class="bold">AD server:</td>
+				<td>{{ user_manager.server }}</td>
+			</tr>
+			<tr>
+				<td class="bold">Base DN:</td>
+				<td>{{ user_manager.base_dn }}</td>
+			</tr>
+			<tr>
+				<td class="bold">Valid Groups:</td>
+				<td>{{ user_manager.valid_groups }}</td>
+			</tr>
+			<tr>
+				<td class="bold">User Domain:</td>
+				<td>{{ user_manager.user_domain }}</td>
+			</tr>
+			{% endifequal %}
+		</table>
+	</div>
+	<div id="display_user_manager_info_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_user_manager_info'); Element.toggle('display_user_manager_info_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>

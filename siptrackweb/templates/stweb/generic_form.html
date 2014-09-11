@@ -1,0 +1,31 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - {{ form.title }}{% endblock %}
+
+{% block content %}
+	<div class="content-header">
+		Submit: {{ form.title }}
+	</div>
+	<div class="content-data">
+		<form action="{{ form.action }}" {{ form.extraelements|safe }} method="post">
+			{% if form.message %}
+			{{ form.message|safe }}
+			<br/>
+			<br/>
+			{% endif %}
+			<table>
+				{{ form.form.as_table }}
+				<tr>
+					<td>&nbsp;</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td align="right">
+						<input type="submit" value="{{ form.submit }}"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+{% endblock %}

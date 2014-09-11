@@ -1,0 +1,100 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - search results{% endblock %}
+
+{% block content %}
+	{% if searchresults.resultcount %}
+		{% if searchresults.devices %}
+			<div class="content-header">
+				Device Matches
+			</div>
+			<div class="content-data">
+				<table class="infotable">
+					<tr>
+						<th class="infotable">Name</th>
+						<th class="infotable">Description</th>
+					</tr>
+					{% for device in searchresults.devices %}
+					{% if forloop.counter|divisibleby:"2" %}
+					<tr class="infotableeven">
+					{% else %}
+					<tr class="infotableodd">
+					{% endif %}
+						<td>
+							<a href="/device/display/{{ device.oid }}/">{{ device.attributes.name }}</a>
+						</td>
+						<td>
+							{{ device.attributes.description }}
+						</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+			<br/>
+			<br/>
+		{% endif %}
+		{% if searchresults.device_categories %}
+			<div class="content-header">
+				Device Category Matches
+			</div>
+			<div class="content-data">
+				<table class="infotable">
+					<tr>
+						<th class="infotable">Name</th>
+						<th class="infotable">Description</th>
+					</tr>
+					{% for device_category in searchresults.device_categories %}
+					{% if forloop.counter|divisibleby:"2" %}
+					<tr class="infotableeven">
+					{% else %}
+					<tr class="infotableodd">
+					{% endif %}
+						<td>
+							<a href="/device/display/{{ device_category.oid }}/">{{ device_category.attributes.name }}</a>
+						</td>
+						<td>
+							{{ device_category.attributes.description }}
+						</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+			<br/>
+			<br/>
+		{% endif %}
+		{% if searchresults.networks %}
+			<div class="content-header">
+				Network Matches
+			</div>
+			<div class="content-data">
+				<table class="infotable">
+					<tr>
+						<th class="infotable">Name</th>
+						<th class="infotable">Description</th>
+					</tr>
+					{% for network in searchresults.networks %}
+					{% if forloop.counter|divisibleby:"2" %}
+					<tr class="infotableeven">
+					{% else %}
+					<tr class="infotableodd">
+					{% endif %}
+						<td>
+							<a href="/network/display/{{ network.oid }}/">{{ network }}</a>
+						</td>
+						<td>
+							{{ network.attributes.description }}
+						</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+		{% endif %}
+	{% else %}
+		<div class="content-header">
+			Sorry
+		</div>
+		<div class="content-data">
+			No matches found.
+		</div>
+	{% endif %}
+{% endblock %}

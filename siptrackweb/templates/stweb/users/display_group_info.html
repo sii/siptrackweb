@@ -1,0 +1,40 @@
+<div class="content-links">
+	{% if write_access %}
+	<a href="/user/group/update/{{ group.oid|urlencode }}/">update</a>
+	{% if administrator %}
+	| <a href="/user/group/delete/{{ group.oid|urlencode }}/">delete</a>
+	{% endif %}
+	{% endif %}
+</div>
+<div class="content-header" onclick="Element.toggle('display_group'); Element.toggle('display_group_hidden');">
+	Group Information
+</div>
+<div class="content-data">
+	<div id="display_group">
+		<table class="faketable">
+			<tr>
+				<td>Group name:</td>
+				<td>{{ group.attributes.name }}</td>
+			</tr>
+			<tr>
+				<td>Description:</td>
+				<td>{{ group.attributes.description }}</td>
+			</tr>
+			<tr>
+				<td>Users:</td>
+				<td>
+					{% for user in group.users %}
+					<a href="/display/{{ user.oid }}/">{{ user.username|escape }}</a></br>
+					{% endfor %}
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id="display_group_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_group'); Element.toggle('display_group_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>
+{% include "stweb/attributes/display.html" %}

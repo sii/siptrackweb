@@ -1,0 +1,59 @@
+{% ifnotequal network.class_name "network tree" %}
+<div class="content-links">
+	{% if write_access %}
+	<a href="/network/delete/{{ network.oid|urlencode }}/">delete network</a>
+	| <a href="/template/apply/select/{{ network.oid|urlencode }}/nodemod/">modify network</a>
+	| <a href="/tag/{{ network.oid|urlencode }}/">tag network</a>
+	{% endif %}
+</div>
+<div class="content-header" onclick="Element.toggle('display_network_info'); Element.toggle('display_network_info_hidden');">
+	Network Information
+</div>
+<div class="content-data">
+	<div id="display_network_info">
+		<table class="faketable">
+			<tr>
+				<td>Network:</td>
+				{% ifequal network.class_name "ipv4 network" %}
+				<td>{{ network }} ({{ network.strNetmask }})</a></td>
+				{% endifequal %}
+				{% ifequal network.class_name "ipv6 network" %}
+				<td>{{ network }}</a></td>
+				{% endifequal %}
+			</tr>
+			{% if network.attributes.description %}
+			<tr >
+				<td>Description:</td>
+				<td>{{ network.attributes.description }}</td>
+			</tr>
+			{% endif %}
+			{% if network.attributes.hostname %}
+			<tr >
+				<td>Hostname:</td>
+				<td>{{ network.attributes.hostname }}</td>
+			</tr>
+			{% endif %}
+			{% if not network.isHost %}
+			<tr>
+				<td>Usage:</td>
+				<td>{{ network.numAllocatedHosts }} / {{ network.size }}</td>
+			</tr>
+			<tr>
+				<td>Allocated subnets:</td>
+				<td>{{ network.numAllocatedSubnets }}</td>
+			</tr>
+			<tr>
+				<td>Available addresses:</td>
+				<td>{{ network.numFreeHosts }}</td>
+			</tr>
+			{% endif %}
+		</table>
+	</div>
+	<div id="display_network_info_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_network_info'); Element.toggle('display_network_info_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>
+{% endifnotequal %}

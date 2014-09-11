@@ -1,0 +1,23 @@
+{% for attribute in attribute_list.large %}
+<div class="content-links">
+	{% if write_access %}
+	<a href="/attribute/update/{{ attribute.oid|urlencode }}/">edit</a>
+	| <a href="/attribute/delete/{{ attribute.oid|urlencode }}/">delete</a>
+	|
+	{% endif %}
+	<a href="/attribute/display/{{ attribute.oid|urlencode }}/">display</a>
+</div>
+<div class="content-header" onclick="Element.toggle('display_attr_large_{{ attribute.name }}'); Element.toggle('display_attr_large_{{ attribute.name }}_hidden');">
+	Attribute: {{ attribute.name }}
+</div>
+<div class="content-data">
+	<div id="display_attr_large_{{ attribute.name }}" {% if attribute.attributes.hidden %} style="display:none" {% endif %}>
+		<pre>{{ attribute.value }}</pre>
+	</div>
+	<div id="display_attr_large_{{ attribute.name }}_hidden" class="hiddencontent" {% if not attribute.attributes.hidden %} style="display:none" {% endif %} onclick="Element.toggle('display_attr_large_{{ attribute.name }}'); Element.toggle('display_attr_large_{{ attribute.name }}_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+{% endfor %}

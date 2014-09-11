@@ -1,0 +1,36 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - display password category{% endblock %}
+
+{% block content %}
+	<div class="content-links">
+		{% if write_access %}
+		<a href="/password/category/delete/{{ password_category.oid|urlencode }}/">delete</a>
+		{% endif %}
+	</div>
+	<div class="content-header" onclick="Element.toggle('display_password_category'); Element.toggle('display_password_category_hidden');">
+		Category Information
+	</div>
+	<div class="content-data">
+		<div id="display_password_category">
+			<table class="faketable">
+				<tr>
+					<td>Name:</td>
+					<td>{{ password_category.attributes.name|escape }}</td>
+				</tr>
+				<tr>
+					<td>Description:</td>
+					<td>{{ password_category.attributes.description|escape }}</td>
+				</tr>
+			</table>
+		</div>
+		<div id="display_password_category_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_password_category'); Element.toggle('display_password_category_hidden');">
+			Hidden content, click to expand.
+		</div>
+	</div>
+	<br/>
+	<br/>
+	<br/>
+	{% include "stweb/passwords/display_categories.html" %}
+	{% include "stweb/passwords/display_passwords.html" %}
+{% endblock %}

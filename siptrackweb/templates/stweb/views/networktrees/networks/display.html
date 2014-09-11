@@ -1,0 +1,15 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - browse network{% endblock %}
+
+{% block content %}
+	{% include "stweb/views/networktrees/display_tree_info.html" %}
+	{% include "stweb/views/networktrees/networks/display_network_info.html" %}
+	{% include "stweb/attributes/display_attributes.html" %}
+	{% include "stweb/views/networktrees/networks/display_associated_devices.html" %}
+	{% include "stweb/views/networktrees/networks/display_networks.html" %}
+	{% include "stweb/templates/display_templates.html" %}
+	{% include "stweb/attributes/display_boxes.html" %}
+	{% include "stweb/configs/display.html" %}
+	{% include "stweb/permissions/display_permissions.html" %}
+{% endblock %}

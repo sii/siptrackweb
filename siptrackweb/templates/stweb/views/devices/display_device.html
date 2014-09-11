@@ -1,0 +1,71 @@
+<div class="content-links">
+	{% if write_access %}
+	<a href="/device/delete/{{ device.oid|urlencode }}/">delete device</a>
+	| <a href="/tag/{{ device.oid|urlencode }}/">tag device</a>
+	| <a href="/template/apply/select/{{ device.oid|urlencode }}/nodemod/">modify device</a>
+	| <a href="/device/recreate/template/select/{{ device.oid|urlencode }}/">re-create device</a>
+	{% if valid_copy_target %}
+	| <a href="/device/copy/{{ device.oid|urlencode }}/">copy device</a>
+	{% endif %}
+	{% if device.attributes.disabled %}
+	| <a href="/device/enable/{{ device.oid|urlencode }}/">enable device</a>
+	{% else %}
+	| <a href="/device/disable/{{ device.oid|urlencode }}/">disable device</a>
+	{% endif %}
+	{% if valid_tag_target %}
+	| <a href="/relocate/tagged/{{ device.oid|urlencode }}/">move tagged object here</a>
+	{% endif %}
+	|
+	{% endif %}
+	<a href="/device/export/{{ device.oid|urlencode }}/">export</a>
+</div>
+<div class="content-header" onclick="Element.toggle('display_device_info'); Element.toggle('display_device_info_hidden');">
+	Device Information
+</div>
+<div class="content-data">
+	<div id="display_device_info">
+		{% if device.attributes.disabled %}
+		<div class="red bold center">THIS DEVICE IS CURRENTLY DISABLED</div>
+		{% endif %}
+		<table class="faketable">
+			<tr>
+				<td class="bold">Name:</td>
+				<td>{{ device.attributes.name }}</td>
+			</tr>
+			{% if device.attributes.description %}
+			<tr>
+				<td class="bold">Description:</td>
+				<td>{{ device.attributes.description }}</td>
+			</tr>
+			{% endif %}
+			{% if device.attributes.class %}
+			<tr>
+				<td class="bold">Class:</td>
+				<td>{{ device.attributes.class }}</td>
+			</tr>
+			{% endif %}
+			{% if device.ctime %}
+			<tr>
+				<td class="bold">Created:</td>
+				<td>{{ device.prettyCtime }}</td>
+			</tr>
+			{% endif %}
+			{% if primary_network %}
+			<tr>
+				<td class="bold">Primary Network</td>
+				<td>{{ primary_network.strAddress }}/{{ primary_network.parent.strNetmaskCIDR }} ({{ primary_network.parent.strNetmask }})</td>
+			</tr>
+			<tr>
+				<td class="bold">Default Gateway{% if default_gateway_guessed %} (guessed){% endif %}:</td>
+				<td>{{ default_gateway }}</td>
+			</tr>
+			{% endif %}
+		</table>
+	</div>
+	<div id="display_device_info_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_device_info'); Element.toggle('display_device_info_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>

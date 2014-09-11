@@ -1,0 +1,54 @@
+{% if administrator %}
+<div class="content-links">
+	<a href="/permission/add/{{ target.oid|urlencode }}/">add permission</a>
+</div>
+<div class="content-header" onclick="Element.toggle('display_permissions'); Element.toggle('display_permissions_hidden');">
+	Permissions
+</div>
+<div class="content-data">
+	<div id="display_permissions" {% if not verbose or not permission_list %} style="display:none" {% endif %}>
+		{% if permission_list %}
+		<table class="infotable">
+			<tr>
+				<th class="infotable">Read Access</th>
+				<th class="infotable">Write Access</th>
+				<th class="infotable">All Users</th>
+				<th class="infotable">Recursive</th>
+				<th class="infotable">Users</th>
+				<th class="infotable">Groups</th>
+				<th class="infotable">Action</th>
+			</tr>
+			{% for perm in permission_list %}
+			{% if forloop.counter|divisibleby:"2" %}
+			<tr class="infotableeven">
+			{% else %}
+			<tr class="infotableodd">
+			{% endif %}
+				<td>{{ perm.read_access }}</td>
+				<td>{{ perm.write_access }}</td>
+				<td>{{ perm.all_users }}</td>
+				<td>{{ perm.recursive }}</td>
+				<td>
+				{% for user in perm.users %}
+				<a href="/display/{{ user.oid }}/">{{ user.username|escape }}</a>&nbsp;
+				{% endfor %}
+				</td>
+				<td>
+				{% for group in perm.groups %}
+				<a href="/display/{{ group.oid }}/">{{ group.attributes.name|escape }}</a>&nbsp;
+				{% endfor %}
+				</td>
+				<td class="center"><a href="/display/{{ perm.oid }}/">display</a> | <a href="/permission/delete/{{ perm.oid }}/">delete</a></td>
+			</tr>
+			{% endfor %}
+		</table>
+		{% endif %}
+	</div>
+	<div id="display_permissions_hidden" class="hiddencontent" {% if verbose or not permission_list %}style="display:none" {% endif %} onclick="Element.toggle('display_permissions'); Element.toggle('display_permissions_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>
+{% endif %}

@@ -1,0 +1,52 @@
+{% if rules.TMPLRULESUBDEV %}
+<div class="content-header">
+	Subdevice Rules
+</div>
+<div class="content-data">
+	<table class="infotable">
+		<tr>
+			<th class="infotable">Number of devices</th>
+			<th class="infotable">Template</th>
+			<th class="infotable">Sequence offset</th>
+			<th class="infotable">Inherited From</th>
+			<th class="infotable">Action</th>
+		</tr>
+		{% for rule in rules.TMPLRULESUBDEV %}
+			{% if forloop.counter|divisibleby:"2" %}
+			<tr class="infotableeven">
+			{% else %}
+			<tr class="infotableodd">
+			{% endif %}
+				<td>
+					{{ rule.num_devices }}</a>
+				</td>
+				<td>
+					{% if rule.device_template %}
+						<a href="/display/{{ rule.device_template.oid|urlencode }}/">{{ rule.device_template.attributes.name }}</a>
+					{% else %}
+						None
+					{% endif %}
+				</td>
+				<td>
+					{{ rule.sequence_offset }}</a>
+				</td>
+				<td>
+					{% if rule.inherited %}
+						<a href="/template/display/{{ rule.parent.oid|urlencode }}/">{{ rule.parent.attributes.name }}</a>
+					{% else %}
+						Local
+					{% endif %}
+				</td>
+				<td>
+					{% if not rule.inherited %}
+						<a href="/template/rule/delete/{{ rule.oid|urlencode }}/">delete</a>
+					{% endif %}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	<br/>
+	<br/>
+	<br/>
+</div>
+{% endif %}

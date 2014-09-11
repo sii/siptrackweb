@@ -1,0 +1,40 @@
+<div class="content-links">
+	{% if write_access %}
+	<a href="/template/{{ template_add_type }}/add/{{ target.oid|urlencode }}/">add</a>
+	{% endif %}
+</div>
+<div class="content-header" onclick="Element.toggle('display_templates'); Element.toggle('display_templates_hidden');">
+	Templates
+</div>
+<div class="content-data">
+	<div id="display_templates" {% if not verbose and template_list %} style="display:none" {% endif %}>
+		{% if template_list %}
+		<table class="infotable">
+			<tr>
+				<th class="infotable">Name</th>
+				<th class="infotable">Description</th>
+			</tr>
+			{% for template in template_list %}
+			{% if forloop.counter|divisibleby:"2" %}
+			<tr class="infotableeven">
+			{% else %}
+			<tr class="infotableodd">
+			{% endif %}
+				<td>
+					<a href="/template/display/{{ template.oid|urlencode }}/">{{ template.attributes.name|escape }}</a>
+				</td>
+				<td>
+					{{ template.attributes.description }}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+		{% endif %}
+	</div>
+	<div id="display_templates_hidden" class="hiddencontent" {% if verbose or not template_list %}style="display:none" {% endif %} onclick="Element.toggle('display_templates'); Element.toggle('display_templates_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>

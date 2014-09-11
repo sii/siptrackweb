@@ -1,0 +1,91 @@
+<div class="content-links">
+	{% if write_access %}
+	<a href="/device/network/add/{{ device.oid|urlencode }}/">add</a>
+	{% ifequal target.class_name "device" %}
+	| <a href="/device/network/autoassign/{{ device.oid|urlencode }}/">auto-assign</a>
+	{% endifequal %}
+	{% endif %}
+</div>
+<div class="content-header" onclick="Element.toggle('display_networks'); Element.toggle('display_networks_hidden');">
+	IP-addresses
+</div>
+<div class="content-data">
+	<div id="display_networks">
+		{% if network_host_list %}
+		<table class="infotable">
+			<tr>
+				<th class="infotable">IP-address</th>
+				<th class="infotable">Primary Address</th>
+				<th class="infotable">Description</th>
+				<th class="infotable">Action</th>
+			</tr>
+			{% for network in network_host_list %}
+				{% if forloop.counter|divisibleby:"2" %}
+				<tr class="infotableeven{% ifequal assigned_network network.oid%} infotablehighlight {% endifequal %}">
+				{% else %}
+				<tr class="infotableodd{% ifequal assigned_network network.oid %} infotablehighlight {% endifequal %}">
+				{% endif %}
+					<td>
+						{% ifequal network.class_id network.parent.class_id %}
+						<a href="/display/{{ network.oid|urlencode }}/">{{ network.strAddress|escape }}/{{network.parent.strNetmaskCIDR}}</a>
+						{% else %}
+						<a href="/display/{{ network.oid|urlencode }}/">{{ network.strAddress|escape }}</a>
+						{% endifequal %}
+					</td>
+					<td>
+						{% if network.attributes.secondary %}
+						False
+						{% else %}
+						True
+						{% endif %}
+					</td>
+					<td>
+						{{ network.attributes.description|escape }}
+					</td>
+					<td class="center">
+						{% if write_access %}
+						<a href="/device/network/delete/{{ device.oid|urlencode }}/{{ network.oid|urlencode}}/">delete</a>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+		{% endif %}
+		{% if network_subnet_list %}
+		<table class="infotable">
+			<tr>
+				<th class="infotable">Subnet/Range</th>
+				<th class="infotable">Description</th>
+				<th class="infotable">Auto-assign</th>
+				<th class="infotable">Action</th>
+			</tr>
+			{% for network in network_subnet_list %}
+				{% if forloop.counter|divisibleby:"2" %}
+				<tr class="infotableeven">
+				{% else %}
+				<tr class="infotableodd">
+				{% endif %}
+					<td>
+						<a href="/display/{{ network.oid|urlencode }}/">{{ network|escape }}</a>
+					</td>
+					<td>
+						{{ network.attributes.description|escape }}
+					</td>
+					<td class="center">
+						{{ network.attributes.autoassign|escape }}
+					</td>
+					<td class="center">
+						<a href="/device/network/delete/{{ device.oid|urlencode }}/{{ network.oid|urlencode}}/">delete</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+		{% endif %}
+	</div>
+	<div id="display_networks_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_networks'); Element.toggle('display_networks_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>

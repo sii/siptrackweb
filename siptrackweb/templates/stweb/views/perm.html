@@ -1,0 +1,17 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - search results{% endblock %}
+
+{% block content %}
+<div class="content-header">
+	Permission Denied
+</div>
+<div class="content-data">
+Action not permitted.
+{% if referer %}
+<br/>
+<br/>
+<a href="{{ referer }}">Back to previous page</a>
+{% endif %}
+</div>
+{% endblock %}

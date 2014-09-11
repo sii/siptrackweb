@@ -1,0 +1,39 @@
+{% ifequal network.class_name "network tree" %}
+<div class="content-links">
+	{% if write_access %}
+	<a href="/networktree/delete/{{ network_tree.oid|urlencode }}/">delete tree</a>
+	{% if valid_tag_target %}
+	| <a href="/relocate/tagged/{{ network_tree.oid|urlencode }}/">move tagged object here</a>
+	{% endif %}
+	{% endif %}
+</div>
+<div class="content-header" onclick="Element.toggle('display_network_tree_info'); Element.toggle('display_network_tree_info_hidden');">
+	Network Tree Information
+</div>
+<div class="content-data">
+	<div id="display_network_tree_info">
+		<table class="faketable">
+			<tr >
+				<td class="bold">Name:</td>
+				<td>{{ network_tree.attributes.name }}</a></td>
+			</tr>
+			{% if network_tree.attributes.description %}
+			<tr >
+				<td class="bold">Description:</td>
+				<td>{{ network_tree.attributes.description }}</td>
+			</tr>
+			{% endif %}
+			<tr >
+				<td class="bold">Protocol:</td>
+				<td>{{ network_tree.protocol }}</td>
+			</tr>
+		</table>
+	</div>
+	<div id="display_network_tree_info_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_network_tree_info'); Element.toggle('display_network_tree_info_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>
+{% endifequal %}

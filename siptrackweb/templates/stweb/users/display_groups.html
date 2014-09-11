@@ -1,0 +1,40 @@
+<div class="content-links">
+	{% if administrator %}
+	<a href="/user/group/add/{{ user_manager.oid }}/">add group</a>
+	{% endif %}
+</div>
+<div class="content-header" onclick="Element.toggle('display_groups'); Element.toggle('display_groups_hidden');">
+	Groups
+</div>
+<div class="content-data">
+	<div id="display_groups">
+		<table class="infotable">
+			<tr>
+				<th class="infotable">Group name</th>
+				<th class="infotable">Description</th>
+			</tr>
+			{% for group in group_list %}
+			{% if forloop.counter|divisibleby:"2" %}
+			<tr class="infotableeven">
+			{% else %}
+			<tr class="infotableodd">
+			{% endif %}
+				<td>
+					<a href="/user/group/display/{{ group.oid|urlencode }}/">
+						{{ group.attributes.name|default:"[UNKNOWN]" }}
+					</a>
+				</td>
+				<td>
+					{{ group.attributes.description }}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+	<div id="display_groups_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_groups'); Element.toggle('display_groups_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>

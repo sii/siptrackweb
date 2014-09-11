@@ -1,0 +1,43 @@
+<div class="content-links">
+	{% if write_access %}
+	<a href="/user/password/update/{{ user.oid|urlencode }}/">update password</a>
+	| <a href="/user/password/reset/{{ user.oid|urlencode }}/">reset password</a>
+	| <a href="/user/update/{{ user.oid|urlencode }}/">update</a>
+	{% if administrator %}
+	| <a href="/user/delete/{{ user.oid|urlencode }}/">delete</a>
+	{% endif %}
+	{% endif %}
+</div>
+<div class="content-header" onclick="Element.toggle('display_user'); Element.toggle('display_user_hidden');">
+	User Information
+</div>
+<div class="content-data">
+	<div id="display_user">
+		<table class="faketable">
+			<tr>
+				<td>User name:</td>
+				<td>{{ user.username }}</td>
+			</tr>
+			<tr>
+				<td>Real name:</td>
+				<td>{{ user.attributes.real_name }}</td>
+			</tr>
+			<tr>
+				<td>Description:</td>
+				<td>{{ user.attributes.description }}</td>
+			</tr>
+			<tr>
+				<td>Administrator:</td>
+				<td>{{ user.administrator }}</td>
+			</tr>
+		</table>
+	</div>
+	<div id="display_user_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_user'); Element.toggle('display_user_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>
+{% include "stweb/users/display_subkeys.html" %}
+{% include "stweb/attributes/display.html" %}

@@ -1,0 +1,43 @@
+<div class="content-links">
+</div>
+<div class="content-header" onclick="Element.toggle('display_sessions'); Element.toggle('display_sessions_hidden');">
+	Active Sessions
+</div>
+<div class="content-data">
+	<div id="display_sessions">
+		<table class="infotable">
+			<tr>
+				<th class="infotable">User name</th>
+				<th class="infotable">Session ID</th>
+				<th class="infotable">Session timeout</th>
+				<th class="infotable">Action</th>
+			</tr>
+			{% for session in session_list %}
+			{% if forloop.counter|divisibleby:"2" %}
+			<tr class="infotableeven">
+			{% else %}
+			<tr class="infotableodd">
+			{% endif %}
+				<td>
+					{{ session.user }}
+				</td>
+				<td>
+					{{ session.id }}
+				</td>
+				<td>
+					{{ session.timeout }}
+				</td>
+				<td>
+					<a href="/user/session/kill/{{ session.id|urlencode }}/">kill</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+	<div id="display_sessions_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_sessions'); Element.toggle('display_sessions_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>

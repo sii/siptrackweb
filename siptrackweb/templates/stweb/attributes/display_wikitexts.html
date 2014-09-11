@@ -1,0 +1,23 @@
+{% for wikitext in attribute_list.wikitext %}
+<div class="content-links">
+	{% if write_access %}
+	<a href="/attribute/update/{{ wikitext.attribute.oid|urlencode }}/">edit</a>
+	| <a href="/attribute/delete/{{ wikitext.attribute.oid|urlencode }}/">delete</a>
+	| 
+	{% endif %}
+	<a href="/attribute/display/{{ wikitext.attribute.oid|urlencode }}/">display</a>
+</div>
+<div class="content-header" onclick="Element.toggle('display_wikitext_{{ wikitext.attribute.name }}'); Element.toggle('display_wikitext_{{ wikitext.attribute.name }}_hidden');">
+	Wikitext attribute: {{ wikitext.attribute.name }}
+</div>
+<div class="content-data">
+	<div id="display_wikitext_{{ wikitext.attribute.name }}" {% if wikitext.attribute.attributes.hidden %} style="display:none" {% endif %}>
+		{{ wikitext.converted|safe }}
+	</div>
+	<div id="display_wikitext_{{ wikitext.attribute.name }}_hidden" class="hiddencontent" {% if not wikitext.attribute.attributes.hidden %} style="display:none" {% endif %} onclick="Element.toggle('display_wikitext_{{ wikitext.attribute.name }}'); Element.toggle('display_wikitext_{{ wikitext.attribute.name }}_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+{% endfor %}

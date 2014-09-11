@@ -1,0 +1,10 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - user managers{% endblock %}
+
+{% block content %}
+	{% include "stweb/users/display_user_manager_info.html" %}
+	{% include "stweb/users/display_users.html" %}
+	{% include "stweb/users/display_groups.html" %}
+	{% include "stweb/attributes/display.html" %}
+{% endblock %}

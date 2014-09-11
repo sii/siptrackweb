@@ -1,0 +1,44 @@
+<div class="content-links">
+	{% if write_access %}
+	<a href="/user/add/{{ user_manager.oid }}/">add user</a>
+	{% endif %}
+</div>
+<div class="content-header" onclick="Element.toggle('display_users'); Element.toggle('display_users_hidden');">
+	Users
+</div>
+<div class="content-data">
+	<div id="display_users">
+		<table class="infotable">
+			<tr>
+				<th class="infotable">User name</th>
+				<th class="infotable">Real name</th>
+				<th class="infotable">Description</th>
+			</tr>
+			{% for user in user_list %}
+			{% if forloop.counter|divisibleby:"2" %}
+			<tr class="infotableeven">
+			{% else %}
+			<tr class="infotableodd">
+			{% endif %}
+				<td>
+					<a href="/user/display/{{ user.oid|urlencode }}/">
+						{{ user.username }}
+					</a>
+				</td>
+				<td>
+					{{ user.attributes.real_name }}
+				</td>
+				<td>
+					{{ user.attributes.description }}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+	<div id="display_users_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_users'); Element.toggle('display_users_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>

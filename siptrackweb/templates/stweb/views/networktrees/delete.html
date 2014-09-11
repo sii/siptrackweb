@@ -1,0 +1,14 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - delete network tree{% endblock %}
+
+{% block content %}
+	<fieldset class="content-fieldset">
+		<legend class="content-legend">Delete Network Tree: {{ network_tree.attributes.name|escape }}</legend>
+		<form action="/networktree/delete/post/{{ network_tree.oid|urlencode }}/" method="post">
+			<input type="hidden" name="really_delete" value="yes"/>
+			If you're really sure, then
+			<input type="submit" value="continue"/>
+		</form>
+	</fieldset>
+{% endblock %}

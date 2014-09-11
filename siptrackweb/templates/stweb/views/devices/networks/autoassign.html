@@ -1,0 +1,14 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - autoassign network{% endblock %}
+
+{% block content %}
+	<fieldset class="content-fieldset">
+		<legend class="content-legend">Automatically Assign Address</legend>
+		<form action="/device/network/autoassign/post/{{ device.oid|urlencode }}/" method="post">
+			<input type="hidden" name="really_autoassign" value="yes"/>
+			If you're really sure, then
+			<input type="submit" value="continue"/>
+		</form>
+	</fieldset>
+{% endblock %}

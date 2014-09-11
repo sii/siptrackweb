@@ -1,0 +1,60 @@
+{% if not target.isHost %}
+<div class="content-links">
+	{% if write_access %}
+	<a href="/network/add/{{ network.oid|urlencode }}/">add network</a>
+	| <a href="/network/display/{{ network.oid|urlencode }}/?display_missing=true">display unallocated networks</a>
+	{% endif %}
+</div>
+<div class="content-header" onclick="Element.toggle('display_networks'); Element.toggle('display_networks_hidden');">
+	Subnets
+</div>
+<div class="content-data">
+	<div id="display_networks">
+		<table class="infotable">
+			<tr>
+				<th class="infotable">Address</th>
+				<th class="infotable">Associated Devices</th>
+				<th class="infotable">Description</th>
+			</tr>
+			{% for cur_net in network_list %}
+				{% if forloop.counter|divisibleby:"2" %}
+				<tr class="infotableeven{% if cur_net.unallocated %} unallocatednetwork{% endif %}">
+				{% else %}
+				<tr class="infotableodd{% if cur_net.unallocated %} unallocatednetwork{% endif %}">
+				{% endif %}
+					<td>
+						{% if cur_net.unallocated %}
+							{{ cur_net }}
+						{% else %}
+							<a href="/network/display/{{ cur_net.oid|urlencode }}/">{{ cur_net|escape }}</a>
+						{% endif %}
+					</td>
+					<td>
+						{% if not cur_net.unallocated %}
+								{% for assoc in cur_net.device_association_list %}
+								{% for pathinfo in assoc.path %}
+								<a {% if pathinfo.disabled %} class="disabledbg" {% endif %} href="{{ pathinfo.path }}">{{ pathinfo.name }}</a>{% if not forloop.last %} /{% endif %}
+								{% endfor %}
+								{% if not forloop.last %}|{% endif %}
+								{% endfor %}
+						{% endif %}
+					</td>
+					<td>
+						{% if not cur_net.unallocated %}
+							{% if cur_net.attributes.description %}
+								{{ cur_net.attributes.description }}
+							{% endif %}
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+	<div id="display_networks_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_networks'); Element.toggle('display_networks_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>
+{% endif %}

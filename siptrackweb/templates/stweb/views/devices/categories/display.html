@@ -1,0 +1,13 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - browse devices{% endblock %}
+
+{% block content %}
+	{% include "stweb/views/devices/categories/display_categories.html" %}
+	{% include "stweb/attributes/display_attributes.html" %}
+	{% include "stweb/views/devices/display_devices_standard.html" %}
+	{% include "stweb/templates/display_templates.html" %}
+	{% include "stweb/attributes/display_boxes.html" %}
+	{% include "stweb/configs/display.html" %}
+	{% include "stweb/permissions/display_permissions.html" %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - {{ form.title }}{% endblock %}
+
+{% block content %}
+	<div class="content-header">
+		siptrack session id
+	</div>
+	<div class="content-data">
+		{{ pm.object_store.transport.session_id }}
+	</div>
+	<br/>
+	<br/>
+	<div class="content-header">
+		django request object
+	</div>
+	<div class="content-data">
+		<pre>
+			{{ request }}
+		</pre>
+	</div>
+{% endblock %}
+

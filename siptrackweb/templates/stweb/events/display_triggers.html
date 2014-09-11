@@ -1,0 +1,36 @@
+{% if administrator %}
+<div class="content-links">
+	<a href="/event/trigger/add/{{ target.oid|urlencode }}/">add event trigger</a>
+</div>
+<div class="content-header" onclick="Element.toggle('display_event_triggers'); Element.toggle('display_event_triggers_hidden');">
+	Event Triggers
+</div>
+<div class="content-data">
+	<div id="display_event_triggers" {% if not verbose or not event_trigger_list %} style="display:none" {% endif %}>
+		{% if event_trigger_list %}
+		<table class="infotable">
+			<tr>
+				<th class="infotable">Name</th>
+				<th class="infotable">Action</th>
+			</tr>
+			{% for trigger in event_trigger_list %}
+			{% if forloop.counter|divisibleby:"2" %}
+			<tr class="infotableeven">
+			{% else %}
+			<tr class="infotableodd">
+			{% endif %}
+			<td><a href="/display/{{ trigger.oid }}/">{{ trigger.attributes.name }}</a></td>
+				<td class="center"><a href="/display/{{ trigger.oid }}/">display</a> | <a href="/event/trigger/delete/{{ trigger.oid }}/">delete</a></td>
+			</tr>
+			{% endfor %}
+		</table>
+		{% endif %}
+	</div>
+	<div id="display_event_triggers_hidden" class="hiddencontent" {% if verbose or not event_trigger_list %}style="display:none" {% endif %} onclick="Element.toggle('display_event_triggers'); Element.toggle('display_event_triggers_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>
+{% endif %}

@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>siptrackweb login</title>
+		<link rel="stylesheet" href="/style.css" />
+		<script src="/prototype.js" type="text/javascript"></script>
+	</head>
+
+	<body>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<div align="center">
+		<div class="loginbox">
+			{% if errormsg %}
+			{{ errormsg }}
+			<br/>
+			<br/>
+			{% endif %}
+			<form action="/login/" method="post">
+				<table style="margin: 0px auto;">
+					{{ form.as_table }}
+					<tr>
+						<td>&nbsp;</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td align="right">
+							<input type="submit" value="submit"/>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		</div>
+		<script type="text/javascript">
+			$('id_username').focus();
+		</script>
+	</body>
+</html>

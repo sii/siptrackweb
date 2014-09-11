@@ -1,0 +1,14 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - delete network range{% endblock %}
+
+{% block content %}
+	<fieldset class="content-fieldset">
+		<legend class="content-legend">Delete Network Range: {{ network_range }}</legend>
+		<form action="/network/range/delete/post/{{ network_range.oid|urlencode }}/" method="post">
+			<input type="hidden" name="really_delete" value="yes"/>
+			If you're really sure, then
+			<input type="submit" value="continue"/>
+		</form>
+	</fieldset>
+{% endblock %}

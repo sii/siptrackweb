@@ -1,0 +1,38 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - display view{% endblock %}
+
+{% block content %}
+	<div class="content-links">
+		{% if write_access %}
+		<a href="/view/update/{{ view.oid|urlencode }}/">update</a>
+		| <a href="/view/delete/{{ view.oid|urlencode }}/">delete</a>
+		{% endif %}
+	</div>
+	<div class="content-header" onclick="Element.toggle('display_view'); Element.toggle('display_view_hidden');">
+		View Information
+	</div>
+	<div class="content-data">
+		<div id="display_view">
+			<table class="faketable">
+				<tr>
+					<td class="bold">Name:</td>
+					<td>{{ view.attributes.name|escape }}</td>
+				</tr>
+				<tr>
+					<td class="bold">Description:</td>
+					<td>{{ view.attributes.description|escape }}</td>
+				</tr>
+			</table>
+		</div>
+		<div id="display_view_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_view'); Element.toggle('display_view_hidden');">
+			Hidden content, click to expand.
+		</div>
+	</div>
+	<br/>
+	<br/>
+	<br/>
+	{% include "stweb/attributes/display.html" %}
+	{% include "stweb/configs/display.html" %}
+	{% include "stweb/permissions/display_permissions.html" %}
+{% endblock %}

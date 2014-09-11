@@ -1,0 +1,57 @@
+<div class="content-links">
+	{% if valid_tag_target %}
+	{% if write_access %}
+	<a href="/device/association/add/{{ device.oid|urlencode }}/">link with tagged device</a>
+	{% endif %}
+	{% endif %}
+</div>
+<div class="content-header" onclick="Element.toggle('display_device_links'); Element.toggle('display_device_links_hidden');">
+	Device Links
+</div>
+<div class="content-data">
+	<div id="display_device_links">
+		{% if device_association_list %}
+		<table class="infotable">
+			<tr>
+				<th class="infotable">Associated Device</th>
+				<th class="infotable">Device Class</th>
+				<th class="infotable">Action</th>
+			</tr>
+			{% for assoc in device_association_list %}
+				{% if forloop.counter|divisibleby:"2" %}
+				<tr class="infotableeven">
+				{% else %}
+				<tr class="infotableodd">
+				{% endif %}
+					<td>
+						{% for pathinfo in assoc.path %}
+						<a {% if pathinfo.disabled %} class="disabledbg" {% endif %} href="{{ pathinfo.path }}">{{ pathinfo.name }}</a>
+						{% if not forloop.last %}
+						/
+						{% endif %}
+						{% endfor %}
+					</td>
+					<td>
+						{{ assoc.obj.attributes.class }}
+					</td>
+					<td class="center">
+						{% if write_access %}
+						{% ifequal assoc.type "association" %}
+						<a href="/device/association/delete/{{ device.oid|urlencode }}/{{ assoc.obj.oid|urlencode }}/">delete</a>
+						{% else %}
+						<a href="/device/reference/delete/{{ device.oid|urlencode }}/{{ assoc.obj.oid|urlencode }}/">delete</a>
+						{% endifequal %}
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+		{% endif %}
+	</div>
+	<div id="display_device_links_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_device_links'); Element.toggle('display_device_links_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>

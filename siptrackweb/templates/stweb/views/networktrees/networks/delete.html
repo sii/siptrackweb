@@ -1,0 +1,17 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - delete network{% endblock %}
+
+{% block content %}
+	<fieldset class="content-fieldset">
+		<legend class="content-legend">Delete Network: {{ network|escape }}</legend>
+		<form action="/network/delete/post/{{ network.oid|urlencode }}/" method="post">
+			<input type="hidden" name="really_delete" value="yes"/>
+			<table>
+				{{ form.as_table }}
+				<tr><td>&nbsp;</td><td/></tr>
+				<tr><td></td><td align="right"><input type="submit" value="delete"/></td></tr>
+			</table>
+		</form>
+	</fieldset>
+{% endblock %}

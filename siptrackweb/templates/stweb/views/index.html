@@ -1,0 +1,54 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - views{% endblock %}
+
+{% block content %}
+	<div class="content-links">
+		{% if write_access %}
+		<a href="/view/add/">add view</a>
+		{% endif %}
+	</div>
+	<div class="content-header" onclick="Element.toggle('display_views'); Element.toggle('display_views_hidden');">
+		Views
+	</div>
+	<div class="content-data">
+		<div id="display_views">
+			<table class="infotable">
+				<tr>
+					<th class="infotable">Name</th>
+					<th class="infotable">Description</th>
+				</tr>
+				{% for view in view_list %}
+				{% if forloop.counter|divisibleby:"2" %}
+				<tr class="infotableeven">
+				{% else %}
+				<tr class="infotableodd">
+				{% endif %}
+					<td>
+						<a href="/view/display/{{ view.oid|urlencode }}/">
+							{% if view.attributes.name %}
+								{{ view.attributes.name|escape }}
+							{% else %}
+								[UNKNOWN]
+							{% endif %}
+						</a>
+					</td>
+					<td>
+						{{ view.attributes.description }}
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+		<div id="display_views_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_views'); Element.toggle('display_views_hidden');">
+			Hidden content, click to expand.
+		</div>
+	</div>
+	<br/>
+	<br/>
+	<br/>
+	{% include "stweb/configs/display.html" %}
+	{% include "stweb/permissions/display_permissions.html" %}
+	{% include "stweb/commands/display_queues.html" %}
+	{% include "stweb/events/display_triggers.html" %}
+{% endblock %}

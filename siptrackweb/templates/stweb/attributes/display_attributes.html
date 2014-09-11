@@ -1,0 +1,40 @@
+<div class="content-links">
+	{% if write_access %}
+	<a href="/attribute/add/select/{{ target.oid|urlencode }}/">add attribute</a>
+	{% endif %}
+</div>
+<div class="content-header" onclick="Element.toggle('display_attributes'); Element.toggle('display_attributes_hidden');">
+	Attributes
+</div>
+<div class="content-data">
+	<div id="display_attributes" {% if not verbose and attribute_list.standard %} style="display:none" {% endif %}>
+		{% if attribute_list.standard %}
+		<table class="infotable">
+			<tr>
+				<th class="infotable">Attribute</th>
+				<th class="infotable">Value</th>
+				<th class="infotable">Action</th>
+			</tr>
+			{% for attr in attribute_list.standard %}
+				{% if not attr.attributes.wikitext and not attr.attributes.large %}
+					{% if forloop.counter|divisibleby:"2" %}
+					<tr class="infotableeven">
+					{% else %}
+					<tr class="infotableodd">
+					{% endif %}
+					<td><a href="/attribute/display/{{ attr.oid }}/">{{ attr.name|escape }}</a></td>
+						<td>{{ attr.value|escape }}</td>
+						<td class="center">{% if write_access %}<a href="/attribute/update/{{ attr.oid }}/">edit</a> | <a href="/attribute/delete/{{ attr.oid }}/">delete</a> | {% endif %}<a href="/attribute/display/{{ attr.oid }}/">display</a></td>
+					</tr>
+				{% endif %}
+			{% endfor %}
+		</table>
+		{% endif %}
+	</div>
+	<div id="display_attributes_hidden" class="hiddencontent" {% if verbose or not attribute_list.standard %}style="display:none" {% endif %} onclick="Element.toggle('display_attributes'); Element.toggle('display_attributes_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>
