@@ -72,6 +72,9 @@ def display_device(request, pm, device):
     pm.render_var['attribute_list'] = attribute.parse_attributes(device)
     pm.render_var['config_list'] = config.parse_config(device)
     pm.render_var['permission_list'] = device.listChildren(include = ['permission'])
+    pm.render_var['event_log_list'] = device.listChildren(include = ['event log'])
+    pm.render_var['event_log_list'].sort(cmp=lambda x, y: cmp(x.ctime, y.ctime))
+
     if 'assigned network' in request.session:
         pm.render_var['assigned_network'] = request.session['assigned network']
         del request.session['assigned network']

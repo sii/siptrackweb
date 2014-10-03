@@ -1,0 +1,51 @@
+<div class="content-links">
+</div>
+<div class="content-header" onclick="Element.toggle('display_device_event_logs'); Element.toggle('display_device_event_logs_hidden');">
+	Event Log
+</div>
+<div class="content-data">
+	<div id="display_device_event_logs" style="display:none">
+		{% if event_log_list %}
+		<table class="infotable">
+			<tr>
+				<th class="infotable">User</th>
+				<th class="infotable">Text</th>
+				<th class="infotable">Timestamp</th>
+			</tr>
+			{% for event_log in event_log_list %}
+				{% if forloop.counter|divisibleby:"2" %}
+				<tr class="infotableeven">
+				{% else %}
+				<tr class="infotableodd">
+				{% endif %}
+					<td>
+						{{ event_log.event_data.username }}
+					</td>
+					<td>
+						{% if event_log.event_type == "create device" %}
+						Created device
+						{% elif event_log.event_type == "relocate device" %}
+						Moved device from {{ event_log.event_data.src_name }} to {{ event_log.event_data.dst_name }}
+						{% elif event_log.event_type == "create attribute" %}
+						Created attribute {{ event_log.event_data.name }}
+						{% elif event_log.event_type == "update attribute" %}
+						Updated attribute {{ event_log.event_data.name }}
+						{% elif event_log.event_type == "remove attribute" %}
+						Removed attribute {{ event_log.event_data.name }}
+						{% endif %}
+					</td>
+					<td>
+						{{ event_log.prettyCtime }}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+		{% endif %}
+	</div>
+	<div id="display_device_event_logs_hidden" class="hiddencontent" onclick="Element.toggle('display_device_event_logs'); Element.toggle('display_device_event_logs_hidden');">
+		Hidden content, click to expand.
+	</div>
+</div>
+<br/>
+<br/>
+<br/>
