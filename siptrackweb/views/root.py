@@ -40,12 +40,18 @@ def index(request):
 def style(request):
     t = loader.get_template('stweb/style.css')
     c = Context({})
-    return HttpResponse(t.render(c), mimetype='text/css')
+    try:
+        return HttpResponse(t.render(c), content_type='text/css')
+    except TypeError:
+        return HttpResponse(t.render(c), mimetype='text/css')
 
 def prototypejs(request):
     t = loader.get_template('stweb/prototype.js')
     c = Context({})
-    return HttpResponse(t.render(c), mimetype='application/x-javascript')
+    try:
+        return HttpResponse(t.render(c), content_type='application/x-javascript')
+    except TypeError:
+        return HttpResponse(t.render(c), mimetype='application/x-javascript')
 
 @helpers.authcheck
 def search(request):

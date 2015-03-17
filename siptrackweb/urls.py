@@ -1,4 +1,7 @@
-from django.conf.urls.defaults import *
+try:
+    from django.conf.urls.defaults import patterns
+except ImportError:
+    from django.conf.urls import patterns
 from siptrackweb import views
 
 urlpatterns = patterns('siptrackweb.views',

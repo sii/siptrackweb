@@ -152,7 +152,10 @@ class PageManager(object):
 
     def renderJSON(self, data, http_headers = None):
         data = json.dumps(data, sort_keys=True, indent=2)
-        http_response = HttpResponse(data, mimetype='application/json')
+        try:
+            http_response = HttpResponse(data, content_type='application/json')
+        except TypeError:
+            http_response = HttpResponse(data, mimetype='application/json')
         http_response['Cache-Control'] = 'max-age=0,no-cache,no-store'
         if http_headers:
             for key in http_headers:
@@ -160,7 +163,10 @@ class PageManager(object):
         return http_response
 
     def renderDownload(self, data, filename):
-        http_response = HttpResponse(data, mimetype='application/octet-stream')
+        try:
+            http_response = HttpResponse(data, content_type='application/octet-stream')
+        except TypeError:
+            http_response = HttpResponse(data, mimetype='application/octet-stream')
         http_response['Cache-Control'] = 'max-age=0,no-cache,no-store'
         http_response['Content-Disposition'] = 'attachment; filename=%s' % (filename)
         return http_response
