@@ -1,3 +1,5 @@
+import json
+
 import siptracklib.errors
 from siptrackweb.views import helpers
 from siptrackweb.views import attribute
@@ -114,6 +116,7 @@ def export(request, oid):
         data['subdevices'].append({'oid': subdevice.oid, 'name': subdevice.attributes.get('name', ''), 'class': subdevice.attributes.get('class', ''), 'disabled': subdevice.attributes.get('disabled', False)})
     for link in node.listLinks(include = ['device']):
         data['devicelinks'].append({'oid': link.oid, 'name': link.attributes.get('name', ''), 'class': link.attributes.get('class', '')})
+    data = json.dumps(data, sort_keys=True, indent=2)
     filename = '%s.json' % (node.attributes.get('name', node.oid))
     filename = filename.replace(' ', '_').replace(',', '_')
     return pm.renderDownload(data, '%s.json' % (node.attributes.get('name', node.oid)))
