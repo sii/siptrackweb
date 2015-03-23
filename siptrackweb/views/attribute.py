@@ -9,7 +9,10 @@ def parse_attributes(obj):
     attr_list = {'standard': [], 'wikitext': [], 'large': []}
     for attr in obj.attributes:
         if attr.attributes.get('wikitext'):
-            converted = textile.textile(attr.value.encode('utf-8'),
+            value = attr.value
+            if type(value) == str:
+                value = value.decode('utf-8')
+            converted = textile.textile(value,
                     encoding = 'utf-8', output = 'utf-8')
             d = {'attribute': attr, 'converted': converted}
             attr_list['wikitext'].append(d)
