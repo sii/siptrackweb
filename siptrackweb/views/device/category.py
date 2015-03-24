@@ -103,24 +103,6 @@ def delete_post(request, oid):
 
     return pm.redirect('display.display', (parent_oid,))
 
-@helpers.authcheck
-def export_OLD(request, oid):
-    pm = helpers.PageManager(request, '')
-    node = pm.object_store.getOID(oid)
-    data = {'type': node.class_name, 'oid': node.oid, 'attributes': [], 'subdevices': [], 'devicelinks': [], 'class': node.attributes.get('class')}
-    for attr in node.attributes:
-        if attr.atype in ['binary']:
-            continue
-        data['attributes'].append({'name': attr.name, 'value': attr.value, 'type': attr.atype})
-    for subdevice in node.listChildren(include = ['device']):
-        data['subdevices'].append({'oid': subdevice.oid, 'name': subdevice.attributes.get('name', ''), 'class': subdevice.attributes.get('class', ''), 'disabled': subdevice.attributes.get('disabled', False)})
-    for link in node.listLinks(include = ['device']):
-        data['devicelinks'].append({'oid': link.oid, 'name': link.attributes.get('name', ''), 'class': link.attributes.get('class', '')})
-    data = json.dumps(data, sort_keys=True, indent=2)
-    filename = '%s.json' % (node.attributes.get('name', node.oid))
-    filename = filename.replace(' ', '_').replace(',', '_')
-    return pm.renderDownload(data, '%s.json' % (node.attributes.get('name', node.oid)))
-
 def export_get_device_path(device):
     ret = []
     while device.class_name == 'device':
@@ -155,9 +137,7 @@ def export(request, oid):
             continue
         data['attributes'].append({'name': attr.name, 'value': attr.value, 'type': attr.atype})
     for subdevice in node.listChildren(include = ['device']):
-        sd_dict = {'oid': subdevice.oid, 'name': subdevice.attributes.get('name', ''), 'class': subdevice.attributes.get('class', ''), 'devicelinks': []}
-        for link in subdevice.listLinks(include = ['device']):
-            sd_dict['devicelinks'].append(export_get_device_info(link))
+        sd_dict = export_get_device_info(subdevice)
         data['subdevices'].append(sd_dict)
     for link in node.listLinks(include = ['device']):
         data['devicelinks'].append({'oid': link.oid, 'name': link.attributes.get('name', ''), 'class': link.attributes.get('class', '')})
