@@ -104,7 +104,7 @@ def delete_post(request, oid):
     return pm.redirect('display.display', (parent_oid,))
 
 @helpers.authcheck
-def export(request, oid):
+def export_OLD(request, oid):
     pm = helpers.PageManager(request, '')
     node = pm.object_store.getOID(oid)
     data = {'type': node.class_name, 'oid': node.oid, 'attributes': [], 'subdevices': [], 'devicelinks': [], 'class': node.attributes.get('class')}
@@ -114,6 +114,51 @@ def export(request, oid):
         data['attributes'].append({'name': attr.name, 'value': attr.value, 'type': attr.atype})
     for subdevice in node.listChildren(include = ['device']):
         data['subdevices'].append({'oid': subdevice.oid, 'name': subdevice.attributes.get('name', ''), 'class': subdevice.attributes.get('class', ''), 'disabled': subdevice.attributes.get('disabled', False)})
+    for link in node.listLinks(include = ['device']):
+        data['devicelinks'].append({'oid': link.oid, 'name': link.attributes.get('name', ''), 'class': link.attributes.get('class', '')})
+    data = json.dumps(data, sort_keys=True, indent=2)
+    filename = '%s.json' % (node.attributes.get('name', node.oid))
+    filename = filename.replace(' ', '_').replace(',', '_')
+    return pm.renderDownload(data, '%s.json' % (node.attributes.get('name', node.oid)))
+
+def export_get_device_path(device):
+    ret = []
+    while device.class_name == 'device':
+        d = {'name': device.attributes.get('name')}
+        ret.append(d)
+        device = device.parent
+    ret.reverse()
+    return ret
+
+def export_get_networks(device):
+    ret = []
+    for network in device.listNetworks():
+        ret.append({'oid': network.oid, 'address': str(network), 'secondary': network.attributes.get('secondary', False)})
+    return ret
+
+def export_get_device_info(device):
+    ret = {'oid': device.oid,
+           'name': device.attributes.get('name', ''),
+           'class': device.attributes.get('class', ''),
+           'path': export_get_device_path(device),
+           'networks': export_get_networks(device),
+           'disabled': device.attributes.get('disabled', False)}
+    return ret
+
+@helpers.authcheck
+def export(request, oid):
+    pm = helpers.PageManager(request, '')
+    node = pm.object_store.getOID(oid)
+    data = {'type': node.class_name, 'oid': node.oid, 'attributes': [], 'subdevices': [], 'devicelinks': [], 'class': node.attributes.get('class')}
+    for attr in node.attributes:
+        if attr.atype in ['binary']:
+            continue
+        data['attributes'].append({'name': attr.name, 'value': attr.value, 'type': attr.atype})
+    for subdevice in node.listChildren(include = ['device']):
+        sd_dict = {'oid': subdevice.oid, 'name': subdevice.attributes.get('name', ''), 'class': subdevice.attributes.get('class', ''), 'devicelinks': []}
+        for link in subdevice.listLinks(include = ['device']):
+            sd_dict['devicelinks'].append(export_get_device_info(link))
+        data['subdevices'].append(sd_dict)
     for link in node.listLinks(include = ['device']):
         data['devicelinks'].append({'oid': link.oid, 'name': link.attributes.get('name', ''), 'class': link.attributes.get('class', '')})
     data = json.dumps(data, sort_keys=True, indent=2)
