@@ -4,6 +4,7 @@ body {
 	font-family: Tahoma,Verdana,Arial,Helvetica;
 	font-size: 10pt;
 	background-color: #ffffff;
+    padding-top: 51px;
 }
 
 #menu {
@@ -97,13 +98,9 @@ body {
 	height: 100%;
 }
 
-#content {
-	background-color: #FFFFFF;
-	margin: 0px;
-	padding-top: 40px;
-	height: 100%;
-	margin: 0px auto;
-	width: 80%;
+#main-content {
+    margin-top: 10px;
+
 }
 
 #menu-content-divider {
@@ -206,9 +203,11 @@ a:hover {
 	color: #FFFFFF;
 	font-family: arial, sans-serif;
 	font-weight: bold;
-	font-size: 12pt;
+	font-size: 12px;
+    border-top: 1px solid #3060b0;
 	border-bottom: 1px solid #3060b0;
 	white-space: nowrap;
+    padding: 10px;
 }
 
 a.topbarlink {
