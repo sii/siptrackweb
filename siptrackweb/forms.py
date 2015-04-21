@@ -879,3 +879,8 @@ class DeviceCopyForm(forms.Form):
                                            required = False, initial = False)
    skip_networks = forms.BooleanField(label = 'Skip networks',
                                            required = False, initial = True)
+class AttributeEditNotesForm(forms.Form):
+    notes = forms.CharField(max_length = 50000, label = '',
+                             help_text = '',
+                             required = False,
+                             widget = forms.Textarea(attrs={'cols':'100', 'rows': '15'}))

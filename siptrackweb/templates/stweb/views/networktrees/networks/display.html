@@ -63,6 +63,7 @@
                 {% if not target.isHost %}
                     <a class="btn btn-default" href="/network/display/{{ network.oid|urlencode }}/?display_missing=true">Display unallocated</a>
                 {% endif %}
+                <a class="btn btn-info" href="/attribute/notes/{{ network.oid|urlencode }}/">Edit notes</a>
             {% endif %}
         </div>
     </div>
@@ -79,14 +80,15 @@
         <div role="tabpanel" class="tab-pane fade in active" id="network">
             <br/>
             {% include "stweb/views/networktrees/display_tree_info.html" %}
+            {% include "stweb/attributes/display_boxes.html" %}
             {% include "stweb/views/networktrees/networks/display_network_info.html" %}
             {% include "stweb/views/networktrees/networks/display_associated_devices.html" %}
             {% include "stweb/views/networktrees/networks/display_networks.html" %}
-            {% include "stweb/attributes/display_boxes.html" %}
         </div>
         <div role="tabpanel" class="tab-pane fade" id="attributes">
             <br/>
             {% include "stweb/attributes/display_attributes.html" %}
+            {% include "stweb/attributes/display_boxes.html" %}
         </div>
         <div role="tabpanel" class="tab-pane fade" id="other">
             <br/>

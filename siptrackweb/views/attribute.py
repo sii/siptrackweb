@@ -183,3 +183,27 @@ def delete(request, oid):
 
     return pm.redirect('display.display', (parent.oid,))
 
+@helpers.authcheck
+def edit_notes(request, oid):
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    target = pm.setVar('target', pm.object_store.getOID(oid))
+    url = '/attribute/notes/post/%s/' % (target.oid)
+    pm.addForm(AttributeEditNotesForm(initial={'notes': target.attributes.get('Notes', '')}), url,
+               'edit notes', message = '')
+    pm.path(target)
+    return pm.render()
+
+@helpers.authcheck
+def edit_notes_post(request, oid):
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    target = pm.setVar('target', pm.object_store.getOID(oid))
+    pm.path(target)
+    url = '/attribute/notes/post/%s/' % (target.oid)
+    pm.addForm(AttributeEditNotesForm(request.POST), url,
+               'edit notes', message = '')
+    if not pm.form.is_valid():
+        return pm.render()
+    target.attributes['Notes'] = pm.form.cleaned_data['notes']
+    attr = target.attributes.getObject('Notes')
+    attr.attributes['wikitext'] = True
+    return pm.redirect('display.display', (oid,))

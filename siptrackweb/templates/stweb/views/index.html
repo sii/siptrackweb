@@ -7,14 +7,12 @@
         <div class="panel-body">
             Actions:
             {% if write_access %}
+                <a class="btn btn-success" href="/view/add/">Add view</a>
                 <div class="btn-group">
                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         Add <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="/view/add/">View</a>
-                        </li>
                         <li>
                             <a href="/config/add/select/{{ target.oid|urlencode }}/">Configuration item</a>
                         </li>

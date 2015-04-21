@@ -25,6 +25,8 @@ urlpatterns = patterns('siptrackweb.views',
     (r'^attribute/update/post/(?P<oid>[^/]+)/$', 'attribute.update_post'),
     (r'^attribute/delete/(?P<oid>[^/]+)/$', 'attribute.delete'),
     (r'^attribute/display/(?P<oid>[^/]+)/$', 'attribute.display'),
+    (r'^attribute/notes/(?P<oid>[^/]+)/$', 'attribute.edit_notes'),
+    (r'^attribute/notes/post/(?P<oid>[^/]+)/$', 'attribute.edit_notes_post'),
 
     (r'^template/apply/select/(?P<target_oid>[^/]+)/(?P<template_type>[^/]+)/$', 'template.apply_select'),
     (r'^template/apply/set/(?P<target_oid>[^/]+)/(?P<template_type>[^/]+)/$', 'template.apply_set'),
