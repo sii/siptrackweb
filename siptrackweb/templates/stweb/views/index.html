@@ -3,11 +3,37 @@
 {% block title %}siptrackweb - views{% endblock %}
 
 {% block content %}
-	<div class="content-links">
-		{% if write_access %}
-		<a href="/view/add/">add view</a>
-		{% endif %}
-	</div>
+    <div class="panel panel-default" style="background-color: #f0f0f0">
+        <div class="panel-body">
+            Actions:
+            {% if write_access %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Add <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="/view/add/">View</a>
+                        </li>
+                        <li>
+                            <a href="/config/add/select/{{ target.oid|urlencode }}/">Configuration item</a>
+                        </li>
+                        {% if administrator %}
+                            <li>
+                                <a href="/permission/add/{{ target.oid|urlencode }}/">Permission</a>
+                            </li>
+                            <li>
+                                <a href="/command/queue/add/{{ target.oid|urlencode }}/">Command queue</a>
+                            </li>
+                            <li>
+                                <a href="/event/trigger/add/{{ target.oid|urlencode }}/">Event trigger</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 	<div class="content-header" onclick="Element.toggle('display_views'); Element.toggle('display_views_hidden');">
 		Views
 	</div>

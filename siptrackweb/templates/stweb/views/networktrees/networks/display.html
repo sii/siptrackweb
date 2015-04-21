@@ -3,13 +3,97 @@
 {% block title %}siptrackweb - browse network{% endblock %}
 
 {% block content %}
-	{% include "stweb/views/networktrees/display_tree_info.html" %}
-	{% include "stweb/views/networktrees/networks/display_network_info.html" %}
-	{% include "stweb/attributes/display_attributes.html" %}
-	{% include "stweb/views/networktrees/networks/display_associated_devices.html" %}
-	{% include "stweb/views/networktrees/networks/display_networks.html" %}
-	{% include "stweb/templates/display_templates.html" %}
-	{% include "stweb/attributes/display_boxes.html" %}
-	{% include "stweb/configs/display.html" %}
-	{% include "stweb/permissions/display_permissions.html" %}
+    <div class="panel panel-default" style="background-color: #f0f0f0">
+        <div class="panel-body">
+            Actions:
+            {% if write_access %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Add <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        {% if not target.isHost %}
+                        <li>
+                            <a href="/network/add/{{ network.oid|urlencode }}/">Network</a>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <a href="/attribute/add/select/{{ target.oid|urlencode }}/">Attribute</a>
+                        </li>
+                        <li>
+                            <a href="/config/add/select/{{ target.oid|urlencode }}/">Config variable</a>
+                        </li>
+                        <li>
+                            <a href="/permission/add/{{ target.oid|urlencode }}/">Permission</a>
+                        </li>
+                        <li>
+                            <a href="/template/{{ template_add_type }}/add/{{ target.oid|urlencode }}/">Template</a>
+                        </li>
+                    </ul>
+                </div>
+                {% if network.class_name != "network tree" or valid_tag_target %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Tags <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        {% if network.class_name != "network tree" %}
+                            <li>
+                                <a href="/tag/{{ network.oid|urlencode }}/">Tag network</a>
+                            </li>
+                        {% endif %}
+                        {% if valid_tag_target %}
+                            {% ifequal network.class_name "network tree" %}
+                            <li>
+                                <a href="/relocate/tagged/{{ network_tree.oid|urlencode }}/">Move tagged object here</a>
+                            </li>
+                            {% endifequal %}
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+                {% ifequal network.class_name "network tree" %}
+                    <a class="btn btn-danger" href="/networktree/delete/{{ network_tree.oid|urlencode }}/">Delete network tree</a>
+                {% else %}
+                <a class="btn btn-danger" href="/network/delete/{{ network.oid|urlencode }}/">Delete network</a>
+                {% endifequal %}
+                {% if network.class_name != "network tree" %}
+                    <a class="btn btn-default" href="/template/apply/select/{{ network.oid|urlencode }}/nodemod/">Modify network</a>
+                {% endif %}
+                {% if not target.isHost %}
+                    <a class="btn btn-default" href="/network/display/{{ network.oid|urlencode }}/?display_missing=true">Display unallocated</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <div role="tabpanel">
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#network" aria-controls="home" role="tab" data-toggle="tab">Networks</a></li>
+          <li role="presentation"><a href="#attributes" aria-controls="attributes" role="tab" data-toggle="tab">Attributes</a></li>
+          <li role="presentation"><a href="#other" aria-controls="other" role="tab" data-toggle="tab">Other</a></li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="network">
+            <br/>
+            {% include "stweb/views/networktrees/display_tree_info.html" %}
+            {% include "stweb/views/networktrees/networks/display_network_info.html" %}
+            {% include "stweb/views/networktrees/networks/display_associated_devices.html" %}
+            {% include "stweb/views/networktrees/networks/display_networks.html" %}
+            {% include "stweb/attributes/display_boxes.html" %}
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="attributes">
+            <br/>
+            {% include "stweb/attributes/display_attributes.html" %}
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="other">
+            <br/>
+            {% include "stweb/templates/display_templates.html" %}
+            {% include "stweb/configs/display.html" %}
+            {% include "stweb/permissions/display_permissions.html" %}
+        </div>
+      </div>
+    </div>
 {% endblock %}

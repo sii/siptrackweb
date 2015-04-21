@@ -1,24 +1,3 @@
-<div class="content-links">
-	{% if write_access %}
-	<a href="/device/delete/{{ device.oid|urlencode }}/">delete device</a>
-	| <a href="/tag/{{ device.oid|urlencode }}/">tag device</a>
-	| <a href="/template/apply/select/{{ device.oid|urlencode }}/nodemod/">modify device</a>
-	| <a href="/device/recreate/template/select/{{ device.oid|urlencode }}/">re-create device</a>
-	{% if valid_copy_target %}
-	| <a href="/device/copy/{{ device.oid|urlencode }}/">copy device</a>
-	{% endif %}
-	{% if device.attributes.disabled %}
-	| <a href="/device/enable/{{ device.oid|urlencode }}/">enable device</a>
-	{% else %}
-	| <a href="/device/disable/{{ device.oid|urlencode }}/">disable device</a>
-	{% endif %}
-	{% if valid_tag_target %}
-	| <a href="/relocate/tagged/{{ device.oid|urlencode }}/">move tagged object here</a>
-	{% endif %}
-	|
-	{% endif %}
-	<a href="/device/export/{{ device.oid|urlencode }}/">export</a>
-</div>
 <div class="content-header" onclick="Element.toggle('display_device_info'); Element.toggle('display_device_info_hidden');">
 	Device Information
 </div>
@@ -66,6 +45,5 @@
 		Hidden content, click to expand.
 	</div>
 </div>
-<br/>
 <br/>
 <br/>

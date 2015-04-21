@@ -1,12 +1,3 @@
-<div class="content-links">
-	{% if write_access %}
-	<a href="/template/update/{{ template.oid|urlencode }}/">update</a>
-	| <a href="/template/delete/{{ template.oid|urlencode }}/">delete</a>
-	{% if valid_copy_target %}
-	| <a href="/template/copy/{{ template.oid|urlencode }}/">copy</a>
-	{% endif %}
-	{% endif %}
-</div>
 <div class="content-header">
 	Template Information
 </div>

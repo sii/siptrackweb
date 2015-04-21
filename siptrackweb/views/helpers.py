@@ -79,7 +79,7 @@ class PageManager(object):
         self.forms = {}
         self.view_tree = self.object_store.view_tree
         self.render_var['view_list'] = \
-                self.view_tree.listChildren(include = ['view'])
+            self.view_tree.listChildren(include = ['view'])
         self.render_var['searchform'] = forms.ViewSearchForm()
         self.render_var['username'] = request.session['username']
         self.render_var['administrator'] = request.session['administrator']

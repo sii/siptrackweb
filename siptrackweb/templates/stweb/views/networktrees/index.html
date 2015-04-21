@@ -3,11 +3,14 @@
 {% block title %}siptrackweb - network tree{% endblock %}
 
 {% block content %}
-	<div class="content-links">
-		{% if write_access %}
-		<a href="/networktree/add/{{ parent.oid|urlencode }}/">Add Network Tree</a>
-		{% endif %}
-	</div>
+    <div class="panel panel-default" style="background-color: #f0f0f0">
+        <div class="panel-body">
+            Actions:
+            {% if write_access %}
+                <a class="btn btn-success" href="/networktree/add/{{ parent.oid|urlencode }}/">Add Network Tree</a>
+            {% endif %}
+        </div>
+    </div>
 	<div class="content-header" onclick="Element.toggle('display_network_trees'); Element.toggle('display_network_trees_hidden');">
 		Network Trees
 	</div>

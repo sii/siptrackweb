@@ -1,10 +1,4 @@
-<div class="content-links">
-	{% if valid_tag_target %}
-	{% if write_access %}
-	<a href="/device/association/add/{{ device.oid|urlencode }}/">link with tagged device</a>
-	{% endif %}
-	{% endif %}
-</div>
+{% if device_association_list %}
 <div class="content-header" onclick="Element.toggle('display_device_links'); Element.toggle('display_device_links_hidden');">
 	Device Links
 </div>
@@ -54,4 +48,4 @@
 </div>
 <br/>
 <br/>
-<br/>
+{% endif %}

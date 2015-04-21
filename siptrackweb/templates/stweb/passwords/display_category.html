@@ -3,11 +3,16 @@
 {% block title %}siptrackweb - display password category{% endblock %}
 
 {% block content %}
-	<div class="content-links">
-		{% if write_access %}
-		<a href="/password/category/delete/{{ password_category.oid|urlencode }}/">delete</a>
-		{% endif %}
-	</div>
+    <div class="panel panel-default" style="background-color: #f0f0f0">
+        <div class="panel-body">
+            Actions:
+            {% if write_access %}
+                <a class="btn btn-success" href="/password/category/add/{{ target.oid|urlencode }}/">Add category</a>
+                <a class="btn btn-success" href="/password/add/{{ target.oid|urlencode }}/">Add password</a>
+                <a class="btn btn-danger" href="/password/category/delete/{{ password_category.oid|urlencode }}/">Delete category</a>
+            {% endif %}
+        </div>
+    </div>
 	<div class="content-header" onclick="Element.toggle('display_password_category'); Element.toggle('display_password_category_hidden');">
 		Category Information
 	</div>

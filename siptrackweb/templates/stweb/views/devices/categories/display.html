@@ -3,11 +3,83 @@
 {% block title %}siptrackweb - browse devices{% endblock %}
 
 {% block content %}
-	{% include "stweb/views/devices/categories/display_categories.html" %}
-	{% include "stweb/attributes/display_attributes.html" %}
-	{% include "stweb/views/devices/display_devices_standard.html" %}
-	{% include "stweb/templates/display_templates.html" %}
-	{% include "stweb/attributes/display_boxes.html" %}
-	{% include "stweb/configs/display.html" %}
-	{% include "stweb/permissions/display_permissions.html" %}
+    <div class="panel panel-default" style="background-color: #f0f0f0">
+        <div class="panel-body">
+            Actions:
+            {% if write_access %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Add <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="/device/category/add/{{ device.oid|urlencode }}/">Sub-category</a>
+                        </li>
+                        <li>
+                            <a href="/attribute/add/select/{{ target.oid|urlencode }}/">Attribute</a>
+                        </li>
+                        <li>
+                            <a href="/device/add/template/select/{{ target.oid|urlencode }}/">Device</a>
+                        </li>
+                        <li>
+                            <a href="/template/device/add/{{ target.oid|urlencode }}/">Template</a>
+                        </li>
+                        <li>
+                            <a href="/config/add/select/{{ target.oid|urlencode }}/">Config variable</a>
+                        </li>
+                        <li>
+                            <a href="/permission/add/{{ target.oid|urlencode }}/">Permission</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Tags <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="/tag/{{ target.oid|urlencode }}/">Tag category</a>
+                        </li>
+                        {% if valid_tag_target %}
+                        <li>
+                            <a href="/relocate/tagged/{{ target.oid|urlencode }}/">Move tagged here</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% ifequal device.class_name "device category" %}
+                    <a class="btn btn-danger" href="/device/category/delete/{{ device.oid|urlencode }}/">Delete category</a>
+                {% endifequal %}
+            {% endif %}
+            <a class="btn btn-default" href="/device/category/export/{{ device.oid|urlencode }}/">Export category</a>
+        </div>
+    </div>
+    <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#category" aria-controls="home" role="tab" data-toggle="tab">Category</a></li>
+            <li role="presentation"><a href="#attributes" aria-controls="attributes" role="tab" data-toggle="tab">Attributes</a></li>
+            <li role="presentation"><a href="#other" aria-controls="other" role="tab" data-toggle="tab">Other</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="category">
+                <br/>
+                {% include "stweb/views/devices/categories/display_categories.html" %}
+                {% include "stweb/attributes/display_boxes.html" %}
+                {% include "stweb/views/devices/display_devices_standard.html" %}
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="attributes">
+                <br/>
+                {% include "stweb/attributes/display_attributes.html" %}
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="other">
+                <br/>
+                {% include "stweb/templates/display_templates.html" %}
+                {% include "stweb/configs/display.html" %}
+                {% include "stweb/permissions/display_permissions.html" %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

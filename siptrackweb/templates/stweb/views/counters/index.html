@@ -3,12 +3,15 @@
 {% block title %}siptrackweb - counters{% endblock %}
 
 {% block content %}
-	<div class="content-links">
-		{% if write_access %}
-		<a href="/counter/basic/add/{{ parent.oid|urlencode }}/">add basic</a>
-		| <a href="/counter/looping/add/{{ parent.oid|urlencode }}/">add looping</a>
-		{% endif %}
-	</div>
+    <div class="panel panel-default" style="background-color: #f0f0f0">
+        <div class="panel-body">
+            Actions:
+            {% if write_access %}
+                <a class="btn btn-success" href="/counter/basic/add/{{ parent.oid|urlencode }}/">Add basic</a>
+                <a class="btn btn-success" href="/counter/looping/add/{{ parent.oid|urlencode }}/">Add looping</a>
+            {% endif %}
+        </div>
+    </div>
 	<div class="content-header" onclick="Element.toggle('display_counters'); Element.toggle('display_counters_hidden');">
 		Counters
 	</div>

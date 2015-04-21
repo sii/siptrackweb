@@ -1,9 +1,9 @@
+{% if device_association_list %}
 <div class="content-header" onclick="Element.toggle('display_network_assoc_devices'); Element.toggle('display_network_assoc_devices_hidden');">
 	Associated Devices
 </div>
 <div class="content-data">
 	<div id="display_network_assoc_devices">
-                {% if device_association_list %}
                 <table class="infotable">
                         <tr>
                                 <th class="infotable">Associated Device</th>
@@ -45,7 +45,6 @@
                                 </tr>
                         {% endfor %}
                 </table>
-                {% endif %}
 	</div>
 	<div id="display_network_assoc_devices_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_network_assoc_devices'); Element.toggle('display_network_assoc_devices_hidden');">
 		Hidden content, click to expand.
@@ -53,3 +52,4 @@
 </div>
 <br/>
 <br/>
+{% endif %}

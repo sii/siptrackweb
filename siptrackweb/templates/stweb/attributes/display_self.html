@@ -3,12 +3,16 @@
 {% block title %}siptrackweb - display attribute{% endblock %}
 
 {% block content %}
-	<div class="content-links">
-		{% if write_access %}
-		<a href="/attribute/update/{{ attribute.oid|urlencode }}/">edit</a>
-		| <a href="/attribute/delete/{{ attribute.oid|urlencode }}/">delete</a>
-		{% endif %}
-	</div>
+    <div class="panel panel-default" style="background-color: #f0f0f0">
+        <div class="panel-body">
+            Actions:
+            {% if write_access %}
+                <a class="btn btn-success" href="/attribute/add/select/{{ target.oid|urlencode }}/">Add attribute</a>
+                <a class="btn btn-default" href="/attribute/update/{{ attribute.oid|urlencode }}/">Edit attribute</a>
+                <a class="btn btn-danger" href="/attribute/delete/{{ attribute.oid|urlencode }}/">Delete attribute</a>
+            {% endif %}
+        </div>
+    </div>
 	<div class="content-header" onclick="Element.toggle('display_attribute'); Element.toggle('display_attribute_hidden');">
 		Attribute Information
 	</div>

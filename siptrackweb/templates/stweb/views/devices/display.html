@@ -1,15 +1,121 @@
 {% extends "stweb/base.html" %}
 
 {% block title %}siptrackweb - browse devices{% endblock %}
-
 {% block content %}
-	{% include "stweb/views/devices/display_device.html" %}
-	{% include "stweb/attributes/display_attributes.html" %}
-	{% include "stweb/attributes/display_boxes.html" %}
-	{% include "stweb/views/devices/display_device_associations.html" %}
-	{% include "stweb/views/devices/display_devices_extended.html" %}
-	{% include "stweb/views/devices/display_networks.html" %}
-	{% include "stweb/passwords/display_passwords.html" %}
-	{% include "stweb/configs/display.html" %}
-	{% include "stweb/permissions/display_permissions.html" %}
+    <div class="panel panel-default" style="background-color: #f0f0f0">
+        <div class="panel-body">
+            Actions:
+            {% if write_access %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Add <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="/device/add/template/select/{{ target.oid|urlencode }}/">Sub-device</a>
+                        </li>
+                        <li>
+                            <a href="/attribute/add/select/{{ target.oid|urlencode }}/">Attribute</a>
+                        </li>
+                        <li>
+                            <a href="/password/add/{{ target.oid|urlencode }}/">Password</a>
+                        </li>
+                        <li>
+                            <a href="/config/add/select/{{ target.oid|urlencode }}/">Config variable</a>
+                        </li>
+                        <li>
+                            <a href="/permission/add/{{ target.oid|urlencode }}/">Permission</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Tags <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="/tag/{{ target.oid|urlencode }}/">Tag device</a>
+                        </li>
+                        {% if valid_tag_target %}
+                            <li>
+                                <a href="/relocate/tagged/{{ target.oid|urlencode }}/">Move tagged here</a>
+                            </li>
+                            <li>
+                                <a href="/device/association/add/{{ device.oid|urlencode }}/">Link with tagged device</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        IP-address <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="/device/network/add/{{ device.oid|urlencode }}/">Add</a>
+                        </li>
+                        <li>
+                            <a href="/device/network/autoassign/{{ device.oid|urlencode }}/">Auto-assign</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Other <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="/device/recreate/template/select/{{ device.oid|urlencode }}/">Re-create device</a>
+                        </li>
+                        {% if valid_copy_target %}
+                            <li>
+                                <a href="/device/copy/{{ device.oid|urlencode }}/">Copy device to tagged category</a>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <a href="/device/export/{{ device.oid|urlencode }}/">Export device</a>
+                        </li>
+                    </ul>
+                </div>
+                <a class="btn btn-danger" href="/device/delete/{{ device.oid|urlencode }}/">Delete device</a>
+                {% if device.attributes.disabled %}
+                    <a class="btn btn-default" href="/device/enable/{{ device.oid|urlencode }}/">Enable device</a>
+                {% else %}
+                    <a class="btn btn-default" href="/device/disable/{{ device.oid|urlencode }}/">Disable device</a>
+                {% endif %}
+                <a class="btn btn-default" href="/template/apply/select/{{ device.oid|urlencode }}/nodemod/">Modify device</a>
+                <a class="btn btn-info" href="/device/notes/{{ device.oid|urlencode }}/">Edit notes</a>
+            {% endif %}
+        </div>
+    </div>
+    <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#device" aria-controls="home" role="tab" data-toggle="tab">Device</a></li>
+            <li role="presentation"><a href="#attributes" aria-controls="attributes" role="tab" data-toggle="tab">Attributes</a></li>
+            <li role="presentation"><a href="#other" aria-controls="other" role="tab" data-toggle="tab">Other</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="device">
+                <br/>
+                {% include "stweb/views/devices/display_device.html" %}
+                {% include "stweb/attributes/display_boxes.html" %}
+                {% include "stweb/views/devices/display_device_associations.html" %}
+                {% include "stweb/views/devices/display_devices_extended.html" %}
+                {% include "stweb/views/devices/display_networks.html" %}
+                {% include "stweb/passwords/display_passwords.html" %}
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="attributes">
+                <br/>
+                {% include "stweb/attributes/display_attributes.html" %}
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="other">
+                <br/>
+                {% include "stweb/configs/display.html" %}
+                {% include "stweb/permissions/display_permissions.html" %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -1,8 +1,4 @@
-<div class="content-links">
-	{% if write_access %}
-	<a href="/device/add/template/select/{{ device.oid|urlencode }}/">add device</a>
-	{% endif %}
-</div>
+{% if device_list %}
 <div class="content-header" onclick="Element.toggle('display_devices_standard'); Element.toggle('display_devices_standard_hidden');">
 	Devices
 </div>
@@ -45,5 +41,4 @@
 </div>
 <br/>
 <br/>
-<br/>
-
+{% endif %}

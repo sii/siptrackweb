@@ -3,6 +3,70 @@
 {% block title %}siptrackweb - display template{% endblock %}
 
 {% block content %}
+    <div class="panel panel-default" style="background-color: #f0f0f0">
+        <div class="panel-body">
+            Actions:
+            {% if write_access %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Add <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="/attribute/add/select/{{ target.oid|urlencode }}/">Attribute</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Add rule<span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="/template/rule/text/add/{{ template.oid|urlencode }}/">Text</a>
+                        </li>
+                        <li>
+                            <a href="/template/rule/fixed/add/{{ template.oid|urlencode }}/">Fixed</a>
+                        </li>
+                        <li>
+                            <a href="/template/rule/regmatch/add/{{ template.oid|urlencode }}/">Regmatch</a>
+                        </li>
+                        <li>
+                            <a href="/template/rule/bool/add/{{ template.oid|urlencode }}/">Boolean</a>
+                        </li>
+                        <li>
+                            <a href="/template/rule/int/add/{{ template.oid|urlencode }}/">Integer</a>
+                        </li>
+                        <li>
+                            <a href="/template/rule/flushnodes/add/{{ template.oid|urlencode }}/">Flush nodes</a>
+                        </li>
+                        <li>
+                            <a href="/template/rule/flushassoc/add/{{ template.oid|urlencode }}/">Flush associations</a>
+                        </li>
+                        <li>
+                            <a href="/template/rule/delattr/add/{{ template.oid|urlencode }}/">Delete attribute</a>
+                        </li>
+                        {% ifequal template.class_name "device template" %}
+                            <li>
+                                <a href="/template/rule/password/add/{{ template.oid|urlencode }}/">Password</a>
+                            </li>
+                            <li>
+                                <a href="/template/rule/network/add/{{ template.oid|urlencode }}/">Network assignment</a>
+                            </li>
+                            <li>
+                                <a href="/template/rule/subdevice/add/{{ template.oid|urlencode }}/">Subdevice</a>
+                            </li>
+                        {% endifequal %}
+                    </ul>
+                </div>
+                <a class="btn btn-default" href="/template/update/{{ template.oid|urlencode }}/">Update template</a>
+                <a class="btn btn-danger" href="/template/delete/{{ template.oid|urlencode }}/">Delete template</a>
+                {% if valid_copy_target %}
+                    <a class="btn btn-default" href="/template/copy/{{ template.oid|urlencode }}/">Copy template</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
 	{% include "stweb/templates/display_template_information.html" %}
 	{% include "stweb/attributes/display_attributes.html" %}
 	{% include "stweb/templates/display_rules.html" %}

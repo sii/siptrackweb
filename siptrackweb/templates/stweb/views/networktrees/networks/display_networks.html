@@ -1,10 +1,4 @@
 {% if not target.isHost %}
-<div class="content-links">
-	{% if write_access %}
-	<a href="/network/add/{{ network.oid|urlencode }}/">add network</a>
-	| <a href="/network/display/{{ network.oid|urlencode }}/?display_missing=true">display unallocated networks</a>
-	{% endif %}
-</div>
 <div class="content-header" onclick="Element.toggle('display_networks'); Element.toggle('display_networks_hidden');">
 	Subnets
 </div>
@@ -54,7 +48,6 @@
 		Hidden content, click to expand.
 	</div>
 </div>
-<br/>
 <br/>
 <br/>
 {% endif %}

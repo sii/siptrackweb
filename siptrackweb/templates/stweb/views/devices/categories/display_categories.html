@@ -1,17 +1,4 @@
-<div class="content-links">
-	{% if write_access %}
-	<a href="/device/category/add/{{ device.oid|urlencode }}/">add category</a>
-	{% ifequal device.class_name "device category" %}
-	| <a href="/device/category/delete/{{ device.oid|urlencode }}/">delete category</a>
-	{% endifequal %}
-	| <a href="/tag/{{ device.oid|urlencode }}/">tag category</a>
-	{% if valid_tag_target %}
-	| <a href="/relocate/tagged/{{ device.oid|urlencode }}/">move tagged object here</a>
-	{% endif %}
-	|
-	{% endif %}
-	<a href="/device/category/export/{{ device.oid|urlencode }}/">export</a>
-</div>
+{% if category_list %}
 <div class="content-header" onclick="Element.toggle('display_categories'); Element.toggle('display_categories_hidden');">
 	Categories
 </div>
@@ -46,5 +33,4 @@
 </div>
 <br/>
 <br/>
-<br/>
-
+{% endif %}

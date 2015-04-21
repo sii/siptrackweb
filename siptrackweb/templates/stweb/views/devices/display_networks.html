@@ -1,11 +1,4 @@
-<div class="content-links">
-	{% if write_access %}
-	<a href="/device/network/add/{{ device.oid|urlencode }}/">add</a>
-	{% ifequal target.class_name "device" %}
-	| <a href="/device/network/autoassign/{{ device.oid|urlencode }}/">auto-assign</a>
-	{% endifequal %}
-	{% endif %}
-</div>
+{% if network_host_list %}
 <div class="content-header" onclick="Element.toggle('display_networks'); Element.toggle('display_networks_hidden');">
 	IP-addresses
 </div>
@@ -88,4 +81,4 @@
 </div>
 <br/>
 <br/>
-<br/>
+{% endif %}

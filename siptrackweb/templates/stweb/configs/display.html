@@ -1,14 +1,9 @@
-<div class="content-links">
-	{% if write_access %}
-	<a href="/config/add/select/{{ target.oid|urlencode }}/">add configuration item</a>
-	{% endif %}
-</div>
+{% if config_list %}
 <div class="content-header" onclick="Element.toggle('display_configs'); Element.toggle('display_configs_hidden');">
 	Configuration Values
 </div>
 <div class="content-data">
 	<div id="display_configs" {% if not verbose or not config_list %} style="display:none" {% endif %}>
-		{% if config_list %}
 		<table class="infotable">
 			<tr>
 				<th class="infotable">Type</th>
@@ -35,7 +30,6 @@
 			</tr>
 			{% endfor %}
 		</table>
-		{% endif %}
 	</div>
 	<div id="display_configs_hidden" class="hiddencontent" {% if verbose or not config_list %}style="display:none" {% endif %} onclick="Element.toggle('display_configs'); Element.toggle('display_configs_hidden');">
 		Hidden content, click to expand.
@@ -43,4 +37,4 @@
 </div>
 <br/>
 <br/>
-<br/>
+{% endif %}

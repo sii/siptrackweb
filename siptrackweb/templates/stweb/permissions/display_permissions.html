@@ -1,7 +1,4 @@
-{% if administrator %}
-<div class="content-links">
-	<a href="/permission/add/{{ target.oid|urlencode }}/">add permission</a>
-</div>
+{% if administrator and permission_list %}
 <div class="content-header" onclick="Element.toggle('display_permissions'); Element.toggle('display_permissions_hidden');">
 	Permissions
 </div>

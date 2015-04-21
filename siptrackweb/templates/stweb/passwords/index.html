@@ -3,6 +3,16 @@
 {% block title %}siptrackweb - passwords{% endblock %}
 
 {% block content %}
+    <div class="panel panel-default" style="background-color: #f0f0f0">
+        <div class="panel-body">
+            Actions:
+            {% if write_access %}
+                <a class="btn btn-success" href="/password/key/add/{{ view.oid|urlencode }}/">Add password key</a>
+                <a class="btn btn-success" href="/password/category/add/{{ parent.oid|urlencode }}/">Add category</a>
+                <a class="btn btn-success" href="/password/add/{{ parent.oid|urlencode }}/">Add password</a>
+            {% endif %}
+        </div>
+    </div>
 	{% include "stweb/passwords/display_passwordkeys.html" %}
 	{% include "stweb/passwords/display_categories.html" %}
 	{% include "stweb/passwords/display_passwords.html" %}

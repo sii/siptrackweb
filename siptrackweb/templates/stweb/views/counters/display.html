@@ -3,12 +3,15 @@
 {% block title %}siptrackweb - display counter{% endblock %}
 
 {% block content %}
-	<div class="content-links">
-		{% if write_access %}
-		<a href="/counter/update/{{ counter.oid|urlencode }}/">update</a>
-		| <a href="/counter/delete/{{ counter.oid|urlencode }}/">delete</a>
-		{% endif %}
-	</div>
+    <div class="panel panel-default" style="background-color: #f0f0f0">
+        <div class="panel-body">
+            Actions:
+            {% if write_access %}
+                <a class="btn btn-default" href="/counter/update/{{ counter.oid|urlencode }}/">Update counter</a>
+                <a class="btn btn-danger" href="/counter/delete/{{ counter.oid|urlencode }}/">Delete counter</a>
+            {% endif %}
+        </div>
+    </div>
 	<div class="content-header" onclick="Element.toggle('display_counter'); Element.toggle('display_counter_hidden');">
 		Counter Information
 	</div>

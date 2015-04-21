@@ -1,20 +1,3 @@
-<div class="content-links">
-	{% if write_access %}
-	<a href="/template/rule/text/add/{{ template.oid|urlencode }}/">add text</a>
-	| <a href="/template/rule/fixed/add/{{ template.oid|urlencode }}/">add fixed</a>
-	| <a href="/template/rule/regmatch/add/{{ template.oid|urlencode }}/">add regmatch</a>
-	| <a href="/template/rule/bool/add/{{ template.oid|urlencode }}/">add boolean</a>
-	| <a href="/template/rule/int/add/{{ template.oid|urlencode }}/">add integer</a>
-	| <a href="/template/rule/flushnodes/add/{{ template.oid|urlencode }}/">flush nodes</a>
-	| <a href="/template/rule/flushassoc/add/{{ template.oid|urlencode }}/">flush associations</a>
-	| <a href="/template/rule/delattr/add/{{ template.oid|urlencode }}/">delete attribute</a>
-	{% ifequal template.class_name "device template" %}
-	| <a href="/template/rule/password/add/{{ template.oid|urlencode }}/">add password</a>
-	| <a href="/template/rule/network/add/{{ template.oid|urlencode }}/">add network assignment</a>
-	| <a href="/template/rule/subdevice/add/{{ template.oid|urlencode }}/">add subdevice</a>
-	{% endifequal %}
-	{% endif %}
-</div>
 <div class="content-header">
 	Template Rules
 </div>

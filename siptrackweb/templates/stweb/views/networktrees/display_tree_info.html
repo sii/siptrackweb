@@ -1,12 +1,4 @@
 {% ifequal network.class_name "network tree" %}
-<div class="content-links">
-	{% if write_access %}
-	<a href="/networktree/delete/{{ network_tree.oid|urlencode }}/">delete tree</a>
-	{% if valid_tag_target %}
-	| <a href="/relocate/tagged/{{ network_tree.oid|urlencode }}/">move tagged object here</a>
-	{% endif %}
-	{% endif %}
-</div>
 <div class="content-header" onclick="Element.toggle('display_network_tree_info'); Element.toggle('display_network_tree_info_hidden');">
 	Network Tree Information
 </div>
@@ -33,7 +25,6 @@
 		Hidden content, click to expand.
 	</div>
 </div>
-<br/>
 <br/>
 <br/>
 {% endifequal %}
