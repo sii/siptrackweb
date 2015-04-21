@@ -491,3 +491,18 @@ div#menu-devicespec {
 	width: 400px;
 	text-align: center;
 }
+
+.navbar-default {
+    background-color: #a0c0ff !important;
+    border-color: #a0c0ff !important;
+}
+.navbar-default .navbar-nav > li > a {
+    color: #ffffff !important;
+}
+.navbar-default .navbar-nav > li > a:hover {
+    color: #303030 !important;
+}
+
+.navbar-default .navbar-brand {
+    color: #ffffff !important;
+}
