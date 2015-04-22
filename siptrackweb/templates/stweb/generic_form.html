@@ -25,23 +25,29 @@
             <table class="table table-striped table-bordered">
                 <tbody>
                     {% for argument in form.form %}
-                        <tr>
-                            <td>
-                                {{ argument.label_tag }}
-                            </td>
-                            <td>
-                                {% render_field argument class+="form-control" %}
-                            </td>
-                            {% if argument.errors %}
-                                <td class="red">
-                                    {{ argument.errors }}
-                                </td>
-                            {% else %}
+                        {% if not argument.is_hidden or form.display_hidden%}
+                            <tr>
                                 <td>
-                                    {{ argument.help_text|safe }}
+                                    {{ argument.label_tag }}
                                 </td>
-                            {% endif %}
-                        </tr>
+                                <td>
+                                    {% if argument.field.widget|is_checkbox %}
+                                        {{ argument }}
+                                    {% else %}
+                                        {% render_field argument class+="form-control" %}
+                                    {% endif %}
+                                </td>
+                                {% if argument.errors %}
+                                    <td class="red">
+                                        {{ argument.errors }}
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        {{ argument.help_text|safe }}
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
                     {% endfor %}
                 </tbody>
             </table>

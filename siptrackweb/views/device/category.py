@@ -51,20 +51,20 @@ def display(request, pm, device):
 
 @helpers.authcheck
 def add(request, parent_oid):
-    pm = helpers.PageManager(request, 'stweb/views/devices/categories/add.html')
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
     parent = pm.setVar('parent', pm.object_store.getOID(parent_oid))
     pm.path(parent)
 
-    pm.setForm(DeviceCategoryAddForm())
+    pm.addForm(DeviceCategoryAddForm(), '/device/category/add/post/%s/' % (parent_oid))
     return pm.render()
 
 @helpers.authcheck
 def add_post(request, parent_oid):
-    pm = helpers.PageManager(request, 'stweb/views/devices/categories/add.html')
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
     parent = pm.setVar('parent', pm.object_store.getOID(parent_oid))
     pm.path(parent)
 
-    pm.setForm(ViewAddForm(request.POST))
+    pm.addForm(DeviceCategoryAddForm(request.POST), '/device/category/add/post/%s/' % (parent_oid))
     if not pm.form.is_valid():
         return pm.error()
 

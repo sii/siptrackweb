@@ -5,18 +5,19 @@ from siptrackweb.forms import *
 
 @helpers.authcheck
 def add(request, oid):
-    pm = helpers.PageManager(request, 'stweb/views/devices/networks/add.html')
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
     device = pm.setVar('device', pm.object_store.getOID(oid))
     pm.path(device)
     view = device.getParent('view')
     network_trees = view.listChildren(include = ['network tree'])
 
-    pm.setForm(DeviceNetworkAddForm(network_trees))
+    url = '/device/network/add/post/%s/' % (oid)
+    pm.addForm(DeviceNetworkAddForm(network_trees), url)
     return pm.render()
 
 @helpers.authcheck
 def add_post(request, oid):
-    pm = helpers.PageManager(request, 'stweb/views/devices/networks/add.html')
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
     device = pm.setVar('device', pm.object_store.getOID(oid))
     pm.path(device)
     view = device.getParent('view')

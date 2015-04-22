@@ -120,7 +120,7 @@ class PageManager(object):
 
     def addForm(self, form_obj, action, title = 'form', submit = 'continue',
             method = 'POST', name = 'form', message = None, default = True,
-            extraelements = ''):
+            extraelements = '', display_hidden = False):
         form = {}
         form['form'] = form_obj
         form['action'] = action
@@ -130,6 +130,7 @@ class PageManager(object):
         form['name'] = name
         form['message'] = message
         form['extraelements'] = extraelements
+        form['display_hidden'] = display_hidden
         if default:
             self.form = form_obj
         self.forms[name] = form

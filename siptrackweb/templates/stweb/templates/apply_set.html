@@ -1,4 +1,6 @@
 {% extends "stweb/base.html" %}
+{% load myfilters %}
+{% load widget_tweaks %}
 
 {% block title %}siptrackweb - {{ form.title }}{% endblock %}
 
@@ -13,29 +15,36 @@
 			<br/>
 			<br/>
 			{% endif %}
-			<table class="infotable">
-				<th class="infotable center">Apply Rule</th>
-				<th class="infotable">Name</th>
-				<th class="infotable">Value</th>
-				<th class="infotable">Help</th>
-				{% for field in form.form %}
-				<tr class="infotableeven">
-					<td class="center"><input checked="checked" type="checkbox" name="apply-{{field.html_name}}"/></td>
-					<td>{{ field.label }}</td>
-					<td>{% if field.is_hidden %}{{ field.initial }}{% else %}{{ field }}{% endif %}</td>
-					<td>{{ field.help_text }}</td>
-				</tr>
-				{% endfor %}
-				<tr>
-					<td colspan="4">&nbsp;</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td colspan="4" align="right">
-						<input type="submit" value="{{ form.submit }}"/>
-					</td>
-				</tr>
+			<table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th class="center">Apply Rule</th>
+                    <th class="">Name</th>
+                    <th class="">Value</th>
+                    <th class="">Help</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for field in form.form %}
+                    <tr class="">
+                        <td class="center"><input checked="checked" type="checkbox" name="apply-{{field.html_name}}"/></td>
+                        <td>{{ field.label }}</td>
+                        <td>
+                            {% if field.is_hidden %}
+                                {{ field.initial }}
+                            {% else %}
+                                {% if field.field.widget|is_checkbox %}
+                                    {{ field }}
+                                {% else %}
+                                    {% render_field field class+="form-control" %}
+                                {% endif %}
+                            {% endif %}</td>
+                        <td>{{ field.help_text }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
 			</table>
+            <input class="btn btn-lg btn-success" type="submit" value="{{ form.submit }}"/>
 		</form>
 	</div>
 {% endblock %}
