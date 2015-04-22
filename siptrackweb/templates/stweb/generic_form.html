@@ -9,6 +9,7 @@
         Submit: {{ form.title }}
     </div>
     <div class="content-data">
+        <br/>
         <form action="{{ form.action }}" {{ form.extraelements|safe }} method="post">
             {% if form.message %}
                 {{ form.message|safe }}
@@ -19,40 +20,35 @@
             {% for argument in form.form %}
                 {% if argument.is_hidden %}
                     {{ argument }}
-                {% else %}
-                    {% if argument.field.widget|is_checkbox %}
-                        <div class="row">
-                            <div class="col-md-2">{{ argument }}</div>
-                            <div class="col-md-10">{{ argument.label_tag }}</div>
-                        </div>
-                    {% else %}
-                        <div class="row">
-                            <div class="col-md-11">{{ argument.label_tag }}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">{% render_field argument class+="form-control" data-validation="required" %}</div>
-                        </div>
-                    {% endif %}
-                    {% if argument.errors %}
-                        <div class="row">
-                            <div class="col-md-11 red">{{ argument.errors }}</div>
-                        </div>
-                    {% endif %}
-                    {% if argument.help_text %}
-                        <div class="row">
-                            <div class="col-md-9">{{ argument.help_text|safe }}</div>
-                        </div>
-                    {% endif %}
-                    {% if not forloop.last %}
-                        <br/>
-                    {% endif %}
                 {% endif %}
             {% endfor %}
+            <table class="table table-striped table-bordered">
+                <tbody>
+                    {% for argument in form.form %}
+                        <tr>
+                            <td>
+                                {{ argument.label_tag }}
+                            </td>
+                            <td>
+                                {% render_field argument class+="form-control" %}
+                            </td>
+                            {% if argument.errors %}
+                                <td class="red">
+                                    {{ argument.errors }}
+                                </td>
+                            {% else %}
+                                <td>
+                                    {{ argument.help_text|safe }}
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
             {% if not form.readonly %}
                 <br/>
-                <br/>
                 <div class="center-section left">
-                    <input class="btn" type="submit" id="submit" value="{{ form.submit }}"/>
+                    <input class="btn btn-lg btn-success" type="submit" id="submit" value="{{ form.submit }}"/>
                 </div>
             {% endif %}
         </form>
