@@ -1,5 +1,5 @@
 {% if device_list %}
-<div class="content-header" onclick="Element.toggle('display_devices_ext'); Element.toggle('display_devices_ext_hidden');">
+<div class="content-header">
 	Devices
 </div>
 <div class="content-data">
@@ -44,9 +44,6 @@
 			{% endfor %}
 		</table>
 		{% endif %}
-	</div>
-	<div id="display_devices_ext_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_devices_ext'); Element.toggle('display_devices_ext_hidden');">
-		Hidden content, click to expand.
 	</div>
 </div>
 <br/>

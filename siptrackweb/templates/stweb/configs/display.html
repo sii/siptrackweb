@@ -1,9 +1,9 @@
 {% if config_list %}
-<div class="content-header" onclick="Element.toggle('display_configs'); Element.toggle('display_configs_hidden');">
+<div class="content-header">
 	Configuration Values
 </div>
 <div class="content-data">
-	<div id="display_configs" {% if not verbose or not config_list %} style="display:none" {% endif %}>
+	<div id="display_configs">
 		<table class="infotable">
 			<tr>
 				<th class="infotable">Type</th>
@@ -19,7 +19,7 @@
 			{% endif %}
 				<td>{{ cfg.class_name }}</td>
 				{% ifequal cfg.class_name "config value" %}
-				<td>{{ cfg.name|escape }}</a></td>
+				<td>{{ cfg.name|escape }}</td>
 				<td>{{ cfg.value|escape }}</td>
 				{% endifequal %}
 				{% ifequal cfg.class_name "config network autoassign" %}
@@ -30,9 +30,6 @@
 			</tr>
 			{% endfor %}
 		</table>
-	</div>
-	<div id="display_configs_hidden" class="hiddencontent" {% if verbose or not config_list %}style="display:none" {% endif %} onclick="Element.toggle('display_configs'); Element.toggle('display_configs_hidden');">
-		Hidden content, click to expand.
 	</div>
 </div>
 <br/>

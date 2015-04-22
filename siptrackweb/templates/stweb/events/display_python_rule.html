@@ -8,7 +8,7 @@
 		<a href="/event/trigger/rule/python/delete/{{ rule.oid|urlencode }}/">delete</a>
 		{% endif %}
 	</div>
-	<div class="content-header" onclick="Element.toggle('display_python_rule'); Element.toggle('display_python_rule_hidden');">
+	<div class="content-header">
 		Python Rule Information
 		<div class="content-links">
 			<a href="/event/trigger/rule/python/update/{{ rule.oid|urlencode }}/">update</a>
@@ -32,14 +32,11 @@
 				</tr>
 			</table>
 		</div>
-		<div id="display_python_rule_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_python_rule'); Element.toggle('display_python_rule_hidden');">
-			Hidden content, click to expand.
-		</div>
 	</div>
 	<br/>
 	<br/>
 	<br/>
-	<div class="content-header" onclick="Element.toggle('display_python_rule_code'); Element.toggle('display_python_rule_code_hidden');">
+	<div class="content-header">
 		Source Code
 		<div class="content-links">
 		</div>
@@ -47,9 +44,6 @@
 	<div class="content-data">
 		<div id="display_python_rule_code">
 			<pre>{{ rule.code }}</pre>
-		</div>
-		<div id="display_python_rule_code_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_python_rule_code'); Element.toggle('display_python_rule_code_hidden');">
-			Hidden content, click to expand.
 		</div>
 	</div>
 	<br/>

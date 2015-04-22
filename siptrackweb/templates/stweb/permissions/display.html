@@ -8,7 +8,7 @@
 		<a href="/permission/delete/{{ permission.oid|urlencode }}/">delete</a>
 		{% endif %}
 	</div>
-	<div class="content-header" onclick="Element.toggle('display_permission'); Element.toggle('display_permission_hidden');">
+	<div class="content-header">
 		Permission Information
 	</div>
 	<div class="content-data">
@@ -51,9 +51,6 @@
 				</tr>
 				{% endif %}
 			</table>
-		</div>
-		<div id="display_permission_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_permission'); Element.toggle('display_permission_hidden');">
-			Hidden content, click to expand.
 		</div>
 	</div>
 	<br/>

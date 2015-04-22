@@ -1,5 +1,5 @@
 {% ifequal network.class_name "network tree" %}
-<div class="content-header" onclick="Element.toggle('display_network_tree_info'); Element.toggle('display_network_tree_info_hidden');">
+<div class="content-header">
 	Network Tree Information
 </div>
 <div class="content-data">
@@ -20,9 +20,6 @@
 				<td>{{ network_tree.protocol }}</td>
 			</tr>
 		</table>
-	</div>
-	<div id="display_network_tree_info_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_network_tree_info'); Element.toggle('display_network_tree_info_hidden');">
-		Hidden content, click to expand.
 	</div>
 </div>
 <br/>

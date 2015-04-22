@@ -74,15 +74,6 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ username }} <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/logout/">Logout</a></li>
-                                {% if target %}
-                                 <li>
-                                     {% if verbose %}
-                                         <a href="/toggle-verbose/{{ target.oid }}/">Toggle verbosity off</a>
-                                     {% else %}
-                                         <a href="/toggle-verbose/{{ target.oid }}/">Toggle verbosity on</a>
-                                     {% endif %}
-                                 </li>
-                                {% endif %}
                             </ul>
                         </li>
                     </ul>

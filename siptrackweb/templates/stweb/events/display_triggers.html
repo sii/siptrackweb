@@ -2,11 +2,11 @@
 <div class="content-links">
 	<a href="/event/trigger/add/{{ target.oid|urlencode }}/">add event trigger</a>
 </div>
-<div class="content-header" onclick="Element.toggle('display_event_triggers'); Element.toggle('display_event_triggers_hidden');">
+<div class="content-header">
 	Event Triggers
 </div>
 <div class="content-data">
-	<div id="display_event_triggers" {% if not verbose or not event_trigger_list %} style="display:none" {% endif %}>
+	<div id="display_event_triggers">
 		{% if event_trigger_list %}
 		<table class="infotable">
 			<tr>
@@ -25,9 +25,6 @@
 			{% endfor %}
 		</table>
 		{% endif %}
-	</div>
-	<div id="display_event_triggers_hidden" class="hiddencontent" {% if verbose or not event_trigger_list %}style="display:none" {% endif %} onclick="Element.toggle('display_event_triggers'); Element.toggle('display_event_triggers_hidden');">
-		Hidden content, click to expand.
 	</div>
 </div>
 <br/>

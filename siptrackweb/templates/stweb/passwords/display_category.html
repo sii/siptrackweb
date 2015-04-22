@@ -13,7 +13,7 @@
             {% endif %}
         </div>
     </div>
-	<div class="content-header" onclick="Element.toggle('display_password_category'); Element.toggle('display_password_category_hidden');">
+	<div class="content-header">
 		Category Information
 	</div>
 	<div class="content-data">
@@ -28,9 +28,6 @@
 					<td>{{ password_category.attributes.description|escape }}</td>
 				</tr>
 			</table>
-		</div>
-		<div id="display_password_category_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_password_category'); Element.toggle('display_password_category_hidden');">
-			Hidden content, click to expand.
 		</div>
 	</div>
 	<br/>

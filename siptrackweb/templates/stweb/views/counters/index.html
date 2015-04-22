@@ -12,7 +12,7 @@
             {% endif %}
         </div>
     </div>
-	<div class="content-header" onclick="Element.toggle('display_counters'); Element.toggle('display_counters_hidden');">
+	<div class="content-header">
 		Counters
 	</div>
 	<div class="content-data">
@@ -43,9 +43,6 @@
 				</tr>
 				{% endfor %}
 			</table>
-		</div>
-		<div id="display_counters_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_counters'); Element.toggle('display_counters_hidden');">
-			Hidden content, click to expand.
 		</div>
 	</div>
 {% endblock %}

@@ -2,7 +2,7 @@
 <div class="content-links">
 	<a href="/command/add/{{ target.oid|urlencode }}/">add command</a>
 </div>
-<div class="content-header" onclick="Element.toggle('display_commands'); Element.toggle('display_commands_hidden');">
+<div class="content-header">
 	Commands
 </div>
 <div class="content-data">
@@ -30,9 +30,6 @@
 			{% endfor %}
 		</table>
 		{% endif %}
-	</div>
-	<div id="display_commands_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_commands'); Element.toggle('display_commands_hidden');">
-		Hidden content, click to expand.
 	</div>
 </div>
 <br/>

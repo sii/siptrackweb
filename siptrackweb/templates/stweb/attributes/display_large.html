@@ -7,15 +7,12 @@
 	{% endif %}
 	<a href="/attribute/display/{{ attribute.oid|urlencode }}/">display</a>
 </div>
-<div class="content-header" onclick="Element.toggle('display_attr_large_{{ attribute.name }}'); Element.toggle('display_attr_large_{{ attribute.name }}_hidden');">
+<div class="content-header"">
 	Attribute: {{ attribute.name }}
 </div>
 <div class="content-data">
-	<div id="display_attr_large_{{ attribute.name }}" {% if attribute.attributes.hidden %} style="display:none" {% endif %}>
+	<div id="display_attr_large_{{ attribute.name }}">
 		<pre>{{ attribute.value }}</pre>
-	</div>
-	<div id="display_attr_large_{{ attribute.name }}_hidden" class="hiddencontent" {% if not attribute.attributes.hidden %} style="display:none" {% endif %} onclick="Element.toggle('display_attr_large_{{ attribute.name }}'); Element.toggle('display_attr_large_{{ attribute.name }}_hidden');">
-		Hidden content, click to expand.
 	</div>
 </div>
 <br/>

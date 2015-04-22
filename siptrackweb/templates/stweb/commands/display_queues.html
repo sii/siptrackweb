@@ -2,11 +2,11 @@
 <div class="content-links">
 	<a href="/command/queue/add/{{ target.oid|urlencode }}/">add command queue</a>
 </div>
-<div class="content-header" onclick="Element.toggle('display_command_queues'); Element.toggle('display_command_queues_hidden');">
+<div class="content-header">
 	Command Queues
 </div>
 <div class="content-data">
-	<div id="display_command_queues" {% if not verbose or not command_queue_list %} style="display:none" {% endif %}>
+	<div id="display_command_queues">
 		{% if command_queue_list %}
 		<table class="infotable">
 			<tr>
@@ -25,9 +25,6 @@
 			{% endfor %}
 		</table>
 		{% endif %}
-	</div>
-	<div id="display_command_queues_hidden" class="hiddencontent" {% if verbose or not command_queue_list %}style="display:none" {% endif %} onclick="Element.toggle('display_command_queues'); Element.toggle('display_command_queues_hidden');">
-		Hidden content, click to expand.
 	</div>
 </div>
 <br/>

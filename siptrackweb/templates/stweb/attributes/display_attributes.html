@@ -1,9 +1,9 @@
 {% if attribute_list.standard %}
-<div class="content-header" onclick="Element.toggle('display_attributes'); Element.toggle('display_attributes_hidden');">
+<div class="content-header">
 	Attributes
 </div>
 <div class="content-data">
-	<div id="display_attributes" {% if not verbose and attribute_list.standard %} style="display:none" {% endif %}>
+	<div id="display_attributes">
 		<table class="infotable">
 			<tr>
 				<th class="infotable">Attribute</th>
@@ -24,9 +24,6 @@
 				{% endif %}
 			{% endfor %}
 		</table>
-	</div>
-	<div id="display_attributes_hidden" class="hiddencontent" {% if verbose or not attribute_list.standard %}style="display:none" {% endif %} onclick="Element.toggle('display_attributes'); Element.toggle('display_attributes_hidden');">
-		Hidden content, click to expand.
 	</div>
 </div>
 <br/>

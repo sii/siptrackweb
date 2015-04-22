@@ -1,9 +1,9 @@
 {% if administrator and permission_list %}
-<div class="content-header" onclick="Element.toggle('display_permissions'); Element.toggle('display_permissions_hidden');">
+<div class="content-header">
 	Permissions
 </div>
 <div class="content-data">
-	<div id="display_permissions" {% if not verbose or not permission_list %} style="display:none" {% endif %}>
+	<div id="display_permissions">
 		{% if permission_list %}
 		<table class="infotable">
 			<tr>
@@ -40,9 +40,6 @@
 			{% endfor %}
 		</table>
 		{% endif %}
-	</div>
-	<div id="display_permissions_hidden" class="hiddencontent" {% if verbose or not permission_list %}style="display:none" {% endif %} onclick="Element.toggle('display_permissions'); Element.toggle('display_permissions_hidden');">
-		Hidden content, click to expand.
 	</div>
 </div>
 <br/>

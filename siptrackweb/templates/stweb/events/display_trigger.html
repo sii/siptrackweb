@@ -8,7 +8,7 @@
 		<a href="/event/trigger/delete/{{ trigger.oid|urlencode }}/">delete</a>
 		{% endif %}
 	</div>
-	<div class="content-header" onclick="Element.toggle('display_event_trigger'); Element.toggle('display_event_trigger_hidden');">
+	<div class="content-header">
 		Event Trigger Information
 		<div class="content-links">
 			<a href="/event/trigger/update/{{ trigger.oid|urlencode }}/">update</a>
@@ -23,9 +23,6 @@
 					<td>{{ trigger.attributes.name }}</td>
 				</tr>
 			</table>
-		</div>
-		<div id="display_event_trigger_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_event_trigger'); Element.toggle('display_event_trigger_hidden');">
-			Hidden content, click to expand.
 		</div>
 	</div>
 	<br/>

@@ -3,7 +3,7 @@
 	<a href="/user/connectkey/selectkey/{{ user.oid|urlencode }}/">connect password key</a>
 	{% endif %}
 </div>
-<div class="content-header" onclick="Element.toggle('display_subkeys'); Element.toggle('display_subkeys_hidden');">
+<div class="content-header">
 	Subkeys
 </div>
 <div class="content-data">
@@ -28,9 +28,6 @@
 			{% endfor %}
 		</table>
 		{% endif %}
-	</div>
-	<div id="display_subkeys_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_subkeys'); Element.toggle('display_subkeys_hidden');">
-		Hidden content, click to expand.
 	</div>
 </div>
 <br/>

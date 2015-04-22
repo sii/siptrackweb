@@ -11,7 +11,7 @@
             {% endif %}
         </div>
     </div>
-	<div class="content-header" onclick="Element.toggle('display_network_trees'); Element.toggle('display_network_trees_hidden');">
+	<div class="content-header">
 		Network Trees
 	</div>
 	<div class="content-data">
@@ -34,9 +34,6 @@
 				</tr>
 				{% endfor %}
 			</table>
-		</div>
-		<div id="display_network_trees_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_network_trees'); Element.toggle('display_network_trees_hidden');">
-			Hidden content, click to expand.
 		</div>
 	</div>
 {% endblock %}

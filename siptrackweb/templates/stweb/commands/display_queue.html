@@ -8,7 +8,7 @@
 		<a href="/command/queue/delete/{{ queue.oid|urlencode }}/">delete</a>
 		{% endif %}
 	</div>
-	<div class="content-header" onclick="Element.toggle('display_command_queue'); Element.toggle('display_command_queue_hidden');">
+	<div class="content-header">
 		Command Queue Information
 		<div class="content-links">
 			<a href="/command/queue/update/{{ queue.oid|urlencode }}/">update</a>
@@ -23,9 +23,6 @@
 					<td>{{ queue.attributes.name }}</td>
 				</tr>
 			</table>
-		</div>
-		<div id="display_command_queue_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_command_queue'); Element.toggle('display_command_queue_hidden');">
-			Hidden content, click to expand.
 		</div>
 	</div>
 	<br/>

@@ -3,7 +3,7 @@
 	<a href="/network/range/add/{{ network.oid|urlencode }}/">add network range</a>
 	{% endif %}
 </div>
-<div class="content-header" onclick="Element.toggle('display_network_ranges'); Element.toggle('display_network_ranges_hidden');">
+<div class="content-header">
 	Network Ranges
 </div>
 <div class="content-data">
@@ -34,9 +34,6 @@
 			{% endfor %}
 		</table>
 		{% endif %}
-	</div>
-	<div id="display_network_ranges_hidden" class="hiddencontent" style="display:none" onclick="Element.toggle('display_network_ranges'); Element.toggle('display_network_ranges_hidden');">
-		Hidden content, click to expand.
 	</div>
 </div>
 <br/>
