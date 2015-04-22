@@ -1,31 +1,60 @@
 {% extends "stweb/base.html" %}
+{% load myfilters %}
+{% load widget_tweaks %}
 
 {% block title %}siptrackweb - {{ form.title }}{% endblock %}
 
 {% block content %}
-	<div class="content-header">
-		Submit: {{ form.title }}
-	</div>
-	<div class="content-data">
-		<form action="{{ form.action }}" {{ form.extraelements|safe }} method="post">
-			{% if form.message %}
-			{{ form.message|safe }}
-			<br/>
-			<br/>
-			{% endif %}
-			<table>
-				{{ form.form.as_table }}
-				<tr>
-					<td>&nbsp;</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td align="right">
-						<input type="submit" value="{{ form.submit }}"/>
-					</td>
-				</tr>
-			</table>
-		</form>
-	</div>
+    <div class="content-header">
+        Submit: {{ form.title }}
+    </div>
+    <div class="content-data">
+        <form action="{{ form.action }}" {{ form.extraelements|safe }} method="post">
+            {% if form.message %}
+                {{ form.message|safe }}
+                <br/>
+                <br/>
+            {% endif %}
+
+            {% for argument in form.form %}
+                {% if argument.is_hidden %}
+                    {{ argument }}
+                {% else %}
+                    {% if argument.field.widget|is_checkbox %}
+                        <div class="row">
+                            <div class="col-md-2">{{ argument }}</div>
+                            <div class="col-md-10">{{ argument.label_tag }}</div>
+                        </div>
+                    {% else %}
+                        <div class="row">
+                            <div class="col-md-11">{{ argument.label_tag }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">{% render_field argument class+="form-control" data-validation="required" %}</div>
+                        </div>
+                    {% endif %}
+                    {% if argument.errors %}
+                        <div class="row">
+                            <div class="col-md-11 red">{{ argument.errors }}</div>
+                        </div>
+                    {% endif %}
+                    {% if argument.help_text %}
+                        <div class="row">
+                            <div class="col-md-9">{{ argument.help_text|safe }}</div>
+                        </div>
+                    {% endif %}
+                    {% if not forloop.last %}
+                        <br/>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% if not form.readonly %}
+                <br/>
+                <br/>
+                <div class="center-section left">
+                    <input class="btn" type="submit" id="submit" value="{{ form.submit }}"/>
+                </div>
+            {% endif %}
+        </form>
+    </div>
 {% endblock %}
