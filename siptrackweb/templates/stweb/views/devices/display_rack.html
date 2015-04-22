@@ -1,0 +1,29 @@
+{% if device_rack %}
+    <div class="bold center border-bottom" style="background-color: #E0E0FF; margin-bottom: 5px; padding: 5px;">
+        Rack: <a href="/display/{{ device_rack.device.oid }}/">{{ device_rack.device.attributes.name }}</a>
+    </div>
+    <table class="rack-table">
+        <tbody>
+        {% for unit in device_rack.units %}
+            <tr>
+                <td class="rack-unit-unit">
+                    {% for unit_num in unit.all_units %}
+                        <div class="{% if not forloop.last %}border-bottom{% endif %}" style="padding: 2px;">{{ unit_num }}</div>
+                    {% endfor %}
+                </td>
+                {% if unit.empty %}
+                    <td class="rack-unit-empty">&nbsp;</td>
+                {% else %}
+                    <td class="rack-unit-used{% if unit.linked_device.attributes.disabled %} rack-unit-disabled{% endif %}{% if unit.selected %} rack-unit-highlight{% endif %}">
+                        <a href="/display/{{ unit.linked_device.oid }}/">
+                            {{ unit.name }}
+                        </a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br/>
+    <br/>
+{% endif %}

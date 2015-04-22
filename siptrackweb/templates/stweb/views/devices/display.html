@@ -100,12 +100,29 @@
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="device">
                 <br/>
-                {% include "stweb/views/devices/display_device.html" %}
-                {% include "stweb/attributes/display_boxes.html" %}
-                {% include "stweb/views/devices/display_device_associations.html" %}
-                {% include "stweb/views/devices/display_devices_extended.html" %}
-                {% include "stweb/views/devices/display_networks.html" %}
-                {% include "stweb/passwords/display_passwords.html" %}
+                <div class="row">
+                {% if device_rack %}
+                    <div class="col-md-8">
+                        {% include "stweb/views/devices/display_device.html" %}
+                        {% include "stweb/attributes/display_boxes.html" %}
+                        {% include "stweb/views/devices/display_device_associations.html" %}
+                        {% include "stweb/views/devices/display_devices_extended.html" %}
+                        {% include "stweb/views/devices/display_networks.html" %}
+                        {% include "stweb/passwords/display_passwords.html" %}
+                    </div>
+                    <div class="col-md-4">
+                        {% include "stweb/views/devices/display_rack.html" %}
+                    </div>
+                {% else %}
+                    {% include "stweb/views/devices/display_device.html" %}
+                    {% include "stweb/attributes/display_boxes.html" %}
+                    {% include "stweb/views/devices/display_rack.html" %}
+                    {% include "stweb/views/devices/display_device_associations.html" %}
+                    {% include "stweb/views/devices/display_devices_extended.html" %}
+                    {% include "stweb/views/devices/display_networks.html" %}
+                    {% include "stweb/passwords/display_passwords.html" %}
+                {% endif %}
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="attributes">
                 <br/>

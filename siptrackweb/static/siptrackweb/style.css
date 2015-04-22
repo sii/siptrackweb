@@ -506,3 +506,50 @@ div#menu-devicespec {
 .navbar-default .navbar-brand {
     color: #ffffff !important;
 }
+
+.rack-table {
+    border: solid 1px black;
+    width: 100%;
+    font-size: 11px;
+    font-weight: bold;
+}
+.rack-table td {
+    text-align: center;
+}
+.rack-table a {
+    color: #000000;
+    width: 100%;
+    display: block;
+}
+.rack-table a:hover {
+    color: #303030;
+    text-decoration: none;
+    background-color: inherit;
+}
+.rack-unit-unit {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    width: 1%;
+    text-align: left;
+    font-weight: bold;
+}
+.rack-unit-used {
+    background-color: #d0e9c6;
+    border-bottom: 1px solid black;
+}
+.rack-unit-used:hover {
+    background-color: #e0e0e0;
+}
+.rack-unit-empty {
+    background-color: #afd9ee;
+    border-bottom: 1px solid black;
+}
+.rack-unit-highlight {
+    background-color: #cccccc !important;
+}
+.rack-unit-disabled {
+    background-color: red;
+}
+.border-bottom {
+    border-bottom: 1px solid black;
+}

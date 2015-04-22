@@ -29,6 +29,88 @@ def make_device_association_list(device):
     ret.sort()
     return ret
 
+class RackUnit(object):
+    def __init__(self, device = None, unit = None):
+        self.device = device
+        self.linked_device = None
+        self.selected = False
+        if device:
+            try:
+                self.unit = int(device.attributes.get('name'))
+            except ValueError:
+                self.unit = 0
+            assoc = device.listLinks()
+            if assoc:
+                self.empty = False
+                self.linked_device = assoc[0]
+                self.name = self.linked_device.attributes.get('name')
+            else:
+                self.empty = True
+                self.name = ''
+        else:
+            self.unit = unit
+            self.empty = True
+            self.name = ''
+        self.unit_str = '%02d' % (self.unit)
+        self.all_units = [self.unit_str]
+
+    def __cmp__(self, other):
+        return cmp(self.unit, other.unit)
+
+    def mergeUnit(self, unit):
+        self.all_units.append(unit.unit_str)
+
+
+class DeviceRack(object):
+    def __init__(self, device, highlight_device = None):
+        self.device = device
+        self.highlight_device = highlight_device
+        self.units = self._makeUnits()
+
+    def _makeUnits(self):
+        units = [RackUnit(d) for d in self.device.listChildren(include=['device']) if d.attributes.get('class') == 'rack unit']
+        if not units:
+            units = [RackUnit(None, 42)]
+        units.sort()
+        missing = []
+        pos = 1
+        for unit in units:
+            while pos < unit.unit:
+                missing.append(RackUnit(unit=pos))
+                pos += 1
+            pos += 1
+        units += missing
+        units.sort()
+        units.reverse()
+        prev = None
+        prev_merge = None
+        remove = []
+        for unit in units:
+            if prev and unit.linked_device == prev.linked_device:
+                if prev_merge and unit.linked_device == prev_merge.linked_device:
+                    prev_merge.mergeUnit(unit)
+                else:
+                    prev.mergeUnit(unit)
+                    prev_merge = prev
+                remove.append(unit)
+            prev = unit
+            if self.highlight_device and unit.linked_device == self.highlight_device:
+                unit.selected = True
+        for unit in remove:
+            units.remove(unit)
+        return units
+
+def make_device_rack(device):
+    if device.attributes.get('class') == 'rack':
+        return DeviceRack(device)
+    else:
+        for assoc in device.listLinks(include=['device']):
+            if assoc.attributes.get('class') == 'rack unit':
+                return DeviceRack(assoc.parent, device)
+            if assoc.attributes.get('class') == 'rack':
+                return DeviceRack(assoc, device)
+    return None
+
 def make_device_list_with_links(parent):
     ret = []
     for device in parent.listChildren(include = ['device']):
@@ -82,6 +164,7 @@ def display_device(request, pm, device):
     pm.render_var['network_subnet_list'] = subnets
     assoc_list = make_device_association_list(device)
     pm.render_var['device_association_list'] = assoc_list
+    pm.render_var['device_rack'] = make_device_rack(device)
 
     pm.render_var['primary_network'] = None
     pm.render_var['default_gateway_guessed'] = True
