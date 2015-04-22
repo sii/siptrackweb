@@ -23,7 +23,8 @@ def add_post(request, oid):
     view = device.getParent('view')
     network_trees = view.listChildren(include = ['network tree'])
 
-    pm.setForm(DeviceNetworkAddForm(network_trees, request.POST))
+    url = '/device/network/add/post/%s/' % (oid)
+    pm.addForm(DeviceNetworkAddForm(network_trees, request.POST), url)
     if not pm.form.is_valid():
         return pm.error()
 

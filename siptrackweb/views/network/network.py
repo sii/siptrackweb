@@ -64,27 +64,27 @@ def display(request, oid):
 
 @helpers.authcheck
 def add(request, parent_oid):
-    pm = helpers.PageManager(request, 'stweb/views/networktrees/networks/add.html')
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
     network = pm.object_store.getOID(parent_oid)
     network_tree = network.getNetworkTree()
     pm.render_var['network_tree_list'] = network_tree.parent.listChildren(include = ['network tree'])
 
     pm.render_var['network_tree'] = network_tree
     pm.render_var['network'] = network
-    pm.setForm(NetworkAddForm())
+    pm.addForm(NetworkAddForm(), '/network/add/post/%s/' % (parent_oid))
     pm.path(network)
     return pm.render()
 
 @helpers.authcheck
 def add_post(request, parent_oid):
-    pm = helpers.PageManager(request, 'stweb/views/networktrees/networks/add.html')
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
     parent = pm.object_store.getOID(parent_oid)
     pm.path(parent)
     network_tree = parent.getNetworkTree()
     pm.render_var['network_tree_list'] = network_tree.parent.listChildren(include = ['network tree'])
     pm.render_var['network_tree'] = network_tree
 
-    pm.setForm(NetworkAddForm(request.POST))
+    pm.addForm(NetworkAddForm(request.POST), '/network/add/post/%s/' % (parent_oid))
     if not pm.form.is_valid():
         return pm.error()
 
@@ -97,21 +97,21 @@ def add_post(request, parent_oid):
 
 @helpers.authcheck
 def delete(request, oid):
-    pm = helpers.PageManager(request, 'stweb/views/networktrees/networks/delete.html')
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    pm.addForm(NetworkDeleteForm(), '/network/delete/post/%s/' % (oid), message='Removing network.')
     network = pm.object_store.getOID(oid)
     network_tree = network.getNetworkTree()
     pm.render_var['network_tree'] = network_tree
     pm.render_var['network_tree_list'] = network_tree.parent.listChildren(include = ['network tree'])
     pm.render_var['network'] = network
-
-    pm.setForm(NetworkDeleteForm())
 
     pm.path(network)
     return pm.render()
 
 @helpers.authcheck
 def delete_post(request, oid):
-    pm = helpers.PageManager(request, 'stweb/views/networktrees/networks/delete.html')
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    pm.addForm(NetworkDeleteForm(request.POST), '/network/delete/post/%s/' % (oid), message='Removing network.')
     network = pm.object_store.getOID(oid)
     pm.path(network)
     network_tree = network.getNetworkTree()
@@ -119,7 +119,6 @@ def delete_post(request, oid):
     pm.render_var['network_tree_list'] = network_tree.parent.listChildren(include = ['network tree'])
     pm.render_var['network'] = network
 
-    pm.setForm(NetworkDeleteForm(request.POST))
     if not pm.form.is_valid():
         return pm.error('invalid value for recursive')
 

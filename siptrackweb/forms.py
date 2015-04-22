@@ -32,7 +32,7 @@ class NetworkTreeAddForm(forms.Form):
             choices = (('ipv4', 'ipv4'), ('ipv6', 'ipv6')))
 
 class NetworkAddForm(forms.Form):
-    name = forms.CharField(max_length = 50, label = 'Address')
+    name = forms.CharField(max_length = 50, label = 'Address', help_text='The network/address in CIDR form (x.x.x.x or x.x.x.x/xx)')
     description = forms.CharField(max_length = 100, required = False,
             label = 'Description')
 

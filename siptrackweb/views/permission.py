@@ -57,7 +57,9 @@ def add_post(request, parent_oid):
 
     users = get_add_users(pm.object_store)
     groups = get_add_groups(pm.object_store)
-    pm.setForm(PermissionAddForm(users, groups, request.POST))
+    form = PermissionAddForm(users, groups, request.POST)
+    url = '/permission/add/post/%s/' % (parent.oid)
+    pm.addForm(form, url, 'add permission')
     if not pm.form.is_valid():
         return pm.error()
 

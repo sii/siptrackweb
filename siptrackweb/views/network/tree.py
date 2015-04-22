@@ -20,24 +20,24 @@ def index(request, parent_oid):
 
 @helpers.authcheck
 def add(request, parent_oid):
-    pm = helpers.PageManager(request, 'stweb/views/networktrees/add.html')
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
     parent = pm.setVar('parent', pm.object_store.getOID(parent_oid))
     pm.path(parent)
     pm.section('network')
 
     pm.render_var['network_tree_list'] = parent.listChildren(include = ['network tree'])
-    pm.setForm(NetworkTreeAddForm())
+    pm.addForm(NetworkTreeAddForm(), '/networktree/add/post/%s/' % (parent_oid))
     return pm.render()
 
 @helpers.authcheck
 def add_post(request, parent_oid):
-    pm = helpers.PageManager(request, 'stweb/views/networktrees/add.html')
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
     parent = pm.setVar('parent', pm.object_store.getOID(parent_oid))
     pm.path(parent)
     pm.section('network')
 
     pm.render_var['network_tree_list'] = parent.listChildren(include = ['network tree'])
-    pm.setForm(NetworkTreeAddForm(request.POST))
+    pm.addForm(NetworkTreeAddForm(request.POST), '/networktree/add/post/%s/' % (parent_oid))
     if not pm.form.is_valid():
         return pm.error()
 
@@ -48,7 +48,8 @@ def add_post(request, parent_oid):
 
 @helpers.authcheck
 def delete(request, oid):
-    pm = helpers.PageManager(request, 'stweb/views/networktrees/delete.html')
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    pm.addForm(DeleteForm(), '/networktree/delete/post/%s/' % (oid), message='Removing network tree.')
     pm.section('network')
 
     nt = pm.setVar('network_tree', pm.object_store.getOID(oid))
@@ -59,7 +60,8 @@ def delete(request, oid):
 
 @helpers.authcheck
 def delete_post(request, oid):
-    pm = helpers.PageManager(request, 'stweb/views/networktrees/delete.html')
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    pm.addForm(DeleteForm(request.POST), '/networktree/delete/post/%s/' % (oid), message='Removing network tree.')
     pm.section('network')
     nt = pm.object_store.getOID(oid)
     parent_oid = nt.parent.oid
