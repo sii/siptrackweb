@@ -124,3 +124,7 @@ def dinfo(request):
     pm.render_var['pm'] = pm
     return pm.render()
 
+@helpers.authcheck
+def p404(request):
+    return render_to_response('404.html')
+

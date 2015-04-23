@@ -6,6 +6,7 @@ from siptrackweb import views
 
 urlpatterns = patterns('siptrackweb.views',
     (r'^$', 'root.index'),
+    (r'^404$', 'root.p404'),
 
     (r'^display/(?P<oid>[^/]+)/$', 'display.display'),
 
