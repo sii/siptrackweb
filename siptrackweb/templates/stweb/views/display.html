@@ -8,7 +8,16 @@
             Actions:
             {% if write_access %}
                 <a class="btn btn-default" href="/view/update/{{ target.oid }}/">Update view</a>
-                <a class="btn btn-danger" href="/view/delete/{{ target.oid }}/">Delete view</a>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Dangerous <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a data-toggle="tooltip" data-placement="bottom" title="This will delete this entire view including all devices, networks etc." href="/view/delete/{{ target.oid }}/">Delete view</a>
+                        </li>
+                    </ul>
+                </div>
             {% endif %}
         </div>
     </div>
