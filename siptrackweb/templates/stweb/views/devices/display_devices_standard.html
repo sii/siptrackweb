@@ -8,6 +8,7 @@
 		<table class="infotable">
 			<tr>
 				<th class="infotable">Name</th>
+                <th class="infotable">Class</th>
 				<th class="infotable">Description</th>
 			</tr>
 			{% for cur_device in device_list %}
@@ -27,6 +28,9 @@
 							<a href="/device/display/{{ cur_device.oid|urlencode }}/">[UNKNOWN]</a><br/>
 						{% endif %}
 					</td>
+                    <td>
+                        {{ cur_device.attributes.class|escape }}
+                    </td>
 					<td>
 						{{ cur_device.attributes.description|escape }}
 					</td>

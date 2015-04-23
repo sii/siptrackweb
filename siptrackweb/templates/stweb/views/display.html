@@ -3,33 +3,46 @@
 {% block title %}siptrackweb - display view{% endblock %}
 
 {% block content %}
-	<div class="content-links">
-		{% if write_access %}
-		<a href="/view/update/{{ view.oid|urlencode }}/">update</a>
-		| <a href="/view/delete/{{ view.oid|urlencode }}/">delete</a>
-		{% endif %}
-	</div>
-	<div class="content-header">
-		View Information
-	</div>
-	<div class="content-data">
-		<div id="display_view">
-			<table class="faketable">
-				<tr>
-					<td class="bold">Name:</td>
-					<td>{{ view.attributes.name|escape }}</td>
-				</tr>
-				<tr>
-					<td class="bold">Description:</td>
-					<td>{{ view.attributes.description|escape }}</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<br/>
-	<br/>
-	<br/>
-	{% include "stweb/attributes/display.html" %}
-	{% include "stweb/configs/display.html" %}
-	{% include "stweb/permissions/display_permissions.html" %}
+    <div class="panel panel-default" style="background-color: #f0f0f0">
+        <div class="panel-body">
+            Actions:
+            {% if write_access %}
+                <a class="btn btn-default" href="/view/update/{{ target.oid }}/">Update view</a>
+                <a class="btn btn-danger" href="/view/delete/{{ target.oid }}/">Delete view</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="panel panel-default" style="background-color: #f0f0f0">
+        <div class="panel-body">
+            Manage:
+            <a class="btn btn-default" href="/device/{{ view.oid }}/">Devices</a>
+            <a class="btn btn-default" href="/networktree/{{ view.oid }}/">Networks</a>
+            <a class="btn btn-default" href="/counter/{{ view.oid }}/">Counters</a>
+            <a class="btn btn-default" href="/password/{{ view.oid }}/">Passwords</a>
+        </div>
+    </div>
+    <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#view" aria-controls="home" role="tab" data-toggle="tab">View</a></li>
+            <li role="presentation"><a href="#other" aria-controls="other" role="tab" data-toggle="tab">Other</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="view">
+                <br/>
+                {% include "stweb/views/display_view_info.html" %}
+                {% include "stweb/views/devices/categories/display_categories.html" %}
+                {% include "stweb/views/devices/display_devices_standard.html" %}
+                {% include "stweb/views/networktrees/display_network_trees.html" %}
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="other">
+                <br/>
+                {% include "stweb/attributes/display.html" %}
+                {% include "stweb/configs/display.html" %}
+                {% include "stweb/permissions/display_permissions.html" %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

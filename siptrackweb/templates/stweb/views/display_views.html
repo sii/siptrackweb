@@ -1,0 +1,37 @@
+{% if view_list %}
+<div class="content-header">
+    Views
+</div>
+<div class="content-data">
+    <div id="display_views">
+        <table class="infotable">
+            <tr>
+                <th class="infotable">Name</th>
+                <th class="infotable">Description</th>
+            </tr>
+            {% for view in view_list %}
+                {% if forloop.counter|divisibleby:"2" %}
+                    <tr class="infotableeven">
+                        {% else %}
+                    <tr class="infotableodd">
+                {% endif %}
+            <td>
+                <a href="/view/display/{{ view.oid|urlencode }}/">
+                    {% if view.attributes.name %}
+                        {{ view.attributes.name|escape }}
+                    {% else %}
+                        [UNKNOWN]
+                    {% endif %}
+                </a>
+            </td>
+            <td>
+                {{ view.attributes.description }}
+            </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+<br/>
+<br/>
+{% endif %}

@@ -13,13 +13,7 @@
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href="/device/category/add/{{ device.oid|urlencode }}/">Sub-category</a>
-                        </li>
-                        <li>
                             <a href="/attribute/add/select/{{ target.oid|urlencode }}/">Attribute</a>
-                        </li>
-                        <li>
-                            <a href="/device/add/template/select/{{ target.oid|urlencode }}/">Device</a>
                         </li>
                         <li>
                             <a href="/template/device/add/{{ target.oid|urlencode }}/">Template</a>
@@ -50,6 +44,8 @@
                 {% ifequal device.class_name "device category" %}
                     <a class="btn btn-danger" href="/device/category/delete/{{ device.oid|urlencode }}/">Delete category</a>
                 {% endifequal %}
+                <a class="btn btn-success" href="/device/category/add/{{ device.oid|urlencode }}/" data-toggle="tooltip" data-placement="bottom" title="Device categories are used to group devics into sections, for example by location.">Add category</a>
+                <a class="btn btn-success" href="/device/add/template/select/{{ target.oid|urlencode }}/" data-toggle="tooltip" data-placement="bottom" title="Devices represent any devices in your network, for example servers, switches, routers etc.">Add device</a>
             {% endif %}
             <a class="btn btn-default" href="/device/category/export/{{ device.oid|urlencode }}/">Export category</a>
             <a class="btn btn-info" href="/attribute/notes/{{ device.oid|urlencode }}/">Edit notes</a>

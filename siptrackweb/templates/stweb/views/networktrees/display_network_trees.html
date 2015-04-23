@@ -1,0 +1,29 @@
+{% if network_tree_list %}
+<div class="content-header">
+    Network Trees
+</div>
+<div class="content-data">
+    <div id="display_network_trees">
+        <table class="infotable">
+            <tr>
+                <th class="infotable">Name</th>
+                <th class="infotable">Protocol</th>
+                <th class="infotable">Description</th>
+            </tr>
+            {% for network_tree in network_tree_list %}
+                {% if forloop.counter|divisibleby:"2" %}
+                    <tr class="infotableeven">
+                        {% else %}
+                    <tr class="infotableodd">
+                {% endif %}
+            <td><a href="/network/display/{{ network_tree.oid }}/">{{ network_tree.attributes.name|default:"[UNKNOWN]" }}</a></td>
+            <td>{{ network_tree.protocol }}</td>
+            <td>{{ network_tree.attributes.description }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+<br/>
+<br/>
+{% endif %}

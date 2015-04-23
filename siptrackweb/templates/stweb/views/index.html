@@ -7,7 +7,7 @@
         <div class="panel-body">
             Actions:
             {% if write_access %}
-                <a class="btn btn-success" href="/view/add/">Add view</a>
+                <a class="btn btn-success" href="/view/add/" data-toggle="tooltip" data-placement="bottom" title="Views are used to separate distinct entities in siptrack, views have their own devices, networks etc.">Add view</a>
                 <div class="btn-group">
                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         Add <span class="caret"></span>
@@ -32,44 +32,26 @@
             {% endif %}
         </div>
     </div>
-	<div class="content-header">
-		Views
-	</div>
-	<div class="content-data">
-		<div id="display_views">
-			<table class="infotable">
-				<tr>
-					<th class="infotable">Name</th>
-					<th class="infotable">Description</th>
-				</tr>
-				{% for view in view_list %}
-				{% if forloop.counter|divisibleby:"2" %}
-				<tr class="infotableeven">
-				{% else %}
-				<tr class="infotableodd">
-				{% endif %}
-					<td>
-						<a href="/view/display/{{ view.oid|urlencode }}/">
-							{% if view.attributes.name %}
-								{{ view.attributes.name|escape }}
-							{% else %}
-								[UNKNOWN]
-							{% endif %}
-						</a>
-					</td>
-					<td>
-						{{ view.attributes.description }}
-					</td>
-				</tr>
-				{% endfor %}
-			</table>
-		</div>
-	</div>
-	<br/>
-	<br/>
-	<br/>
-	{% include "stweb/configs/display.html" %}
-	{% include "stweb/permissions/display_permissions.html" %}
-	{% include "stweb/commands/display_queues.html" %}
-	{% include "stweb/events/display_triggers.html" %}
+    <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#view" aria-controls="home" role="tab" data-toggle="tab">Views</a></li>
+            <li role="presentation"><a href="#other" aria-controls="other" role="tab" data-toggle="tab">Other</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="view">
+                <br/>
+                {% include "stweb/views/display_views.html" %}
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="other">
+                <br/>
+                {% include "stweb/configs/display.html" %}
+                {% include "stweb/permissions/display_permissions.html" %}
+                {% include "stweb/commands/display_queues.html" %}
+                {% include "stweb/events/display_triggers.html" %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

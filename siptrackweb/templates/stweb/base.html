@@ -27,6 +27,9 @@
                 <div class="collapse navbar-collapse" id="main-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         {% if current_view %}
+                            <li class="{% ifequal section "view" %}active{% endifequal %}">
+                                <a href="/view/display/{{ current_view.oid }}">View</a>
+                            </li>
                             <li class="{% ifequal section "counter" %}active{% endifequal %}">
                                 <a href="/counter/{{ current_view.oid }}">Counters</a>
                             </li>
@@ -115,6 +118,9 @@
 		<script src="{% static "siptrackweb/bootstrap-3.3.4-dist/js/bootstrap.min.js" %}" type="text/javascript"></script>
 		<script type="text/javascript">
 			$('#searchinput').focus();
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
 		</script>
 		{% block js-includes %}{% endblock %}
 	</body>
