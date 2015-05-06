@@ -39,6 +39,11 @@
                             <a href="/relocate/tagged/{{ target.oid|urlencode }}/">Move tagged here</a>
                         </li>
                         {% endif %}
+						{% if valid_tag_link_target %}
+						<li>
+							<a href="/device/association/add/{{ device.oid|urlencode }}/">Link with tagged device</a>
+						</li>
+						{% endif %}
                     </ul>
                 </div>
                 {% ifequal device.class_name "device category" %}
@@ -66,6 +71,7 @@
                 {% include "stweb/views/devices/categories/display_categories.html" %}
                 {% include "stweb/attributes/display_boxes.html" %}
                 {% include "stweb/views/devices/display_devices_standard.html" %}
+				{% include "stweb/views/devices/display_device_associations.html" %}
             </div>
             <div role="tabpanel" class="tab-pane fade" id="attributes">
                 <br/>

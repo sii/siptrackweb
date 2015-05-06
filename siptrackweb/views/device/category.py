@@ -5,6 +5,7 @@ from siptrackweb.views import helpers
 from siptrackweb.views import attribute
 from siptrackweb.views import config
 from siptrackweb.forms import *
+from siptrackweb.views.device.utils import make_device_association_list
 
 @helpers.authcheck
 def display(request, pm, device):
@@ -35,6 +36,7 @@ def display(request, pm, device):
     pm.render_var['config_list'] = config.parse_config(device)
     pm.render_var['template_list'] = device.listChildren(include = ['device template', 'network template'])
     pm.render_var['permission_list'] = device.listChildren(include = ['permission'])
+    pm.render_var['device_association_list'] = make_device_association_list(device)
     networks = device.listNetworks()
     hosts = [n for n in networks if n.isHost()]
     subnets = [n for n in networks if not n.isHost()]
@@ -45,6 +47,8 @@ def display(request, pm, device):
     if pm.tagged_oid and pm.tagged_oid.oid != device.oid and \
             pm.tagged_oid.class_name in ['device', 'device category']:
         pm.render_var['valid_tag_target'] = True
+        if pm.tagged_oid.class_name == 'device':
+            pm.render_var['valid_tag_link_target'] = True
 
     pm.path(device)
     return pm.render()
