@@ -6,7 +6,7 @@ from siptrackweb.views import helpers
 from siptrackweb.forms import *
 
 def parse_attributes(obj):
-    attr_list = {'standard': [], 'wikitext': [], 'large': []}
+    attr_list = {'standard': [], 'important': [], 'wikitext': [], 'large': []}
     for attr in obj.attributes:
         if attr.attributes.get('wikitext'):
             value = attr.value
@@ -18,6 +18,8 @@ def parse_attributes(obj):
             attr_list['wikitext'].append(d)
         elif attr.attributes.get('large'):
             attr_list['large'].append(attr)
+        elif attr.attributes.get('important'):
+            attr_list['important'].append(attr)
         else:
             attr_list['standard'].append(attr)
     return attr_list

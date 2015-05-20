@@ -105,6 +105,7 @@
                     <div class="col-md-8">
                         {% include "stweb/views/devices/display_device.html" %}
                         {% include "stweb/attributes/display_boxes.html" %}
+						{% include "stweb/attributes/display_attributes_important.html" %}
                         {% include "stweb/views/devices/display_device_associations.html" %}
                         {% include "stweb/views/devices/display_devices_extended.html" %}
                         {% include "stweb/views/devices/display_networks.html" %}
@@ -116,6 +117,7 @@
                 {% else %}
                     {% include "stweb/views/devices/display_device.html" %}
                     {% include "stweb/attributes/display_boxes.html" %}
+					{% include "stweb/attributes/display_attributes_important.html" %}
                     {% include "stweb/views/devices/display_rack.html" %}
                     {% include "stweb/views/devices/display_device_associations.html" %}
                     {% include "stweb/views/devices/display_devices_extended.html" %}

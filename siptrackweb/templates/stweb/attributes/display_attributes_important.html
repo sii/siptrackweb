@@ -1,0 +1,31 @@
+{% if attribute_list.important %}
+<div class="content-header">
+	Attributes
+</div>
+<div class="content-data">
+	<div id="display_attributes">
+		<table class="infotable">
+			<tr>
+				<th class="infotable">Attribute</th>
+				<th class="infotable">Value</th>
+				<th class="infotable">Action</th>
+			</tr>
+			{% for attr in attribute_list.important %}
+				{% if not attr.attributes.wikitext and not attr.attributes.large %}
+					{% if forloop.counter|divisibleby:"2" %}
+					<tr class="infotableeven">
+					{% else %}
+					<tr class="infotableodd">
+					{% endif %}
+					<td><a href="/attribute/display/{{ attr.oid }}/">{{ attr.name|escape }}</a></td>
+						<td>{{ attr.value|escape }}</td>
+						<td class="center">{% if write_access %}<a href="/attribute/update/{{ attr.oid }}/">edit</a> | <a href="/attribute/delete/{{ attr.oid }}/">delete</a> | {% endif %}<a href="/attribute/display/{{ attr.oid }}/">display</a></td>
+					</tr>
+				{% endif %}
+			{% endfor %}
+		</table>
+	</div>
+</div>
+<br/>
+<br/>
+{% endif %}
