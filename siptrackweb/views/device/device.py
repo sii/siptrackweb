@@ -38,6 +38,9 @@ class RackUnit(object):
         self.unit_str = '%02d' % (self.unit)
         self.all_units = [self.unit_str]
 
+    def __str__(self):
+        return '<RackUnit %d>' % self.unit
+
     def __cmp__(self, other):
         return cmp(self.unit, other.unit)
 
@@ -77,11 +80,15 @@ class DeviceRack(object):
                     prev.mergeUnit(unit)
                     prev_merge = prev
                 remove.append(unit)
+            else:
+                prev_merge = None
             prev = unit
             if self.highlight_device and unit.linked_device == self.highlight_device:
                 unit.selected = True
         for unit in remove:
             units.remove(unit)
+        for unit in units:
+            print 'U2', unit, unit.all_units
         return units
 
 def make_device_rack(device):
@@ -146,6 +153,7 @@ def display_device(request, pm, device):
     subnets = [n for n in networks if not n.isHost()]
     pm.render_var['network_host_list'] = hosts
     pm.render_var['network_subnet_list'] = subnets
+    pm.render_var['interface_network_host_list'] = device.listInterfaceNetworks()
     assoc_list = make_device_association_list(device)
     pm.render_var['device_association_list'] = assoc_list
     pm.render_var['device_rack'] = make_device_rack(device)

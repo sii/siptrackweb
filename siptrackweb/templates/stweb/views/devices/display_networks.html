@@ -1,47 +1,86 @@
-{% if network_host_list or network_subnet_list %}
+{% if network_host_list or network_subnet_list or interface_network_host_list %}
 <div class="content-header">
 	IP-addresses
 </div>
 <div class="content-data">
 	<div id="display_networks">
-		{% if network_host_list %}
+		{% if network_host_list or interface_network_host_list%}
 		<table class="infotable">
 			<tr>
 				<th class="infotable">IP-address</th>
-				<th class="infotable">Primary Address</th>
+                <th class="infotable">Primary Address</th>
+				<th class="infotable">Interface</th>
 				<th class="infotable">Description</th>
 				<th class="infotable">Action</th>
 			</tr>
-			{% for network in network_host_list %}
-				{% if forloop.counter|divisibleby:"2" %}
-				<tr class="infotableeven{% ifequal assigned_network network.oid%} infotablehighlight {% endifequal %}">
-				{% else %}
-				<tr class="infotableodd{% ifequal assigned_network network.oid %} infotablehighlight {% endifequal %}">
-				{% endif %}
-					<td>
-						{% ifequal network.class_id network.parent.class_id %}
-						<a href="/display/{{ network.oid|urlencode }}/">{{ network.strAddress|escape }}/{{network.parent.strNetmaskCIDR}}</a>
-						{% else %}
-						<a href="/display/{{ network.oid|urlencode }}/">{{ network.strAddress|escape }}</a>
-						{% endifequal %}
-					</td>
-					<td>
-						{% if network.attributes.secondary %}
-						False
-						{% else %}
-						True
-						{% endif %}
-					</td>
-					<td>
-						{{ network.attributes.description|escape }}
-					</td>
-					<td class="center">
-						{% if write_access %}
-						<a href="/device/network/delete/{{ device.oid|urlencode }}/{{ network.oid|urlencode}}/">delete</a>
-						{% endif %}
-					</td>
-				</tr>
-			{% endfor %}
+            {% for network in network_host_list %}
+                {% if forloop.counter|divisibleby:"2" %}
+                    <tr class="infotableeven{% ifequal assigned_network network.oid%} infotablehighlight {% endifequal %}">
+                        {% else %}
+                    <tr class="infotableodd{% ifequal assigned_network network.oid %} infotablehighlight {% endifequal %}">
+                {% endif %}
+            <td>
+                {% ifequal network.class_id network.parent.class_id %}
+                    <a href="/display/{{ network.oid|urlencode }}/">{{ network.strAddress|escape }}/{{network.parent.strNetmaskCIDR}}</a>
+                {% else %}
+                    <a href="/display/{{ network.oid|urlencode }}/">{{ network.strAddress|escape }}</a>
+                {% endifequal %}
+            </td>
+            <td>
+                {% if network.attributes.secondary %}
+                    False
+                {% else %}
+                    True
+                {% endif %}
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                {{ network.attributes.description|escape }}
+            </td>
+            <td class="center">
+                {% if write_access %}
+                    <a href="/device/network/delete/{{ device.oid|urlencode }}/{{ network.oid|urlencode}}/">delete</a>
+                {% endif %}
+            </td>
+            </tr>
+            {% endfor %}
+            {% for interface, networks in interface_network_host_list %}
+                {% for network in networks %}
+                    {% if forloop.counter|divisibleby:"2" %}
+                        <tr class="infotableeven{% ifequal assigned_network network.oid%} infotablehighlight {% endifequal %}">
+                            {% else %}
+                        <tr class="infotableodd{% ifequal assigned_network network.oid %} infotablehighlight {% endifequal %}">
+                    {% endif %}
+                    <td>
+                        {% ifequal network.class_id network.parent.class_id %}
+                            <a href="/display/{{ network.oid|urlencode }}/">{{ network.strAddress|escape }}/{{network.parent.strNetmaskCIDR}}</a>
+                        {% else %}
+                            <a href="/display/{{ network.oid|urlencode }}/">{{ network.strAddress|escape }}</a>
+                        {% endifequal %}
+                    </td>
+                    <td>
+                        {% if network.attributes.secondary %}
+                            False
+                        {% else %}
+                            True
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="/display/{{ interface.oid|urlencode }}/">{{ interface.attributes.name }}</a>
+                    </td>
+                    <td>
+                        {{ network.attributes.description|escape }}
+                    </td>
+                    <td class="center">
+                        {% if write_access %}
+                            <a href="/device/network/delete/{{ interface.oid|urlencode }}/{{ network.oid|urlencode}}/">delete</a>
+                        {% endif %}
+                    </td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
 		</table>
 		{% endif %}
 		{% if network_subnet_list %}

@@ -78,7 +78,7 @@ def delete_post(request, device_oid, network_oid):
     pm.path(device)
     network = pm.object_store.getOID(network_oid)
 
-    device.disassociate(network)
+    device.unlink(network)
     network.prune()
 
     return pm.redirect('device.display', (device.oid,))
