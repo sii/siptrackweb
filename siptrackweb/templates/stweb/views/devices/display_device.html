@@ -39,6 +39,12 @@
 				<td>{{ default_gateway }}</td>
 			</tr>
 			{% endif %}
+            {% for attr in attribute_list.important %}
+                <tr>
+                    <td class="bold">{{ attr.name }}:</td>
+                    <td>{{ attr.value }}</td>
+                </tr>
+            {% endfor %}
 		</table>
 	</div>
 </div>
