@@ -286,6 +286,8 @@ def rule_add_post(request, rule_type, parent_oid):
             rule.attributes['large'] = True
         if pm.form.cleaned_data['hidden'] is True:
             rule.attributes['hidden'] = True
+        if pm.form.cleaned_data['important'] is True:
+            rule.attributes['important'] = True
     elif rule_type == 'fixed':
         pm.addForm(TemplateRuleFixedAddForm(request.POST),
                 post_url,
@@ -297,6 +299,8 @@ def rule_add_post(request, rule_type, parent_oid):
                 pm.form.cleaned_data['string_value'],
                 pm.form.cleaned_data['variable_expansion'],
                 pm.form.cleaned_data['versions'])
+        if pm.form.cleaned_data['important'] is True:
+            rule.attributes['important'] = True
     elif rule_type == 'regmatch':
         pm.addForm(TemplateRuleRegmatchAddForm(request.POST),
                 post_url,
@@ -307,6 +311,8 @@ def rule_add_post(request, rule_type, parent_oid):
                 pm.form.cleaned_data['attr_name'],
                 pm.form.cleaned_data['regexp'],
                 pm.form.cleaned_data['versions'])
+        if pm.form.cleaned_data['important'] is True:
+            rule.attributes['important'] = True
     elif rule_type == 'bool':
         pm.addForm(TemplateRuleBoolAddForm(request.POST),
                 post_url,
@@ -319,6 +325,8 @@ def rule_add_post(request, rule_type, parent_oid):
         rule = parent.add('template rule bool',
                 pm.form.cleaned_data['attr_name'], default,
                 pm.form.cleaned_data['versions'])
+        if pm.form.cleaned_data['important'] is True:
+            rule.attributes['important'] = True
     elif rule_type == 'int':
         pm.addForm(TemplateRuleIntAddForm(request.POST),
                 post_url,
@@ -329,6 +337,8 @@ def rule_add_post(request, rule_type, parent_oid):
         rule = parent.add('template rule int',
                 pm.form.cleaned_data['attr_name'], default,
                 pm.form.cleaned_data['versions'])
+        if pm.form.cleaned_data['important'] is True:
+            rule.attributes['important'] = True
     elif rule_type == 'delattr':
         pm.addForm(TemplateRuleDeleteAttributeAddForm(request.POST),
                 post_url,

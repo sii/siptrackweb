@@ -122,7 +122,9 @@ def add_post(request, target_oid):
     if form.cleaned_data.get('large', False):
          attr.attributes['large'] = True
     if form.cleaned_data.get('hidden', False):
-         attr.attributes['hidden'] = True
+        attr.attributes['hidden'] = True
+    if form.cleaned_data.get('important', False):
+         attr.attributes['important'] = True
 
     return pm.redirect('display.display', (target_oid,))
 

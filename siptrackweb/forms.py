@@ -226,9 +226,13 @@ class TemplateRuleTextAddForm(forms.Form):
     attr_name = forms.CharField(max_length = 50, label = 'Attribute name',
             help_text = 'Name of attribute to create.')
     hidden = forms.BooleanField(label = 'Hide attribute',
+                                required = False,
+                                initial = False,
+                                help_text = 'If true, the attribute will hidden per default if it is large/wikitext.')
+    important = forms.BooleanField(label = 'Important attribute',
             required = False,
             initial = False,
-            help_text = 'If true, the attribute will hidden per default if it is large/wikitext.')
+            help_text = 'If true, the attribute will be displayed on the device/entity overview page.')
     large = forms.BooleanField(label = 'Large attribute',
             required = False,
             initial = False,
@@ -251,6 +255,10 @@ class TemplateRuleFixedAddForm(forms.Form):
     variable_expansion = forms.BooleanField(label = 'Expand variables',
             required = False,
             initial = False)
+    important = forms.BooleanField(label = 'Important attribute',
+                                   required = False,
+                                   initial = False,
+                                   help_text = 'If true, the attribute will be displayed on the device/entity overview page.')
     description = forms.CharField(max_length = 80, label = 'Description',
             help_text = 'Description of this rule.', required = False)
     versions = forms.IntegerField(label = 'Versions',
@@ -267,6 +275,10 @@ class TemplateRuleRegmatchAddForm(forms.Form):
     versions = forms.IntegerField(label = 'Versions',
             min_value = 1, initial = 1,
             help_text = 'Number of stored versions of the attribute.')
+    important = forms.BooleanField(label = 'Important attribute',
+                                   required = False,
+                                   initial = False,
+                                   help_text = 'If true, the attribute will be displayed on the device/entity overview page.')
 
 class TemplateRuleBoolAddForm(forms.Form):
     attr_name = forms.CharField(max_length = 50, label = 'Attribute name',
@@ -279,6 +291,10 @@ class TemplateRuleBoolAddForm(forms.Form):
     versions = forms.IntegerField(label = 'Versions',
             min_value = 1, initial = 1,
             help_text = 'Number of stored versions of the attribute.')
+    important = forms.BooleanField(label = 'Important attribute',
+                                   required = False,
+                                   initial = False,
+                                   help_text = 'If true, the attribute will be displayed on the device/entity overview page.')
 
 class TemplateRuleIntAddForm(forms.Form):
     attr_name = forms.CharField(max_length = 50, label = 'Attribute name',
@@ -291,6 +307,10 @@ class TemplateRuleIntAddForm(forms.Form):
     versions = forms.IntegerField(label = 'Versions',
             min_value = 1, initial = 1,
             help_text = 'Number of stored versions of the attribute.')
+    important = forms.BooleanField(label = 'Important attribute',
+                                   required = False,
+                                   initial = False,
+                                   help_text = 'If true, the attribute will be displayed on the device/entity overview page.')
 
 class TemplateRuleDeleteAttributeAddForm(forms.Form):
     attr_name = forms.CharField(max_length = 50, label = 'Attribute name',
@@ -419,8 +439,11 @@ class AttributeAddTextForm(forms.Form):
             required = False,
             help_text = 'If true, the attribute will be displayed using textile wikitext parsing, implies "large".')
     hidden = forms.BooleanField(label = 'Hidden attribute',
+                                required = False,
+                                help_text = 'If true, the attribute will hidden per default if it is large/wikitext.')
+    important = forms.BooleanField(label = 'Important attribute',
             required = False,
-            help_text = 'If true, the attribute will hidden per default if it is large/wikitext.')
+            help_text = 'If true, the attribute will be displayed on a device/entities overview page.')
     versions = forms.IntegerField(label = 'Versions',
             min_value = 1, initial = 1,
             help_text = 'If set to > 1 a versioned attribute will be created.')
@@ -434,6 +457,9 @@ class AttributeAddBoolForm(forms.Form):
     versions = forms.IntegerField(label = 'Versions',
             min_value = 1, initial = 1,
             help_text = 'If set to > 1 a versioned attribute will be created.')
+    important = forms.BooleanField(label = 'Important attribute',
+                                   required = False,
+                                   help_text = 'If true, the attribute will be displayed on a device/entities overview page.')
 
 class AttributeAddIntForm(forms.Form):
     name = forms.CharField(max_length = 50, label = 'Name')
@@ -443,6 +469,9 @@ class AttributeAddIntForm(forms.Form):
     versions = forms.IntegerField(label = 'Versions',
             min_value = 1, initial = 1,
             help_text = 'If set to > 1 a versioned attribute will be created.')
+    important = forms.BooleanField(label = 'Important attribute',
+                                   required = False,
+                                   help_text = 'If true, the attribute will be displayed on a device/entities overview page.')
 
 class DeviceCategoryAddForm(forms.Form):
     name = forms.CharField(max_length = 50, label = 'Name')
