@@ -15,7 +15,7 @@
                     <td class="rack-unit-empty">&nbsp;</td>
                 {% elif unit.reserved %}
                     <td class="rack-unit-used rack-unit-reserved">
-                        <a href="/display/{{ unit.linked_device.oid }}/">
+                        <a href="/display/{{ unit.device.oid }}/">
                             {{ unit.device.attributes.rack_unit_reserved_reason }}
                         </a>
                     </td>
@@ -27,7 +27,7 @@
                     </td>
                 {% else %}
                     <td class="rack-unit-used{% if unit.linked_device.attributes.disabled %} rack-unit-disabled{% endif %}{% if unit.selected %} rack-unit-highlight{% endif %}">
-                        <a href="/display/{{ unit.device.oid }}/">
+                        <a href="/display/{{ unit.linked_device.oid }}/">
                             {{ unit.name }}
                         </a>
                     </td>
