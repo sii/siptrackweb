@@ -39,6 +39,18 @@
 				<td>{{ default_gateway }}</td>
 			</tr>
 			{% endif %}
+            {% if device.attributes.rack_unit_occupied %}
+                <tr>
+                    <td class="bold">Unit marked as occupied:</td>
+                    <td>{{ device.attributes.rack_unit_occupied_reason }}</td>
+                </tr>
+            {% endif %}
+            {% if device.attributes.rack_unit_reserved %}
+                <tr>
+                    <td class="bold">Unit marked as reserved:</td>
+                    <td>{{ device.attributes.rack_unit_reserved_reason }}</td>
+                </tr>
+            {% endif %}
             {% for attr in attribute_list.important %}
                 <tr>
                     <td class="bold">{{ attr.name }}:</td>

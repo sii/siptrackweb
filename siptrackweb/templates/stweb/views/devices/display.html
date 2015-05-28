@@ -77,6 +77,33 @@
                         </li>
                     </ul>
                 </div>
+                {% if device.attributes.class == "rack unit" %}
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Rack <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            {% if device.attributes.rack_unit_occupied %}
+                                <li>
+                                    <a href="/rack/unit/unoccupied/{{ device.oid|urlencode }}/">Mark unit unoccupied</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="/rack/unit/occupied/{{ device.oid|urlencode }}/">Mark unit occupied</a>
+                                </li>
+                            {% endif %}
+                            {% if device.attributes.rack_unit_reserved %}
+                                <li>
+                                    <a href="/rack/unit/unreserved/{{ device.oid|urlencode }}/">Mark unit unreserved</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="/rack/unit/reserved/{{ device.oid|urlencode }}/">Mark unit reserved</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endif %}
                 <a class="btn btn-danger" href="/device/delete/{{ device.oid|urlencode }}/">Delete device</a>
                 {% if device.attributes.disabled %}
                     <a class="btn btn-default" href="/device/enable/{{ device.oid|urlencode }}/">Enable device</a>

@@ -3,6 +3,7 @@ import re
 from django.http import HttpResponse
 import siptracklib.errors
 import json
+import time
 
 from siptrackweb.views import helpers
 from siptrackweb.views import attribute
@@ -18,6 +19,8 @@ class RackUnit(object):
         self.device = device
         self.linked_device = None
         self.selected = False
+        self.reserved = False
+        self.occupied = False
         if device:
             try:
                 self.unit = int(device.attributes.get('name'))
@@ -31,6 +34,12 @@ class RackUnit(object):
             else:
                 self.empty = True
                 self.name = ''
+            if device.attributes.get('rack_unit_reserved'):
+                self.reserved = True
+                self.empty = False
+            if device.attributes.get('rack_unit_occupied'):
+                self.occupied = True
+                self.empty = False
         else:
             self.unit = unit
             self.empty = True
@@ -73,6 +82,9 @@ class DeviceRack(object):
         prev_merge = None
         remove = []
         for unit in units:
+            if unit.reserved or unit.occupied:
+                prev_merge = None
+                continue
             if prev and unit.linked_device == prev.linked_device:
                 if prev_merge and unit.linked_device == prev_merge.linked_device:
                     prev_merge.mergeUnit(unit)
@@ -87,8 +99,6 @@ class DeviceRack(object):
                 unit.selected = True
         for unit in remove:
             units.remove(unit)
-        for unit in units:
-            print 'U2', unit, unit.all_units
         return units
 
 def make_device_rack(device):
@@ -545,3 +555,100 @@ def export(request, oid):
     filename = filename.replace(' ', '_').replace(',', '_')
     return pm.renderDownload(data, '%s.json' % (node.attributes.get('name', node.oid)))
 
+@helpers.authcheck
+def rack_unit_occupied(request, device_oid):
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    device = pm.setVar('device', pm.object_store.getOID(device_oid))
+    url = '/rack/unit/occupied/post/%s/' % (device.oid)
+    pm.addForm(RackUnitOccupiedForm(), url,
+               'rack unit occupied')
+    pm.path(device)
+
+    return pm.render()
+
+@helpers.authcheck
+def rack_unit_occupied_post(request, device_oid):
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    device = pm.setVar('device', pm.object_store.getOID(device_oid))
+    pm.path(device)
+    url = '/rack/unit/occupied/post/%s/' % (device.oid)
+    pm.addForm(RackUnitOccupiedForm(request.POST), url,
+               'rack unit occupied')
+    if not pm.form.is_valid():
+        return pm.render()
+
+    device.attributes['rack_unit_occupied'] = True
+    device.attributes['rack_unit_occupied_reason'] = pm.form.cleaned_data['reason']
+    device.attributes['rack_unit_occupied_timestamp'] = int(time.time())
+
+    return pm.redirect('device.display', (device_oid,))
+
+@helpers.authcheck
+def rack_unit_unoccupied(request, device_oid):
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    device = pm.setVar('device', pm.object_store.getOID(device_oid))
+    url = '/rack/unit/unoccupied/%s/' % (device.oid)
+    pm.path(device)
+    if request.method == 'POST':
+        pm.addForm(ConfirmForm(request.POST), url,
+                   'rack unit unoccupied')
+        if pm.form.is_valid():
+            device.attributes.getObject('rack_unit_occupied').delete()
+            device.attributes.getObject('rack_unit_occupied_reason').delete()
+            device.attributes.getObject('rack_unit_occupied_timestamp').delete()
+            return pm.redirect('device.display', (device_oid,))
+        else:
+            raise Exception('invalid')
+    else:
+        pm.addForm(ConfirmForm(), url,
+                   'rack unit unoccupied')
+    return pm.render()
+
+@helpers.authcheck
+def rack_unit_reserved(request, device_oid):
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    device = pm.setVar('device', pm.object_store.getOID(device_oid))
+    url = '/rack/unit/reserved/post/%s/' % (device.oid)
+    pm.addForm(RackUnitReservedForm(), url,
+               'rack unit reserved')
+    pm.path(device)
+
+    return pm.render()
+
+@helpers.authcheck
+def rack_unit_reserved_post(request, device_oid):
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    device = pm.setVar('device', pm.object_store.getOID(device_oid))
+    pm.path(device)
+    url = '/rack/unit/reserved/post/%s/' % (device.oid)
+    pm.addForm(RackUnitReservedForm(request.POST), url,
+               'rack unit reserved')
+    if not pm.form.is_valid():
+        return pm.render()
+
+    device.attributes['rack_unit_reserved'] = True
+    device.attributes['rack_unit_reserved_reason'] = pm.form.cleaned_data['reason']
+    device.attributes['rack_unit_reserved_timestamp'] = int(time.time())
+
+    return pm.redirect('device.display', (device_oid,))
+
+@helpers.authcheck
+def rack_unit_unreserved(request, device_oid):
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    device = pm.setVar('device', pm.object_store.getOID(device_oid))
+    url = '/rack/unit/unreserved/%s/' % (device.oid)
+    pm.path(device)
+    if request.method == 'POST':
+        pm.addForm(ConfirmForm(request.POST), url,
+                   'rack unit unreserved')
+        if pm.form.is_valid():
+            device.attributes.getObject('rack_unit_reserved').delete()
+            device.attributes.getObject('rack_unit_reserved_reason').delete()
+            device.attributes.getObject('rack_unit_reserved_timestamp').delete()
+            return pm.redirect('device.display', (device_oid,))
+        else:
+            raise Exception('invalid')
+    else:
+        pm.addForm(ConfirmForm(), url,
+                   'rack unit unreserved')
+    return pm.render()

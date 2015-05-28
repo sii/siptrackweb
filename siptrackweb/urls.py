@@ -211,6 +211,14 @@ urlpatterns = patterns('siptrackweb.views',
     (r'^event/trigger/rule/python/delete/(?P<oid>[^/]+)/$', 'event.trigger_rule_python.delete'),
     (r'^event/trigger/rule/python/delete/post/(?P<oid>[^/]+)/$', 'event.trigger_rule_python.delete_post'),
 
+    (r'^rack/unit/reserved/(?P<device_oid>[^/]+)/$', 'device.rack_unit_reserved'),
+    (r'^rack/unit/reserved/post/(?P<device_oid>[^/]+)/$', 'device.rack_unit_reserved_post'),
+    (r'^rack/unit/unreserved/(?P<device_oid>[^/]+)/$', 'device.rack_unit_unreserved'),
+
+    (r'^rack/unit/occupied/(?P<device_oid>[^/]+)/$', 'device.rack_unit_occupied'),
+    (r'^rack/unit/occupied/post/(?P<device_oid>[^/]+)/$', 'device.rack_unit_occupied_post'),
+    (r'^rack/unit/unoccupied/(?P<device_oid>[^/]+)/$', 'device.rack_unit_unoccupied'),
+
     (r'^tag/(?P<oid>[^/]+)/$', 'root.tag_oid'),
     (r'^untag/(?P<oid>[^/]+)/$', 'root.untag_oid'),
     (r'^relocate/tagged/(?P<oid>[^/]+)/$', 'root.relocate_tagged_oid'),

@@ -10,6 +10,10 @@ class LoginForm(forms.Form):
 
 class DeleteForm(forms.Form):
     verify = forms.CharField(initial = 'true',
+                             widget = forms.HiddenInput())
+
+class ConfirmForm(forms.Form):
+    verify = forms.CharField(initial = 'true',
             widget = forms.HiddenInput())
 
 class ViewAddForm(forms.Form):
@@ -908,8 +912,19 @@ class DeviceCopyForm(forms.Form):
                                            required = False, initial = False)
    skip_networks = forms.BooleanField(label = 'Skip networks',
                                            required = False, initial = True)
+
 class AttributeEditNotesForm(forms.Form):
     notes = forms.CharField(max_length = 50000, label = '',
-                             help_text = '',
-                             required = False,
-                             widget = forms.Textarea(attrs={'cols':'100', 'rows': '15'}))
+                            help_text = '',
+                            required = False,
+                            widget = forms.Textarea(attrs={'cols':'100', 'rows': '15'}))
+
+class RackUnitOccupiedForm(forms.Form):
+    reason = forms.CharField(max_length = 500, required = False,
+                             label = 'Reason',
+                             help_text = 'Describe what is occupying this unit.')
+
+class RackUnitReservedForm(forms.Form):
+    reason = forms.CharField(max_length = 500, required = False,
+                                  label = 'Reason',
+                             help_text = 'Describe why this unit is reserved.')

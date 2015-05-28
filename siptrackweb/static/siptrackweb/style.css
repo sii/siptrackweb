@@ -548,7 +548,13 @@ div#menu-devicespec {
     background-color: #cccccc !important;
 }
 .rack-unit-disabled {
-    background-color: red;
+	background-color: red;
+}
+.rack-unit-reserved {
+	background-color: orange;
+}
+.rack-unit-occupied {
+    background-color: greenyellow;
 }
 .border-bottom {
     border-bottom: 1px solid black;
