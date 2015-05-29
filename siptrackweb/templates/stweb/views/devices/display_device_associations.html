@@ -26,7 +26,11 @@
 						{% endfor %}
 					</td>
 					<td>
-						{{ assoc.obj.attributes.class }}
+                        {% if assoc.obj.attributes.class %}
+                            {{ assoc.obj.attributes.class }}
+                        {% else %}
+                            {{ assoc.obj.class_name }}
+                        {% endif %}
 					</td>
 					<td class="center">
 						{% if write_access %}
