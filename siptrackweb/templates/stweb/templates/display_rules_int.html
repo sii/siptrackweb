@@ -8,6 +8,7 @@
 			<th class="infotable">Apply to attribute</th>
 			<th class="infotable">Default value</th>
 			<th class="infotable">Versions</th>
+            <th class="infotable">Priority</th>
 			<th class="infotable">Inherited From</th>
 			<th class="infotable">Action</th>
 		</tr>
@@ -26,6 +27,9 @@
 				<td>
 					{{ rule.versions }}
 				</td>
+                <td>
+                    {{ rule.attributes.priority }}
+                </td>
 				<td>
 					{% if rule.inherited %}
 						<a href="/template/display/{{ rule.parent.oid|urlencode }}/">{{ rule.parent.attributes.name }}</a>

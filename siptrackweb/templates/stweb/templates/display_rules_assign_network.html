@@ -5,6 +5,7 @@
 <div class="content-data">
 	<table class="infotable">
 		<tr>
+            <th class="infotable">Priority</th>
 			<th class="infotable">Inherited From</th>
 			<th class="infotable">Action</th>
 		</tr>
@@ -14,6 +15,9 @@
 			{% else %}
 			<tr class="infotableodd">
 			{% endif %}
+                <td>
+                    {{ rule.attributes.priority }}
+                </td>
 				<td>
 					{% if rule.inherited %}
 						<a href="/template/display/{{ rule.parent.oid|urlencode }}/">{{ rule.parent.attributes.name }}</a>

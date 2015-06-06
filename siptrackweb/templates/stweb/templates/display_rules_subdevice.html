@@ -7,7 +7,8 @@
 		<tr>
 			<th class="infotable">Number of devices</th>
 			<th class="infotable">Template</th>
-			<th class="infotable">Sequence offset</th>
+            <th class="infotable">Sequence offset</th>
+			<th class="infotable">Priority</th>
 			<th class="infotable">Inherited From</th>
 			<th class="infotable">Action</th>
 		</tr>
@@ -30,6 +31,9 @@
 				<td>
 					{{ rule.sequence_offset }}</a>
 				</td>
+                <td>
+                    {{ rule.attributes.priority }}
+                </td>
 				<td>
 					{% if rule.inherited %}
 						<a href="/template/display/{{ rule.parent.oid|urlencode }}/">{{ rule.parent.attributes.name }}</a>

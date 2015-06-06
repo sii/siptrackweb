@@ -247,6 +247,9 @@ class TemplateRuleTextAddForm(forms.Form):
             help_text = 'If true, the attribute will be displayed using wikitext parsing, implies "large".')
     description = forms.CharField(max_length = 80, label = 'Description',
             help_text = 'Description of this rule.', required = False)
+    priority = forms.IntegerField(label = 'Priority',
+                                  min_value = 0, initial = 10,
+                                  help_text = 'The priority of this rule when using the templates, lower value will be displayed first.')
     versions = forms.IntegerField(label = 'Versions',
             min_value = 1, initial = 1,
             help_text = 'Number of stored versions of the attribute.')
@@ -265,6 +268,9 @@ class TemplateRuleFixedAddForm(forms.Form):
                                    help_text = 'If true, the attribute will be displayed on the device/entity overview page.')
     description = forms.CharField(max_length = 80, label = 'Description',
             help_text = 'Description of this rule.', required = False)
+    priority = forms.IntegerField(label = 'Priority',
+                                  min_value = 0, initial = 10,
+                                  help_text = 'The priority of this rule when using the templates, lower value will be displayed first.')
     versions = forms.IntegerField(label = 'Versions',
             min_value = 1, initial = 1,
             help_text = 'Number of stored versions of the attribute.')
@@ -279,6 +285,9 @@ class TemplateRuleRegmatchAddForm(forms.Form):
     versions = forms.IntegerField(label = 'Versions',
             min_value = 1, initial = 1,
             help_text = 'Number of stored versions of the attribute.')
+    priority = forms.IntegerField(label = 'Priority',
+                                  min_value = 0, initial = 10,
+                                  help_text = 'The priority of this rule when using the templates, lower value will be displayed first.')
     important = forms.BooleanField(label = 'Important attribute',
                                    required = False,
                                    initial = False,
@@ -295,6 +304,9 @@ class TemplateRuleBoolAddForm(forms.Form):
     versions = forms.IntegerField(label = 'Versions',
             min_value = 1, initial = 1,
             help_text = 'Number of stored versions of the attribute.')
+    priority = forms.IntegerField(label = 'Priority',
+                                  min_value = 0, initial = 10,
+                                  help_text = 'The priority of this rule when using the templates, lower value will be displayed first.')
     important = forms.BooleanField(label = 'Important attribute',
                                    required = False,
                                    initial = False,
@@ -311,6 +323,9 @@ class TemplateRuleIntAddForm(forms.Form):
     versions = forms.IntegerField(label = 'Versions',
             min_value = 1, initial = 1,
             help_text = 'Number of stored versions of the attribute.')
+    priority = forms.IntegerField(label = 'Priority',
+                                  min_value = 0, initial = 10,
+                                  help_text = 'The priority of this rule when using the templates, lower value will be displayed first.')
     important = forms.BooleanField(label = 'Important attribute',
                                    required = False,
                                    initial = False,
@@ -321,10 +336,16 @@ class TemplateRuleDeleteAttributeAddForm(forms.Form):
             help_text = 'Name of attribute to delete.')
     description = forms.CharField(max_length = 80, label = 'Description',
             help_text = 'Description of this rule.', required = False)
+    priority = forms.IntegerField(label = 'Priority',
+                                  min_value = 0, initial = 10,
+                                  help_text = 'The priority of this rule when using the templates, lower value will be displayed first.')
 
 class TemplateRuleFlushNodesAddForm(forms.Form):
     description = forms.CharField(max_length = 80, label = 'Description',
             help_text = 'Description of this rule.', required = False)
+    priority = forms.IntegerField(label = 'Priority',
+                                  min_value = 0, initial = 10,
+                                  help_text = 'The priority of this rule when using the templates, lower value will be displayed first.')
 
     def __init__(self, node_types, *args, **kwargs):
         super(TemplateRuleFlushNodesAddForm, self).__init__(*args, **kwargs)
@@ -344,6 +365,9 @@ class TemplateRuleFlushNodesAddForm(forms.Form):
 class TemplateRuleFlushAssociationsAddForm(forms.Form):
     description = forms.CharField(max_length = 80, label = 'Description',
             help_text = 'Description of this rule.', required = False)
+    priority = forms.IntegerField(label = 'Priority',
+                                  min_value = 0, initial = 10,
+                                  help_text = 'The priority of this rule when using the templates, lower value will be displayed first.')
 
     def __init__(self, node_types, *args, **kwargs):
         super(TemplateRuleFlushAssociationsAddForm, self).__init__(*args, **kwargs)
@@ -367,6 +391,9 @@ class TemplateRulePasswordAddForm(forms.Form):
             required = False, help_text = 'Description of the added password.')
     description = forms.CharField(max_length = 80, label = 'Description',
             help_text = 'Description of this rule.', required = False)
+    priority = forms.IntegerField(label = 'Priority',
+                                  min_value = 0, initial = 10,
+                                  help_text = 'The priority of this rule when using the templates, lower value will be displayed first.')
 
     def __init__(self, password_keys, *args, **kwargs):
         super(TemplateRulePasswordAddForm, self).__init__(*args, **kwargs)
@@ -385,6 +412,9 @@ class TemplateRuleSubdeviceAddForm(forms.Form):
     sequence_offset = forms.IntegerField(label = 'Sequence offset',
             initial = 0,
             help_text = 'Base offset of sequence counter used when applying subdevice templates.')
+    priority = forms.IntegerField(label = 'Priority',
+                                  min_value = 0, initial = 10,
+                                  help_text = 'The priority of this rule when using the templates, lower value will be displayed first.')
 
     def __init__(self, templates, *args, **kwargs):
         super(TemplateRuleSubdeviceAddForm, self).__init__(*args, **kwargs)
@@ -397,6 +427,9 @@ class TemplateRuleSubdeviceAddForm(forms.Form):
 class TemplateRuleAssignNetworkAddForm(forms.Form):
     description = forms.CharField(max_length = 80, label = 'Description',
             help_text = 'Description of this rule.', required = False)
+    priority = forms.IntegerField(label = 'Priority',
+                                  min_value = 0, initial = 10,
+                                  help_text = 'The priority of this rule when using the templates, lower value will be displayed first.')
 
 class NetworkAttributeAddSelectTypeForm(forms.Form):
     ruletype = forms.ChoiceField(label = 'Rule type',
@@ -503,7 +536,9 @@ class TemplateSelectForm(forms.Form):
 class TemplateSetForm(forms.Form):
     def __init__(self, template, *args, **kwargs):
         super(TemplateSetForm, self).__init__(*args, **kwargs)
-        for rule in template.combinedRules():
+        rules = list(template.combinedRules())
+        rules.sort(cmp=lambda x,y: cmp(x.attributes.get('priority', 10), y.attributes.get('priority', 10)))
+        for rule in rules:
             field = None
             if rule.class_name == 'template rule text':
                 wikitext = rule.attributes.get('wikitext', False)

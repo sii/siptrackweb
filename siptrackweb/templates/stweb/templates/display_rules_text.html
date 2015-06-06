@@ -9,7 +9,8 @@
 			<th class="infotable">Versions</th>
 			<th class="infotable">Hidden</th>
 			<th class="infotable">Wikified</th>
-			<th class="infotable">Large</th>
+            <th class="infotable">Large</th>
+			<th class="infotable">Priority</th>
 			<th class="infotable">Inherited From</th>
 			<th class="infotable">Action</th>
 		</tr>
@@ -35,12 +36,15 @@
 						False
 					{% endif %}
 				</td>
+                <td>
+                    {% if rule.attributes.large %}
+                        True
+                    {% else %}
+                        False
+                    {% endif %}
+                </td>
 				<td>
-					{% if rule.attributes.large %}
-						True
-					{% else %}
-						False
-					{% endif %}
+                    {{ rule.attributes.priority }}
 				</td>
 				<td>
 					{% if rule.inherited %}

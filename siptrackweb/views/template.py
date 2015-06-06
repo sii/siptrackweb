@@ -378,7 +378,8 @@ def rule_add_post(request, rule_type, parent_oid):
         # anywhere.
         attr = rule.attributes.getObject('description')
         attr.attributes['exclude'] = True
-
+    if 'priority' in pm.form.cleaned_data and pm.form.cleaned_data['priority'] is not None:
+        rule.attributes['priority'] = pm.form.cleaned_data['priority']
     return pm.redirect('display.display', (parent.oid,))
 
 @helpers.authcheck
