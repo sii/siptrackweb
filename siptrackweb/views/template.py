@@ -383,6 +383,277 @@ def rule_add_post(request, rule_type, parent_oid):
     return pm.redirect('display.display', (parent.oid,))
 
 @helpers.authcheck
+def rule_update(request, oid):
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    rule = pm.object_store.getOID(oid)
+
+    post_url = '/template/rule/update/post/%s/' % (oid)
+    initial = {'description': rule.attributes.get('description', ''),
+               'priority': rule.attributes.get('priority', 10)}
+    if rule.class_name == 'template rule password':
+        view = rule.getParent('view')
+        password_keys = view.listChildren(include = ['password key'])
+        initial.update({'username': rule.username, 'passwd_description': rule.description})
+        pm.addForm(TemplateRulePasswordAddForm(password_keys, initial=initial), post_url,
+                   'update template rule', message = 'Update template rule.')
+    elif rule.class_name == 'template rule subdevice':
+        templates = [template for template in \
+                     siptracklib.template.suggest_templates(parent,
+                                                            parent.class_name) \
+                     if template.attributes.get('device_creation', False) and \
+                     not template.inheritance_only]
+        initial.update({
+                   'num_devices': rule.num_devices,
+                   'sequence_offset': rule.sequence_offset,
+                   'template': rule.device_template})
+        pm.addForm(TemplateRuleSubdeviceAddForm(templates, initial=initial), post_url,
+                   'update template rule', message = 'Update template rule.')
+    elif rule.class_name == 'template rule assign network':
+        pm.addForm(TemplateRuleAssignNetworkAddForm(initial=initial), post_url,
+                   'update template rule', message = 'Update template rule.')
+    elif rule.class_name == 'template rule text':
+        initial.update({
+            'attr_name': rule.attr_name,
+            'version': rule.versions,
+            'hidden': rule.attributes.get('hidden', False),
+            'important': rule.attributes.get('important', False),
+            'large': rule.attributes.get('large', False),
+            'wikitext': rule.attributes.get('wikitext', False),
+        })
+        pm.addForm(TemplateRuleTextAddForm(initial=initial), post_url,
+                   'update template rule', message = 'Update template rule.')
+    elif rule.class_name == 'template rule fixed':
+        initial.update({
+            'attr_name': rule.attr_name,
+            'string_value': rule.value,
+            'variable_expansion': rule.variable_expansion,
+            'important': rule.attributes.get('important', False),
+            'versions': rule.versions,
+        })
+        pm.addForm(TemplateRuleFixedAddForm(initial=initial), post_url,
+                   'update template rule', message = 'Update template rule.')
+    elif rule.class_name == 'template rule regmatch':
+        initial.update({
+            'attr_name': rule.attr_name,
+            'regexp': rule.regexp,
+            'versions': rule.versions,
+        })
+        pm.addForm(TemplateRuleRegmatchAddForm(initial=initial), post_url,
+                   'update template rule', message = 'Update template rule.')
+    elif rule.class_name == 'template rule bool':
+        initial.update({
+            'attr_name': rule.attr_name,
+            'default': rule.default_value,
+            'versions': rule.versions,
+            'important': rule.attributes.get('important', False),
+        })
+        pm.addForm(TemplateRuleBoolAddForm(initial=initial), post_url,
+                   'update template rule', message = 'Update template rule.')
+    elif rule.class_name == 'template rule int':
+        initial.update({
+            'attr_name': rule.attr_name,
+            'default': rule.default_value,
+            'versions': rule.versions,
+            'important': rule.attributes.get('important', False),
+        })
+        pm.addForm(TemplateRuleIntAddForm(initial=initial), post_url,
+                   'update template rule', message = 'Update template rule.')
+    elif rule.class_name == 'template rule delete attribute':
+        initial.update({
+            'attr_name': rule.attr_name,
+        })
+        pm.addForm(TemplateRuleDeleteAttributeAddForm(initial=initial), post_url,
+                   'update template rule', message = 'Update template rule.')
+    elif rule.class_name == 'template rule flush nodes':
+        initial.update({
+            'include': rule.include,
+            'exclude': rule.exclude,
+        })
+        inc = [c.class_name for c in pm.object_store.object_registry.iterChildrenByName('device')]
+        pm.addForm(TemplateRuleFlushNodesAddForm(inc, initial=initial), post_url,
+                   'update template rule', message = 'Update template rule.')
+    elif rule.class_name == 'template rule flush associations':
+        initial.update({
+            'include': rule.include,
+            'exclude': rule.exclude,
+        })
+        inc = pm.object_store.object_registry.iterRegisteredClassNames()
+        pm.addForm(TemplateRuleFlushAssociationsAddForm(inc, initial=initial), post_url,
+                   'update template rule', message = 'Update template rule.')
+    else:
+        raise Exception('invalid rule type')
+    pm.path(rule)
+    return pm.render()
+
+@helpers.authcheck
+def rule_update_post(request, oid):
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    rule = pm.object_store.getOID(oid)
+    parent = rule.parent
+    pm.path(rule)
+
+    post_url = '/template/rule/update/post/%s/' % (oid)
+    if rule.class_name == 'template rule password':
+        view = parent.getParent('view')
+        password_keys = view.listChildren(include = ['password key'])
+        pm.addForm(TemplateRulePasswordAddForm(password_keys, request.POST),
+                post_url,
+                'add template rule', message = 'Adding template rule.')
+        if not pm.form.is_valid():
+            return pm.error()
+        key = None
+        if pm.form.cleaned_data['passwordkey'] != '__no-password-key__':
+            key = pm.object_store.getOID(pm.form.cleaned_data['passwordkey'])
+        rule.delete()
+        rule = parent.add('template rule password',
+                pm.form.cleaned_data['username'],
+                pm.form.cleaned_data['passwd_description'],
+                key)
+    elif rule.class_name == 'template rule subdevice':
+        templates = [template for template in \
+                siptracklib.template.suggest_templates(parent, parent.class_name)
+                if template.attributes.get('device_creation', False)]
+        pm.addForm(TemplateRuleSubdeviceAddForm(templates, request.POST),
+                post_url,
+                'add template rule', message = 'Adding template rule.')
+        if not pm.form.is_valid():
+            return pm.error()
+        template = None
+        if pm.form.cleaned_data['template'] != 'none':
+            template = pm.object_store.getOID(pm.form.cleaned_data['template'])
+        rule.delete()
+        rule = parent.add('template rule subdevice',
+                pm.form.cleaned_data['num_devices'],
+                template,
+                pm.form.cleaned_data['sequence_offset'])
+    elif rule.class_name == 'template rule assign network':
+        pm.addForm(TemplateRuleAssignNetworkAddForm(request.POST),
+                post_url,
+                'add template rule', message = 'Adding template rule.')
+        if not pm.form.is_valid():
+            return pm.error()
+        rule.delete()
+        rule = parent.add('template rule assign network')
+    elif rule.class_name == 'template rule text':
+        pm.addForm(TemplateRuleTextAddForm(request.POST),
+                post_url,
+                'add template rule', message = 'Adding template rule.')
+        if not pm.form.is_valid():
+            return pm.error()
+        rule.delete()
+        rule = parent.add('template rule text',
+                pm.form.cleaned_data['attr_name'],
+                pm.form.cleaned_data['versions'])
+        if pm.form.cleaned_data['wikitext'] is True:
+            rule.attributes['wikitext'] = True
+        if pm.form.cleaned_data['large'] is True:
+            rule.attributes['large'] = True
+        if pm.form.cleaned_data['hidden'] is True:
+            rule.attributes['hidden'] = True
+        if pm.form.cleaned_data['important'] is True:
+            rule.attributes['important'] = True
+    elif rule.class_name == 'template rule fixed':
+        pm.addForm(TemplateRuleFixedAddForm(request.POST),
+                post_url,
+                'add template rule', message = 'Adding template rule.')
+        if not pm.form.is_valid():
+            return pm.error()
+        rule.delete()
+        rule = parent.add('template rule fixed',
+                pm.form.cleaned_data['attr_name'],
+                pm.form.cleaned_data['string_value'],
+                pm.form.cleaned_data['variable_expansion'],
+                pm.form.cleaned_data['versions'])
+        if pm.form.cleaned_data['important'] is True:
+            rule.attributes['important'] = True
+    elif rule.class_name == 'template rule regmatch':
+        pm.addForm(TemplateRuleRegmatchAddForm(request.POST),
+                post_url,
+                'add template rule', message = 'Adding template rule.')
+        if not pm.form.is_valid():
+            return pm.error()
+        rule.delete()
+        rule = parent.add('template rule regmatch',
+                pm.form.cleaned_data['attr_name'],
+                pm.form.cleaned_data['regexp'],
+                pm.form.cleaned_data['versions'])
+        if pm.form.cleaned_data['important'] is True:
+            rule.attributes['important'] = True
+    elif rule.class_name == 'template rule bool':
+        pm.addForm(TemplateRuleBoolAddForm(request.POST),
+                post_url,
+                'add template rule', message = 'Adding template rule.')
+        if not pm.form.is_valid():
+            return pm.error()
+        default = False
+        if pm.form.cleaned_data['default'] == 'true':
+            default = True
+        rule.delete()
+        rule = parent.add('template rule bool',
+                pm.form.cleaned_data['attr_name'], default,
+                pm.form.cleaned_data['versions'])
+        if pm.form.cleaned_data['important'] is True:
+            rule.attributes['important'] = True
+    elif rule.class_name == 'template rule int':
+        pm.addForm(TemplateRuleIntAddForm(request.POST),
+                post_url,
+                'add template rule', message = 'Adding template rule.')
+        if not pm.form.is_valid():
+            return pm.error()
+        default = pm.form.cleaned_data['default']
+        rule.delete()
+        rule = parent.add('template rule int',
+                pm.form.cleaned_data['attr_name'], default,
+                pm.form.cleaned_data['versions'])
+        if pm.form.cleaned_data['important'] is True:
+            rule.attributes['important'] = True
+    elif rule.class_name == 'template rule delete attribute':
+        pm.addForm(TemplateRuleDeleteAttributeAddForm(request.POST),
+                post_url,
+                'add template rule', message = 'Adding template rule.')
+        if not pm.form.is_valid():
+            return pm.error()
+        rule.delete()
+        rule = parent.add('template rule delete attribute',
+                pm.form.cleaned_data['attr_name'])
+    elif rule.class_name == 'template rule flush nodes':
+        inc = [c.class_name for c in pm.object_store.object_registry.iterChildrenByName('device')]
+        pm.addForm(TemplateRuleFlushNodesAddForm(inc, request.POST),
+                post_url,
+                'add template rule', message = 'Adding template rule.')
+        if not pm.form.is_valid():
+            return pm.error()
+        rule.delete()
+        rule = parent.add('template rule flush nodes',
+                pm.form.cleaned_data['include'],
+                pm.form.cleaned_data['exclude'])
+    elif rule.class_name == 'template rule flush associations':
+        inc = pm.object_store.object_registry.iterRegisteredClassNames()
+        pm.addForm(TemplateRuleFlushAssociationsAddForm(inc, request.POST),
+                post_url,
+                'add template rule', message = 'Adding template rule.')
+        if not pm.form.is_valid():
+            return pm.error()
+        rule.delete()
+        rule = parent.add('template rule flush associations',
+                pm.form.cleaned_data['include'],
+                pm.form.cleaned_data['exclude'])
+    else:
+        raise Exception('invalid rule type')
+
+    if 'description' in pm.form.cleaned_data and \
+            pm.form.cleaned_data['description'] is not None and \
+            len(pm.form.cleaned_data['description']) > 0:
+        rule.attributes['description'] = pm.form.cleaned_data['description']
+        # Rule attributes that have an exclude attribute will not be applied
+        # anywhere.
+        attr = rule.attributes.getObject('description')
+        attr.attributes['exclude'] = True
+    if 'priority' in pm.form.cleaned_data and pm.form.cleaned_data['priority'] is not None:
+        rule.attributes['priority'] = pm.form.cleaned_data['priority']
+    return pm.redirect('display.display', (parent.oid,))
+
+@helpers.authcheck
 def rule_delete(request, oid):
     pm = helpers.PageManager(request, 'stweb/generic_form.html')
 

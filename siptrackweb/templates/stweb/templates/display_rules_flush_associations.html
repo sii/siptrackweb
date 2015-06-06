@@ -35,7 +35,8 @@
 				</td>
 				<td>
 					{% if not rule.inherited %}
-						<a href="/template/rule/delete/{{ rule.oid|urlencode }}/">delete</a>
+						<a href="/template/rule/update/{{ rule.oid|urlencode }}/">update</a>
+						| <a href="/template/rule/delete/{{ rule.oid|urlencode }}/">delete</a>
 					{% endif %}
 				</td>
 			</tr>
