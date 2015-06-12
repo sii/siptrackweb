@@ -20,11 +20,7 @@
                     <tr class="infotableodd{% ifequal assigned_network network.oid %} infotablehighlight {% endifequal %}">
                 {% endif %}
             <td>
-                {% ifequal network.class_id network.parent.class_id %}
-                    <a href="/display/{{ network.oid|urlencode }}/">{{ network.strAddress|escape }}/{{network.parent.strNetmaskCIDR}}</a>
-                {% else %}
-                    <a href="/display/{{ network.oid|urlencode }}/">{{ network.strAddress|escape }}</a>
-                {% endifequal %}
+				<a href="/display/{{ network.oid|urlencode }}/">{{ network.strAddress|escape }}</a>
             </td>
             <td>
                 {% if network.attributes.secondary %}
@@ -54,11 +50,7 @@
                         <tr class="infotableodd{% ifequal assigned_network network.oid %} infotablehighlight {% endifequal %}">
                     {% endif %}
                     <td>
-                        {% ifequal network.class_id network.parent.class_id %}
-                            <a href="/display/{{ network.oid|urlencode }}/">{{ network.strAddress|escape }}/{{network.parent.strNetmaskCIDR}}</a>
-                        {% else %}
-                            <a href="/display/{{ network.oid|urlencode }}/">{{ network.strAddress|escape }}</a>
-                        {% endifequal %}
+						<a href="/display/{{ network.oid|urlencode }}/">{{ network.strAddress|escape }}</a>
                     </td>
                     <td>
                         {% if network.attributes.secondary %}
