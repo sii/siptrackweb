@@ -130,7 +130,10 @@ def submit_post(request, oid):
     if not pm.form.is_valid():
         return pm.render()
 
-    config.addConfig(pm.form.cleaned_data['data'])
+    data = pm.form.cleaned_data['data']
+    if type(data) == unicode:
+        data = data.encode('utf-8')
+    config.addConfig(data)
 
     return pm.redirect('device.config.display', (config.oid,))
 
