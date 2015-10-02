@@ -13,10 +13,14 @@
         </div>
     </div>
 	<div class="content-header">
-		Name: {{ config.name }}
+		{{ config.name }}
 	</div>
 	<div class="content-data">
 		<table>
+		<tr>
+			<td class="bold">Name: </td>
+			<td>{{ config.name }}</td>
+		</tr>
 		{% if config.attributes.description %}
 		<tr>
 			<td class="bold">Description:</td>
@@ -26,6 +30,10 @@
 		<tr>
 			<td class="bold">Stored versions: </td>
 			<td>{{ config.stats.count }}</td>
+		</tr>
+		<tr>
+			<td class="bold">Max stored versions: </td>
+			<td>{{ config.max_versions }}</td>
 		</tr>
 		<tr>
 			<td class="bold">Latest version timestamp: &nbsp;&nbsp;</td>
