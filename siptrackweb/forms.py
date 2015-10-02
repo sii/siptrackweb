@@ -978,3 +978,18 @@ class DeviceConfigSubmitForm(forms.Form):
                             required = True,
                             widget = forms.Textarea(attrs={'cols':'100', 'rows': '15'}))
 
+class DeviceConfigTemplateAddForm(forms.Form):
+    name = forms.CharField(max_length = 50, label = 'Name')
+    description = forms.CharField(max_length = 100, required = False,
+            label = 'Description')
+    data = forms.CharField(max_length = 1000000, label = '',
+                            help_text = '',
+                            required = True,
+                            widget = forms.Textarea(attrs={'cols':'100', 'rows': '15'}))
+
+class DeviceConfigTemplateSubmitForm(forms.Form):
+    data = forms.CharField(max_length = 1000000, label = '',
+                            help_text = '',
+                            required = True,
+                            widget = forms.Textarea(attrs={'cols':'100', 'rows': '15'}))
+

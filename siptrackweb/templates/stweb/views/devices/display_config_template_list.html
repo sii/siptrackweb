@@ -1,0 +1,21 @@
+{% for template in device_config_template_list %}
+<div class="content-header">
+	{{ template.attributes.name }} (<a href="/device/config/template/{{template.oid}}/">view</a>)
+</div>
+<div class="content-data">
+	<table>
+	<tr>
+		<td class="bold">Name: </td>
+		<td>{{ template.attributes.name }}</td>
+	</tr>
+	{% if template.attributes.description %}
+	<tr>
+		<td class="bold">Description: &nbsp;&nbsp;&nbsp;</td>
+		<td>{{ template.attributes.description }}</td>
+	</tr>
+	{% endif %}
+	</table>
+</div>
+<br/>
+<br/>
+{% endfor %}

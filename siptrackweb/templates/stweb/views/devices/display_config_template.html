@@ -1,0 +1,38 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - browse devices{% endblock %}
+{% block content %}
+    <div class="panel panel-default" style="background-color: #f0f0f0">
+        <div class="panel-body">
+            Actions:
+            {% if write_access %}
+                <a class="btn btn-danger" href="/device/config/template/delete/{{ template.oid|urlencode }}/">Delete template</a>
+				<a class="btn btn-success" href="/device/config/template/submit/{{ template.oid|urlencode }}/" data-toggle="tooltip" data-placement="bottom" title="Submit a new configuration template text.">Update template text</a>
+            {% endif %}
+			<a class="btn btn-success" href="/device/config/template/generate/{{ template.oid|urlencode }}/">Generate configuration</a>
+			<a class="btn btn-success" href="/device/config/template/generate/{{ template.oid|urlencode }}/">Download configuration</a>
+        </div>
+    </div>
+	<div class="content-header">
+		Template information
+	</div>
+	<div class="content-data">
+		<table>
+		<tr>
+			<td class="bold">Name: </td>
+			<td>{{ template.attributes.name }}</td>
+		</tr>
+		{% if template.attributes.description %}
+		<tr>
+			<td class="bold">Description: &nbsp;&nbsp;&nbsp;</td>
+			<td>{{ template.attributes.description }}</td>
+		</tr>
+		{% endif %}
+		</table>
+	</div>
+	{% if data %}
+	<br/>
+	Template text
+	<pre>{{ data }}</pre>
+	{% endif %}
+{% endblock %}

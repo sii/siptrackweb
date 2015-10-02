@@ -162,6 +162,7 @@ def display_device(request, pm, device):
             device_config.stats['pretty_latest_timestamp'] = time.ctime(device_config.stats['latest_timestamp'])
         else:
             device_config.stats['pretty_latest_timestamp'] = 'Nothing received'
+    pm.render_var['device_config_template_list'] = device.listChildren(include = ['device config template'])
     if 'assigned network' in request.session:
         pm.render_var['assigned_network'] = request.session['assigned network']
         del request.session['assigned network']

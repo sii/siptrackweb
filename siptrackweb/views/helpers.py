@@ -316,6 +316,9 @@ def make_browsable_path(node, end_parent = 'view tree', include_root = True):
         if node.class_name == 'device config':
             ent['path'] = '/device/config/%s/' % (node.oid)
             ent['name'] = node.name
+        if node.class_name == 'device config template':
+            ent['path'] = '/device/config/template/%s/' % (node.oid)
+            ent['name'] = node.attributes.get('name')
         if ent['path'] != None:
             ret.insert(0, ent)
         node = node.parent
