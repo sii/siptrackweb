@@ -155,6 +155,13 @@ def display_device(request, pm, device):
     pm.render_var['attribute_list'] = attribute.parse_attributes(device)
     pm.render_var['config_list'] = config.parse_config(device)
     pm.render_var['permission_list'] = device.listChildren(include = ['permission'])
+    pm.render_var['device_config_list'] = device.listChildren(include = ['device config'])
+    for device_config in pm.render_var['device_config_list']:
+        device_config.stats = device_config.getStats()
+        if device_config.stats['latest_timestamp']:
+            device_config.stats['pretty_latest_timestamp'] = time.ctime(device_config.stats['latest_timestamp'])
+        else:
+            device_config.stats['pretty_latest_timestamp'] = 'Nothing received'
     if 'assigned network' in request.session:
         pm.render_var['assigned_network'] = request.session['assigned network']
         del request.session['assigned network']

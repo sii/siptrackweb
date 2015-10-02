@@ -963,3 +963,18 @@ class RackUnitReservedForm(forms.Form):
     reason = forms.CharField(max_length = 500, required = False,
                                   label = 'Reason',
                              help_text = 'Describe why this unit is reserved.')
+
+class DeviceConfigAddForm(forms.Form):
+    name = forms.CharField(max_length = 50, label = 'Name')
+    description = forms.CharField(max_length = 100, required = False,
+            label = 'Description')
+    max_versions = forms.IntegerField(label = 'Retained versions',
+                                  min_value = 0, initial = 10,
+                                  help_text = 'The number of config versions to retain, set to 0 for unlimited.')
+
+class DeviceConfigSubmitForm(forms.Form):
+    data = forms.CharField(max_length = 1000000, label = '',
+                            help_text = '',
+                            required = True,
+                            widget = forms.Textarea(attrs={'cols':'100', 'rows': '15'}))
+

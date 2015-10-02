@@ -1,0 +1,29 @@
+{% for config in device_config_list %}
+<div class="content-header">
+	<a href="/device/config/{{config.oid}}/">Name: {{ config.name }}</a>
+</div>
+<div class="content-data">
+	<table>
+	{% if config.attributes.description %}
+	<tr>
+		<td class="bold">Description:</td>
+		<td>{{ config.attributes.description }}</td>
+	</tr>
+	{% endif %}
+	<tr>
+		<td class="bold">Stored versions: </td>
+		<td>{{ config.stats.count }}</td>
+	</tr>
+	<tr>
+		<td class="bold">Latest version timestamp: &nbsp;&nbsp;</td>
+		<td>{{ config.stats.pretty_latest_timestamp }}</td>
+	</tr>
+	<tr>
+		<td class="bold">Latest version size: </td>
+		<td>{{ config.stats.latest_size }} bytes</td>
+	</tr>
+	</table>
+</div>
+<br/>
+<br/>
+{% endfor %}

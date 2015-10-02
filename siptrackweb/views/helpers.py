@@ -313,6 +313,9 @@ def make_browsable_path(node, end_parent = 'view tree', include_root = True):
         if node.class_name == 'event trigger rule python':
             ent['path'] = '/event/trigger/rule/python/display/%s/' % (node.oid)
             ent['name'] = 'python rule'
+        if node.class_name == 'device config':
+            ent['path'] = '/device/config/%s/' % (node.oid)
+            ent['name'] = node.name
         if ent['path'] != None:
             ret.insert(0, ent)
         node = node.parent

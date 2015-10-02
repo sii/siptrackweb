@@ -1,0 +1,45 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - browse devices{% endblock %}
+{% block content %}
+    <div class="panel panel-default" style="background-color: #f0f0f0">
+        <div class="panel-body">
+            Actions:
+            {% if write_access %}
+                <a class="btn btn-danger" href="/device/config/delete/{{ config.oid|urlencode }}/">Delete config</a>
+				<a class="btn btn-success" href="/device/config/submit/{{ config.oid|urlencode }}/" data-toggle="tooltip" data-placement="bottom" title="Submit a new configuration text.">Submit config</a>
+            {% endif %}
+			<a class="btn btn-success" href="/device/config/all/{{ config.oid|urlencode }}/">View all versions</a>
+        </div>
+    </div>
+	<div class="content-header">
+		Name: {{ config.name }}
+	</div>
+	<div class="content-data">
+		<table>
+		{% if config.attributes.description %}
+		<tr>
+			<td class="bold">Description:</td>
+			<td>{{ config.attributes.description }}</td>
+		</tr>
+		{% endif %}
+		<tr>
+			<td class="bold">Stored versions: </td>
+			<td>{{ config.stats.count }}</td>
+		</tr>
+		<tr>
+			<td class="bold">Latest version timestamp: &nbsp;&nbsp;</td>
+			<td>{{ config.stats.pretty_latest_timestamp }}</td>
+		</tr>
+		<tr>
+			<td class="bold">Latest version size: </td>
+			<td>{{ config.stats.latest_size }} bytes</td>
+		</tr>
+		</table>
+	</div>
+	{% for version in versions %}
+		<br/>
+		{{ version.pretty_timestamp }} (<a href="/device/config/download/{{config.oid|urlencode}}/{{version.timestamp}}/">download</a>):
+		<pre>{{ version.data }}</pre>
+	{% endfor %}
+{% endblock %}

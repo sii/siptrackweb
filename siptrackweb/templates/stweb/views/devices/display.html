@@ -26,6 +26,9 @@
                         <li>
                             <a href="/permission/add/{{ target.oid|urlencode }}/">Permission</a>
                         </li>
+                        <li>
+                            <a href="/device/config/add/{{ target.oid|urlencode }}/">Device config storage</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="btn-group">
@@ -120,6 +123,9 @@
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#device" aria-controls="home" role="tab" data-toggle="tab">Device</a></li>
             <li role="presentation"><a href="#attributes" aria-controls="attributes" role="tab" data-toggle="tab">Attributes</a></li>
+			{% if device_config_list %}
+	            <li role="presentation"><a href="#device_config" aria-controls="device_config" role="tab" data-toggle="tab">Stored configuration</a></li>
+			{% endif %}
             <li role="presentation"><a href="#other" aria-controls="other" role="tab" data-toggle="tab">Other</a></li>
         </ul>
 
@@ -156,6 +162,12 @@
                 {% include "stweb/attributes/display_attributes.html" %}
                 {% include "stweb/attributes/display_boxes.html" %}
             </div>
+			{% if device_config_list %}
+				<div role="tabpanel" class="tab-pane fade" id="device_config">
+					<br/>
+					{% include "stweb/views/devices/display_config_list.html" %}
+				</div>
+			{% endif %}
             <div role="tabpanel" class="tab-pane fade" id="other">
                 <br/>
                 {% include "stweb/configs/display.html" %}
