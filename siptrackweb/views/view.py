@@ -18,6 +18,7 @@ def index(request, *args, **kwargs):
     pm.render_var['permission_list'] = pm.view_tree.listChildren(include = ['permission'])
     pm.render_var['command_queue_list'] = pm.view_tree.listChildren(include = ['command queue'])
     pm.render_var['event_trigger_list'] = pm.view_tree.listChildren(include = ['event trigger'])
+    pm.render_var['view_list'] = pm.view_tree.listChildren(include = ['view'])
     pm.path(pm.view_tree)
     pm.section('view')
     return pm.render()
