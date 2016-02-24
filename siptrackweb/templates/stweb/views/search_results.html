@@ -10,17 +10,13 @@
 				Device Matches
 			</div>
 			<div class="content-data">
-				<table class="infotable">
+				<table class="table-hover table-striped infotable">
 					<tr>
 						<th class="infotable">Name</th>
 						<th class="infotable">Description</th>
 					</tr>
 					{% for device in searchresults.devices %}
-					{% if forloop.counter|divisibleby:"2" %}
-					<tr class="infotableeven">
-					{% else %}
-					<tr class="infotableodd">
-					{% endif %}
+					<tr>
 						<td>
 							<a href="/device/display/{{ device.oid }}/">{{ device.attributes.name }}</a>
 						</td>
@@ -40,7 +36,7 @@
         Password matches
       </div>
       <div class="content-data">
-        <table class="infotable">
+        <table class="table-hover table-striped infotable">
           <tr>
             <th class="infotable">Username</th>
             <th class="infotable">Password</th>
@@ -49,11 +45,7 @@
             <th class="infotable">Action</th>
           </tr>
           {% for password in searchresults.passwords %}
-          {% if forloop.counter|divisibleby:"2" %}
-          <tr class="infotableeven">
-          {% else %}
-          <tr class="infotableodd">
-          {% endif %}
+          <tr>
             <td>
               {{password.attributes.username}}
             </td>
@@ -86,17 +78,13 @@
         Password category matches
       </div>
       <div class="content-data">
-        <table class="infotable">
+        <table class="table-hover table-striped infotable">
           <tr>
             <th class="infotable">Name</th>
             <th class="infotable">Description</th>
           </tr>
           {% for category in searchresults.password_categories %}
-          {% if forloop.counter|divisibleby:"2" %}
-          <tr class="infotableeven">
-          {% else %}
-          <tr class="infotableodd">
-          {% endif %}
+          <tr>
             <td>
               <a href="/display/{{category.oid}}/">{{category.attributes.name}}</a>
             </td>
@@ -116,17 +104,13 @@
 				Device Category Matches
 			</div>
 			<div class="content-data">
-				<table class="infotable">
+				<table class="table-hover table-striped infotable">
 					<tr>
 						<th class="infotable">Name</th>
 						<th class="infotable">Description</th>
 					</tr>
 					{% for device_category in searchresults.device_categories %}
-					{% if forloop.counter|divisibleby:"2" %}
-					<tr class="infotableeven">
-					{% else %}
-					<tr class="infotableodd">
-					{% endif %}
+					<tr>
 						<td>
 							<a href="/device/display/{{ device_category.oid }}/">{{ device_category.attributes.name }}</a>
 						</td>
@@ -146,17 +130,13 @@
 				Network Matches
 			</div>
 			<div class="content-data">
-				<table class="infotable">
+				<table class="table-hover table-striped infotable">
 					<tr>
 						<th class="infotable">Name</th>
 						<th class="infotable">Description</th>
 					</tr>
 					{% for network in searchresults.networks %}
-					{% if forloop.counter|divisibleby:"2" %}
-					<tr class="infotableeven">
-					{% else %}
-					<tr class="infotableodd">
-					{% endif %}
+					<tr>
 						<td>
 							<a href="/network/display/{{ network.oid }}/">{{ network }}</a>
 						</td>
