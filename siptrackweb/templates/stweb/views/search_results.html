@@ -4,22 +4,19 @@
 
 {% block content %}
 	{% if searchresults.resultcount %}
+
 		{% if searchresults.devices %}
 			<div class="content-header">
 				Device Matches
 			</div>
 			<div class="content-data">
-				<table class="infotable">
+				<table class="table-hover table-striped infotable">
 					<tr>
 						<th class="infotable">Name</th>
 						<th class="infotable">Description</th>
 					</tr>
 					{% for device in searchresults.devices %}
-					{% if forloop.counter|divisibleby:"2" %}
-					<tr class="infotableeven">
-					{% else %}
-					<tr class="infotableodd">
-					{% endif %}
+					<tr>
 						<td>
 							<a href="/device/display/{{ device.oid }}/">{{ device.attributes.name }}</a>
 						</td>
@@ -33,22 +30,19 @@
 			<br/>
 			<br/>
 		{% endif %}
+
 		{% if searchresults.device_categories %}
 			<div class="content-header">
 				Device Category Matches
 			</div>
 			<div class="content-data">
-				<table class="infotable">
+				<table class="table-hover table-striped infotable">
 					<tr>
 						<th class="infotable">Name</th>
 						<th class="infotable">Description</th>
 					</tr>
 					{% for device_category in searchresults.device_categories %}
-					{% if forloop.counter|divisibleby:"2" %}
-					<tr class="infotableeven">
-					{% else %}
-					<tr class="infotableodd">
-					{% endif %}
+					<tr>
 						<td>
 							<a href="/device/display/{{ device_category.oid }}/">{{ device_category.attributes.name }}</a>
 						</td>
@@ -62,22 +56,87 @@
 			<br/>
 			<br/>
 		{% endif %}
+
+    {% if searchresults.passwords %}
+      <div class="content-header">
+        Password matches
+      </div>
+      <div class="content-data">
+        <table class="table-hover table-striped infotable">
+          <tr>
+            <th class="infotable">Username</th>
+            <th class="infotable">Password</th>
+            <th class="infotable">Description</th>
+            <th class="infotable">Key</th>
+            <th class="infotable">Action</th>
+          </tr>
+          {% for password in searchresults.passwords %}
+          <tr>
+            <td>
+              {{password.attributes.username}}
+            </td>
+            <td class="hiddenpassword">{{password.password}}</td>
+            <td>
+              {{password.attributes.description}}
+            </td>
+            <td class="center">
+              {% if password.key %}
+              <a href="/password/key/display/{{password.key.oid|urlencode}}/">{{password.key.attributes.name}}</a>
+              {% endif %}
+            </td>
+            <td class="center">
+              {% if write_access %}
+              <a href="/password/update/{{password.oid|urlencode}}/">update</a> | 
+              <a href="/password/delete/{{password.oid|urlencode}}/">delete</a> | 
+              {% endif %}
+              <a href="/display/{{password.parent.oid}}/">display</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+			<br/>
+			<br/>
+    {% endif %}
+
+    {% if searchresults.password_categories %}
+      <div class="content-header">
+        Password category matches
+      </div>
+      <div class="content-data">
+        <table class="table-hover table-striped infotable">
+          <tr>
+            <th class="infotable">Name</th>
+            <th class="infotable">Description</th>
+          </tr>
+          {% for category in searchresults.password_categories %}
+          <tr>
+            <td>
+              <a href="/display/{{category.oid}}/">{{category.attributes.name}}</a>
+            </td>
+            <td>
+              {{category.attributes.description}}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+			<br/>
+			<br/>
+    {% endif %}
+
 		{% if searchresults.networks %}
 			<div class="content-header">
 				Network Matches
 			</div>
 			<div class="content-data">
-				<table class="infotable">
+				<table class="table-hover table-striped infotable">
 					<tr>
 						<th class="infotable">Name</th>
 						<th class="infotable">Description</th>
 					</tr>
 					{% for network in searchresults.networks %}
-					{% if forloop.counter|divisibleby:"2" %}
-					<tr class="infotableeven">
-					{% else %}
-					<tr class="infotableodd">
-					{% endif %}
+					<tr>
 						<td>
 							<a href="/network/display/{{ network.oid }}/">{{ network }}</a>
 						</td>

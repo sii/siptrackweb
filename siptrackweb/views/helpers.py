@@ -3,7 +3,7 @@ import subprocess
 import json
 import re
 
-from django.shortcuts import render_to_response                                 
+from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.http import (HttpResponse, HttpResponseRedirect)
 from django.conf import settings
@@ -203,12 +203,32 @@ class PageManager(object):
 
 
 def search(object_store, pattern):
-    searchresults = {'devices': [], 'networks': [], 'device_categories': [],
-            'resultcount': 0, 'singleresult': None}
-    include = ['device', 'device category', 'ipv4 network', 'ipv6 network']
+    searchresults = {
+        'devices': [],
+        'networks': [],
+        'device_categories': [],
+        'passwords': [],
+        'password_categories': [],
+        'resultcount': 0,
+        'singleresult': None
+    }
+    include = [
+        'device',
+        'device category',
+        'ipv4 network',
+        'ipv6 network',
+        'password category',
+        'password']
 #    for result in object_store.view_tree.search(pattern, include = include):
     attr_limit = []
-    for result in object_store.quicksearch(pattern, attr_limit = attr_limit, include = include, max_results=100):
+    for result in object_store.quicksearch(pattern, attr_limit = attr_limit,
+                                           include = include, max_results=100,
+                                           default_fields=['name', 'username',
+                                                           'description']):
+        if result.class_name == 'password category':
+            searchresults['password_categories'].append(result)
+        if result.class_name == 'password':
+            searchresults['passwords'].append(result)
         if result.class_name == 'device':
             searchresults['devices'].append(result)
         if result.class_name == 'device category':
