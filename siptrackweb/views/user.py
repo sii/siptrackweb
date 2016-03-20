@@ -183,7 +183,15 @@ def display(request, oid):
 
     user = pm.setVar('user', pm.object_store.getOID(oid))
     pm.render_var['attribute_list'] = attribute.parse_attributes(user)
-    pm.render_var['subkey_list'] = user.listChildren(include = ['sub key'])
+    subkey_list = []
+    for subkey in user.listChildren(include=['sub key']):
+        try:
+            pw_key = subkey.password_key
+        except siptracklib.errors.NonExistent as e:
+            subkey_list.append({'oid': subkey.oid, 'exists': False})
+            continue
+        subkey_list.append(subkey)
+    pm.render_var['subkey_list'] = subkey_list
     pm.path(user)
     return pm.render()
 
