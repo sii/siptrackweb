@@ -386,6 +386,7 @@ def rule_add_post(request, rule_type, parent_oid):
 def rule_update(request, oid):
     pm = helpers.PageManager(request, 'stweb/generic_form.html')
     rule = pm.object_store.getOID(oid)
+    parent = pm.object_store.getOID(rule.parent.oid)
 
     post_url = '/template/rule/update/post/%s/' % (oid)
     initial = {'description': rule.attributes.get('description', ''),
