@@ -9,22 +9,26 @@
 <div class="content-data">
 	<div id="display_subkeys">
 		{% if subkey_list %}
-		<table class="infotable">
-			<tr>
-				<th class="infotable">Name</th>
-				<th class="infotable">Description</th>
-				<th class="infotable">Action</th>
-			</tr>
+		<table class="table-hover table-striped infotable">
+      <thead>
+        <tr>
+          <th class="infotable">Name</th>
+          <th class="infotable">Description</th>
+          <th class="infotable">Action</th>
+        </tr>
+      </thead>
 			{% for subkey in subkey_list %}
-				{% if forloop.counter|divisibleby:"2" %}
-				<tr class="infotableeven">
-				{% else %}
-				<tr class="infotableodd">
-				{% endif %}
-					<td>{{ subkey.password_key.attributes.name|escape }}</td>
-					<td>{{ subkey.password_key.attributes.description|escape }}</td>
-					<td class="center">{% if write_access %}<a href="/user/subkey/delete/{{ subkey.oid }}/">disconnect</a>{% endif %}</td>
-				</tr>
+      <tr>
+        {% if subkey.exists %}
+          <!-- Jinja2 will never display this. -->
+          <td>Password key deleted</td>
+          <td>Password key deleted</td>
+        {% else %}
+          <td>{{ subkey.password_key.attributes.name|escape }}</td>
+          <td>{{ subkey.password_key.attributes.description|escape }}</td>
+        {% endif %}
+        <td class="center">{% if write_access %}<a href="/user/subkey/delete/{{ subkey.oid }}/">disconnect</a>{% endif %}</td>
+      </tr>
 			{% endfor %}
 		</table>
 		{% endif %}
