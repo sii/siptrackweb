@@ -63,7 +63,7 @@ def search(request):
         if not pm.form.is_valid():
             return pm.render()
         searchstring = pm.form.cleaned_data['searchstring']
-    searchstring = searchstring.strip()
+    searchstring = searchstring.strip().lower()
     searchresults = helpers.search(pm.object_store, searchstring)
 
     # Go directly to the result for a single match.
