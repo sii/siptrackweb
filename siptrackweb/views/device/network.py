@@ -37,6 +37,8 @@ def add_post(request, oid):
 
     if network.isHost() and len(device.listNetworks()) > 0:
         network.attributes['secondary'] = True
+    if pm.form.cleaned_data['description']:
+        network.attributes['description'] = pm.form.cleaned_data['description']
     device.associate(network)
 
     return pm.redirect('device.display', (device.oid,))

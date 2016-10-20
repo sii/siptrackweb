@@ -26,9 +26,26 @@
                         </li>
                     </ul>
                 </div>
+                <a class="btn btn-success" href="/device/category/add/{{ device.oid|urlencode }}/" data-toggle="tooltip" data-placement="bottom" title="Device categories are used to group devics into sections, for example by location.">Add category</a>
+                <a class="btn btn-success" href="/device/add/template/select/{{ target.oid|urlencode }}/" data-toggle="tooltip" data-placement="bottom" title="Devices represent any devices in your network, for example servers, switches, routers etc.">Add device</a>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Edit <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        {% if target.class_name == "device category" %}
+                        <li>
+                            <a href="/attribute/quickedit/name/{{ device.oid|urlencode }}/">Name</a>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <a href="/attribute/notes/{{ device.oid|urlencode }}/">Notes</a>
+                        </li>
+                    </ul>
+                </div>
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        Tags <span class="caret"></span>
+                        Tag <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li>
@@ -49,23 +66,8 @@
                 {% ifequal device.class_name "device category" %}
                     <a class="btn btn-danger" href="/device/category/delete/{{ device.oid|urlencode }}/">Delete category</a>
                 {% endifequal %}
-                <a class="btn btn-success" href="/device/category/add/{{ device.oid|urlencode }}/" data-toggle="tooltip" data-placement="bottom" title="Device categories are used to group devics into sections, for example by location.">Add category</a>
-                <a class="btn btn-success" href="/device/add/template/select/{{ target.oid|urlencode }}/" data-toggle="tooltip" data-placement="bottom" title="Devices represent any devices in your network, for example servers, switches, routers etc.">Add device</a>
             {% endif %}
             <a class="btn btn-default" href="/device/category/export/{{ device.oid|urlencode }}/">Export category</a>
-            <div class="btn-group">
-                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    Edit <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li>
-                        <a href="/attribute/quickedit/name/{{ device.oid|urlencode }}/">Name</a>
-                    </li>
-                    <li>
-                        <a href="/attribute/notes/{{ device.oid|urlencode }}/">Notes</a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </div>
     <div role="tabpanel">

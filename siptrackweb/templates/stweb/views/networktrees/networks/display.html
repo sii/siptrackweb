@@ -31,10 +31,23 @@
                         </li>
                     </ul>
                 </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Edit <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="/attribute/quickedit/name/{{ network.oid|urlencode }}/">Description</a>
+                        </li>
+                        <li>
+                            <a href="/attribute/notes/{{ network.oid|urlencode }}/">Notes</a>
+                        </li>
+                    </ul>
+                </div>
                 {% if network.class_name != "network tree" or valid_tag_target %}
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        Tags <span class="caret"></span>
+                        Tag <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         {% if network.class_name != "network tree" %}
@@ -53,17 +66,16 @@
                 </div>
                 {% endif %}
                 {% ifequal network.class_name "network tree" %}
-                    <a class="btn btn-danger" href="/networktree/delete/{{ network_tree.oid|urlencode }}/">Delete network tree</a>
+                    <a class="btn btn-danger" href="/networktree/delete/{{ network_tree.oid|urlencode }}/">Delete</a>
                 {% else %}
-                <a class="btn btn-danger" href="/network/delete/{{ network.oid|urlencode }}/">Delete network</a>
+                <a class="btn btn-danger" href="/network/delete/{{ network.oid|urlencode }}/">Delete</a>
                 {% endifequal %}
                 {% if network.class_name != "network tree" %}
-                    <a class="btn btn-default" href="/template/apply/select/{{ network.oid|urlencode }}/nodemod/">Modify network</a>
+                    <a class="btn btn-default" href="/template/apply/select/{{ network.oid|urlencode }}/nodemod/">Apply template</a>
                 {% endif %}
                 {% if not target.isHost %}
                     <a class="btn btn-default" href="/network/display/{{ network.oid|urlencode }}/?display_missing=true">Display unallocated</a>
                 {% endif %}
-                <a class="btn btn-info" href="/attribute/notes/{{ network.oid|urlencode }}/">Edit notes</a>
             {% endif %}
         </div>
     </div>

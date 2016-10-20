@@ -35,8 +35,24 @@
                     </ul>
                 </div>
                 <div class="btn-group">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Edit <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="/attribute/quickedit/name/{{ device.oid|urlencode }}/">Name</a>
+                        </li>
+                        <li>
+                            <a href="/attribute/quickedit/description/{{ device.oid|urlencode }}/">Description</a>
+                        </li>
+                        <li>
+                            <a href="/attribute/notes/{{ device.oid|urlencode }}/">Notes</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        Tags <span class="caret"></span>
+                        Tag <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li>
@@ -52,6 +68,7 @@
                         {% endif %}
                     </ul>
                 </div>
+                <a class="btn btn-danger" href="/device/delete/{{ device.oid|urlencode }}/">Delete</a>
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         IP-address <span class="caret"></span>
@@ -110,29 +127,12 @@
                         </ul>
                     </div>
                 {% endif %}
-                <a class="btn btn-danger" href="/device/delete/{{ device.oid|urlencode }}/">Delete device</a>
                 {% if device.attributes.disabled %}
                     <a class="btn btn-default" href="/device/enable/{{ device.oid|urlencode }}/">Enable device</a>
                 {% else %}
                     <a class="btn btn-default" href="/device/disable/{{ device.oid|urlencode }}/">Disable device</a>
                 {% endif %}
-                <a class="btn btn-default" href="/template/apply/select/{{ device.oid|urlencode }}/nodemod/">Modify device</a>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        Edit <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="/attribute/quickedit/name/{{ device.oid|urlencode }}/">Name</a>
-                        </li>
-                        <li>
-                            <a href="/attribute/quickedit/description/{{ device.oid|urlencode }}/">Description</a>
-                        </li>
-                        <li>
-                            <a href="/attribute/notes/{{ device.oid|urlencode }}/">Notes</a>
-                        </li>
-                    </ul>
-                </div>
+                <a class="btn btn-default" href="/template/apply/select/{{ device.oid|urlencode }}/nodemod/">Apply template</a>
             {% endif %}
         </div>
     </div>

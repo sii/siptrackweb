@@ -696,6 +696,8 @@ class DeviceNetworkAddForm(forms.Form):
                 forms.CharField(max_length = 50, label = 'IP-Address',
                         help_text = 'Valid forms: host: "a.b.c.d", '
                         'cidr subnet: "a.b.c.d/nn"')
+        self.fields['description'] = forms.CharField(max_length = 50, label = 'Description (optional)',
+                required = False)
 
 class UserAddForm(forms.Form):
     user_name = forms.CharField(max_length = 50, label = 'User Name')
