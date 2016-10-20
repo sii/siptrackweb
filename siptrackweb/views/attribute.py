@@ -188,6 +188,29 @@ def delete(request, oid):
     return pm.redirect('display.display', (parent.oid,))
 
 @helpers.authcheck
+def quickedit(request, oid, attr_name):
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    target = pm.setVar('target', pm.object_store.getOID(oid))
+    url = '/attribute/quickedit/%s/post/%s/' % (attr_name, target.oid)
+    pm.addForm(AttributeQuickeditForm(initial={'value': target.attributes.get(attr_name, '')}), url,
+               'Edit %s' % attr_name, message = '')
+    pm.path(target)
+    return pm.render()
+
+@helpers.authcheck
+def quickedit_post(request, oid, attr_name):
+    pm = helpers.PageManager(request, 'stweb/generic_form.html')
+    target = pm.setVar('target', pm.object_store.getOID(oid))
+    pm.path(target)
+    url = '/attribute/quickedit/%s/post/%s/' % (attr_name, target.oid)
+    pm.addForm(AttributeQuickeditForm(request.POST), url,
+               'Edit %s' % attr_name, message = '')
+    if not pm.form.is_valid():
+        return pm.render()
+    target.attributes[attr_name] = pm.form.cleaned_data['value']
+    return pm.redirect('display.display', (oid,))
+
+@helpers.authcheck
 def edit_notes(request, oid):
     pm = helpers.PageManager(request, 'stweb/generic_form.html')
     target = pm.setVar('target', pm.object_store.getOID(oid))

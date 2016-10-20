@@ -954,6 +954,10 @@ class AttributeEditNotesForm(forms.Form):
                             required = False,
                             widget = forms.Textarea(attrs={'cols':'100', 'rows': '15'}))
 
+class AttributeQuickeditForm(forms.Form):
+    value = forms.CharField(max_length = 100, required = False,
+            label = 'Value')
+
 class RackUnitOccupiedForm(forms.Form):
     reason = forms.CharField(max_length = 500, required = False,
                              label = 'Reason',

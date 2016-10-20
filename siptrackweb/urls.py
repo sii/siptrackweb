@@ -55,6 +55,10 @@ urlpatterns = [
         name='siptrackweb.views.attribute.edit_notes'),
     url(r'^attribute/notes/post/(?P<oid>[^/]+)/$', attribute.edit_notes_post,
         name='siptrackweb.views.attribute.edit_notes_post'),
+    url(r'^attribute/quickedit/(?P<attr_name>[^/]+)/(?P<oid>[^/]+)/$', attribute.quickedit,
+        name='siptrackweb.views.attribute.quickedit'),
+    url(r'^attribute/quickedit/(?P<attr_name>[^/]+)/post/(?P<oid>[^/]+)/$', attribute.quickedit_post,
+        name='siptrackweb.views.attribute.quickedit_post'),
 
     url(r'^template/apply/select/(?P<target_oid>[^/]+)/(?P<template_type>[^/]+)/$',
         template.apply_select, name='siptrackweb.views.template.apply_select'),

@@ -53,7 +53,19 @@
                 <a class="btn btn-success" href="/device/add/template/select/{{ target.oid|urlencode }}/" data-toggle="tooltip" data-placement="bottom" title="Devices represent any devices in your network, for example servers, switches, routers etc.">Add device</a>
             {% endif %}
             <a class="btn btn-default" href="/device/category/export/{{ device.oid|urlencode }}/">Export category</a>
-            <a class="btn btn-info" href="/attribute/notes/{{ device.oid|urlencode }}/">Edit notes</a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Edit <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="/attribute/quickedit/name/{{ device.oid|urlencode }}/">Name</a>
+                    </li>
+                    <li>
+                        <a href="/attribute/notes/{{ device.oid|urlencode }}/">Notes</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <div role="tabpanel">
