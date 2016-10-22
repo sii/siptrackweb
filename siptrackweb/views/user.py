@@ -373,6 +373,33 @@ def connectkey_post(request, oid):
 
 
 @helpers.authcheck
+def ajax_connectkey(request, oid):
+    if request.method != 'POST':
+        return HttpResponseServerError(
+            json.dumps({
+                'error': 'Unsupported method'
+            }),
+            content_type='application/json'
+        )
+
+    pm = helpers.PageManager(request, '')
+    user = pm.object_store.getOID(oid)
+
+    if pm.render_var['username'] != user.username:
+        return HttpResponseServerError(
+            json.dumps({
+                'error': 'User must be logged in to reconnect key'
+            }),
+            content_type='application/json'
+        )
+
+    password_key = pm.object_store.getOID(request.POST.get('oid'))
+    form_subkeyPassword = request.POST.get('subkeyPasswordInput')
+
+    # TODO: Finish
+
+
+@helpers.authcheck
 def subkey_delete(request, oid):
     pm = helpers.PageManager(request, 'stweb/generic_form.html')
 
@@ -400,7 +427,17 @@ def subkey_delete_post(request, oid):
 
 @helpers.authcheck
 def ajax_subkey_delete(request, oid):
+    if request.method != 'POST':
+        return HttpResponse(
+            json.dumps({
+                'error': 'Unsupported method'
+            }),
+            status=500,
+            content_type='application/json'
+        )
+
     pm = helpers.PageManager(request, '')
+
     try:
         subkey = pm.object_store.getOID(oid)
     except siptracklib.errors.NonExistent as e:

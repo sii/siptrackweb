@@ -350,6 +350,8 @@ urlpatterns = [
 
     url(r'^ajax/user/subkey/delete/(?P<oid>[^/]+)/$', user.ajax_subkey_delete,
         name='siptrackweb.views.user.ajax_subkey_delete'),
+    url(r'^ajax/user/connectkey/(?P<oid>[^/]+)/$', user.ajax_connectkey,
+        name='siptrackweb.views.user.ajax_connectkey'),
 
     url(r'^config/add/select/(?P<parent_oid>[^/]+)/$', config.add_select,
         name='siptrackweb.views.config.add_select'),

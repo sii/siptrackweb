@@ -9,7 +9,7 @@
 <div class="content-data">
 	<div id="display_subkeys">
 		{% if subkey_list %}
-		<table class="table-hover table-striped infotable" id="accordion-table">
+		<table class="table table-hover table-striped" id="accordion-table">
       <thead>
         <tr>
           <th class="infotable">Name</th>
@@ -37,10 +37,16 @@
       <tr id="collapse-{{subkey.oid}}" class="collapse out">
         <td colspan="3" class="subkeyChildData">
           <form class="pull-right form-inline">
+            {% if user.username != username %}
             <div class="form-group">
-              <label class="sr-only" for="subkeyPasswordInput">Key password</label>
-              <input type="password" class="form-control" id="subkeyPasswordInput" placeholder="Key password">
-              <input type="text" hidden="true" value="{{subkey.oid}}">
+              <label for="subkeyUserPassword">User password (required if user has never logged in): </label>
+              <input type="password" class="form-control" id="subkeyUserPassword" placeholder="User password">
+            </div>
+            {% endif %}
+            <div class="form-group">
+              <label class="sr-only" for="subkeyPassword">Key password</label>
+              <input type="password" class="form-control" id="subkeyPassword" placeholder="Key password">
+              <input type="text" hidden="true" id="subkeyOid" value="{{subkey.oid}}">
             </div>
             <button type="submit" class="btn btn-primary">Re-connect {{subkey.password_key.attributes.name|escape}}</button>
           </form>
