@@ -559,3 +559,7 @@ div#menu-devicespec {
 .border-bottom {
     border-bottom: 1px solid black;
 }
+
+.subkeyChildData {
+	padding:5px 8px 15px;
+}
