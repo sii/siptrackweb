@@ -348,6 +348,9 @@ urlpatterns = [
     url(r'^user/group/delete/post/(?P<oid>[^/]+)/$', user.group_delete_post,
         name='siptrackweb.views.user.group_delete_post'),
 
+    url(r'^ajax/user/subkey/delete/(?P<oid>[^/]+)/$', user.ajax_subkey_delete,
+        name='siptrackweb.views.user.ajax_subkey_delete'),
+
     url(r'^config/add/select/(?P<parent_oid>[^/]+)/$', config.add_select,
         name='siptrackweb.views.config.add_select'),
     url(r'^config/add/set/(?P<parent_oid>[^/]+)/$', config.add_set,

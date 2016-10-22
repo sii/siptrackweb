@@ -40,6 +40,7 @@
             <div class="form-group">
               <label class="sr-only" for="subkeyPasswordInput">Key password</label>
               <input type="password" class="form-control" id="subkeyPasswordInput" placeholder="Key password">
+              <input type="text" hidden="true" value="{{subkey.oid}}">
             </div>
             <button type="submit" class="btn btn-primary">Re-connect {{subkey.password_key.attributes.name|escape}}</button>
           </form>

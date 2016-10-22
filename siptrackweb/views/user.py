@@ -1,7 +1,8 @@
-from django.http import HttpResponse
+import json
+from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseServerError
 from django.shortcuts import render_to_response
 from django.template import Context, loader
-from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from siptracklib.utils import object_by_attribute
 import siptracklib.errors
@@ -370,6 +371,7 @@ def connectkey_post(request, oid):
 
     return pm.redirect('user.display', (oid,))
 
+
 @helpers.authcheck
 def subkey_delete(request, oid):
     pm = helpers.PageManager(request, 'stweb/generic_form.html')
@@ -380,6 +382,7 @@ def subkey_delete(request, oid):
             'remove subkey', message = 'Removing subkey.')
     pm.path(user)
     return pm.render()
+
 
 @helpers.authcheck
 def subkey_delete_post(request, oid):
@@ -393,6 +396,46 @@ def subkey_delete_post(request, oid):
     subkey.delete()
 
     return pm.redirect('user.display', (user.oid,))
+
+
+@helpers.authcheck
+def ajax_subkey_delete(request, oid):
+    pm = helpers.PageManager(request, '')
+    try:
+        subkey = pm.object_store.getOID(oid)
+    except siptracklib.errors.NonExistent as e:
+        return HttpResponse(
+            json.dumps({
+                'error': 'Subkey does not exist'
+            }),
+            status=404,
+            content_type='application/json'
+        )
+    except Exception as e:
+        return HttpResponseServerError(
+            json.dumps({
+                'error': str(e)
+            }),
+            content_type='application/json'
+        )
+
+    try:
+        subkey.delete()
+    except Exception as e:
+        return HttpResponseServerError(
+            json.dumps({
+                'error': str(e)
+            }),
+            content_type='application/json'
+        )
+
+    return HttpResponse(
+        json.dumps({
+            'status': True
+        }),
+        content_type='application/json'
+    )
+
 
 @helpers.authcheck
 def session_kill(request, session_id):
