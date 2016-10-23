@@ -346,8 +346,12 @@ table.infotable {
 	margin: 0px;
 	width: 100%;
 	white-space: nowrap;
-	font-size: 12pt;
-	text-align: left;
+}
+
+/* Simpler way to style all th tags within infotable tables. */
+.infotable th {
+	background-color: #e0e0ff;
+	color: #404040;
 }
 
 th.infotable {
@@ -356,8 +360,6 @@ th.infotable {
 	background-color: #e0e0ff;
 	border: 1px solid #c0c0c0;
 	color: #404040;
-	font-size: 9pt;
-	font-family: arial, sans-serif;
 }
 
 tr.infotableeven {

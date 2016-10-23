@@ -10,19 +10,14 @@
 </div>
 <div class="content-data">
 	<div id="display_user_managers">
-		<table class="infotable">
-			<tr>
-				<th class="infotable">Name</th>
-				<th class="infotable">Description</th>
-				<th class="infotable">Type</th>
-				<th class="infotable">Active</th>
-			</tr>
+		<table class="table table-striped table-hover table-bordered">
+			<thead>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Type</th>
+				<th>Active</th>
+			</thead>
 			{% for user_manager in user_manager_list %}
-			{% if forloop.counter|divisibleby:"2" %}
-			<tr class="infotableeven">
-			{% else %}
-			<tr class="infotableodd">
-			{% endif %}
 				<td>
 					<a href="/user/manager/display/{{ user_manager.obj.oid|urlencode }}/">
 						{{ user_manager.obj.attributes.name|default:"[UNKNOWN]" }}

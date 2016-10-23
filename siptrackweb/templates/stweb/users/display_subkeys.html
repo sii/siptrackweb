@@ -27,20 +27,20 @@
           <td>{{ subkey.password_key.attributes.name|escape }}</td>
           <td>{{ subkey.password_key.attributes.description|escape }}</td>
         {% endif %}
-        <td class="center">
+        <td>
           {% if write_access %}
-          <a href="#collapse-{{subkey.oid}}" data-toggle="collapse" data-parent="#accordion-table" aria-expanded="true" aria-controls="collapse-{{subkey.oid}}">re-connect</a>&nbsp;&verbar;&nbsp;
-          <a href="/user/subkey/delete/{{ subkey.oid }}/">disconnect</a>
+          <button type="button" class="btn btn-default" href="#collapse-{{subkey.oid}}" data-toggle="collapse" data-parent="#accordion-table" aria-expanded="true" aria-controls="collapse-{{subkey.oid}}">re-connect</button>
+          <a class="btn btn-primary" href="/user/subkey/delete/{{ subkey.oid }}/">disconnect</a>
           {% endif %}
         </td>
       </tr>
       <tr id="collapse-{{subkey.oid}}" class="collapse out">
-        <td colspan="3" class="subkeyChildData">
-          <form class="pull-right form-inline">
+        <td colspan="3" class="center subkeyChildData">
+          <form class="form-inline">
             {% if user.username != username %}
             <div class="form-group">
               <label for="subkeyUserPassword">User password (required if user has never logged in): </label>
-              <input type="password" class="form-control" id="subkeyUserPassword" placeholder="User password">
+              <input type="password" class="form-control" id="userPassword" placeholder="User password">
             </div>
             {% endif %}
             <div class="form-group">
@@ -48,7 +48,7 @@
               <input type="password" class="form-control" id="subkeyPassword" placeholder="Key password">
               <input type="text" hidden="true" id="subkeyOid" value="{{subkey.oid}}">
             </div>
-            <button type="submit" class="btn btn-primary">Re-connect {{subkey.password_key.attributes.name|escape}}</button>
+            <button type="submit" class="btn btn-danger">Re-connect {{subkey.password_key.attributes.name|escape}}</button>
           </form>
         </td>
       </tr>

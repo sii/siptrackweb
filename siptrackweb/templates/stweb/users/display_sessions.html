@@ -5,19 +5,14 @@
 </div>
 <div class="content-data">
 	<div id="display_sessions">
-		<table class="infotable">
-			<tr>
-				<th class="infotable">User name</th>
-				<th class="infotable">Session ID</th>
-				<th class="infotable">Session timeout</th>
-				<th class="infotable">Action</th>
-			</tr>
+		<table class="table table-striped table-hover table-bordered">
+			<thead>
+				<th>User name</th>
+				<th>Session ID</th>
+				<th>Session timeout</th>
+				<th>Action</th>
+			</thead>
 			{% for session in session_list %}
-			{% if forloop.counter|divisibleby:"2" %}
-			<tr class="infotableeven">
-			{% else %}
-			<tr class="infotableodd">
-			{% endif %}
 				<td>
 					{{ session.user }}
 				</td>
@@ -28,7 +23,7 @@
 					{{ session.timeout }}
 				</td>
 				<td>
-					<a href="/user/session/kill/{{ session.id|urlencode }}/">kill</a>
+					<a class="btn btn-danger" href="/user/session/kill/{{ session.id|urlencode }}/">kill</a>
 				</td>
 			</tr>
 			{% endfor %}

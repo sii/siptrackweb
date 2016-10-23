@@ -8,17 +8,12 @@
 </div>
 <div class="content-data">
 	<div id="display_groups">
-		<table class="infotable">
-			<tr>
-				<th class="infotable">Group name</th>
-				<th class="infotable">Description</th>
-			</tr>
+		<table class="table table-striped table-hover table-bordered infotable">
+      <thead>
+				<th>Group name</th>
+				<th>Description</th>
+			</thead>
 			{% for group in group_list %}
-			{% if forloop.counter|divisibleby:"2" %}
-			<tr class="infotableeven">
-			{% else %}
-			<tr class="infotableodd">
-			{% endif %}
 				<td>
 					<a href="/user/group/display/{{ group.oid|urlencode }}/">
 						{{ group.attributes.name|default:"[UNKNOWN]" }}

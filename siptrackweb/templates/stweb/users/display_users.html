@@ -8,18 +8,13 @@
 </div>
 <div class="content-data">
 	<div id="display_users">
-		<table class="infotable">
-			<tr>
-				<th class="infotable">User name</th>
-				<th class="infotable">Real name</th>
-				<th class="infotable">Description</th>
-			</tr>
+		<table class="table table-striped table-hover table-bordered infotable">
+			<thead>
+				<th>User name</th>
+				<th>Real name</th>
+				<th>Description</th>
+			</thead>
 			{% for user in user_list %}
-			{% if forloop.counter|divisibleby:"2" %}
-			<tr class="infotableeven">
-			{% else %}
-			<tr class="infotableodd">
-			{% endif %}
 				<td>
 					<a href="/user/display/{{ user.oid|urlencode }}/">
 						{{ user.username }}
