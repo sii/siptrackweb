@@ -278,6 +278,9 @@ urlpatterns = [
     url(r'^password/update/post/(?P<oid>[^/]+)/$', password.update_post,
         name='siptrackweb.views.password.update_post'),
 
+    url(r'^ajax/password/key/valid/$', password.ajax_key_is_valid,
+        name='siptrackweb.views.password.ajax_key_is_valid'),
+
     url(r'^user/$', user.index, name='siptrackweb.views.user.index'),
     url(r'^user/manager/display/(?P<oid>[^/]+)/$', user.manager_display,
         name='siptrackweb.views.user.manager_display'),

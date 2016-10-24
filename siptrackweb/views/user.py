@@ -183,6 +183,16 @@ def display(request, oid):
     pm = helpers.PageManager(request, 'stweb/users/display_user.html')
 
     user = pm.setVar('user', pm.object_store.getOID(oid))
+
+    # Set a render variable to indicate if the user has logged in before based
+    # on whether or not they have a public key.
+    user_pk = user.listChildren(include=['public key'])
+    if not len(user_pk):
+        has_public_key = False
+    else:
+        has_public_key = True
+    has_logged_in = pm.setVar('has_logged_in', has_public_key)
+
     pm.render_var['attribute_list'] = attribute.parse_attributes(user)
     subkey_list = []
     for subkey in user.listChildren(include=['sub key']):
@@ -386,23 +396,25 @@ def ajax_connectkey(request):
     password_key = pm.object_store.getOID(request.POST.get('passwordKeyOid'))
     user = pm.object_store.getOID(request.POST.get('userOid'))
 
-    if pm.render_var['username'] != user.username:
+    password_key_key = request.POST.get('passwordKeyPassword')
+    user_password = request.POST.get('userPassword')
+
+    try:
+        user.connectPasswordKey(password_key, user_password, password_key_key)
+    except siptracklib.errors.SiptrackError as e:
         return HttpResponseServerError(
             json.dumps({
-                'error': 'User must be logged in to reconnect key'
+                'status': False,
+                'error': str(e)
             }),
             content_type='application/json'
         )
 
-    keyPassword = request.POST.get('subkeyPassword')
-    userPassword = request.POST.get('userPassword')
-
-    # TODO: Finish
-    print('{pwkey}, {pwkey_password}, {user_password}'.format(
-        pwkey=password_key.attributes.get('name'),
-        pwkey_password=keyPassword,
-        user_password=userPassword
-    ))
+    return HttpResponse(
+        json.dumps({
+            'status': True
+        })
+    )
 
 
 @helpers.authcheck
@@ -450,7 +462,7 @@ def ajax_subkey_delete(request):
     except siptracklib.errors.NonExistent as e:
         return HttpResponse(
             json.dumps({
-                'error': 'Subkey does not exist'
+                'error': 'Subkey not found'
             }),
             status=404,
             content_type='application/json'

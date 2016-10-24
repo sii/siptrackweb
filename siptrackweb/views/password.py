@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+import json
+from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import render_to_response
 from django.template import Context, loader
 from django.http import HttpResponseRedirect
@@ -103,6 +104,57 @@ def key_delete_post(request, oid):
         return pm.error(str(e))
 
     return pm.redirect('password.index', (parent_oid,))
+
+
+@helpers.authcheck
+def ajax_key_is_valid(request):
+    if request.method != 'POST':
+        return HttpResponseServerError(
+            json.dumps({
+                'error': 'Incorrect method'
+            }),
+            content_type='application/json'
+        )
+
+    pm = helpers.PageManager(request, '')
+
+    try:
+        pk = pm.object_store.getOID(request.POST.get('passwordKeyOid'))
+    except siptracklib.errors.NonExistent as e:
+        return HttpResponse(
+            json.dumps({
+                'error': 'Password key not found'
+            }),
+            status=404,
+            content_type='application/json'
+        )
+    except Exception as e:
+        return HttpResponseServerError(
+            json.dumps({
+                'error': str(e)
+            }),
+            content_type='application/json'
+        )
+
+    try:
+        test_password = request.POST.get('passwordKeyPassword')
+        pk.isValidPassword(test_password)
+    except Exception as e:
+        return HttpResponseServerError(
+            json.dumps({
+                'status': False,
+                'error': str(e)
+            }),
+            content_type='application/json'
+        )
+
+    return HttpResponse(
+        json.dumps({
+            'status': True
+        }),
+        content_type='application/json'
+    )
+
 
 @helpers.authcheck
 def category_display(request, oid):

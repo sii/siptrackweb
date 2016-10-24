@@ -52,6 +52,8 @@
             </div>
             <button type="submit" class="btn btn-danger">Re-connect {{subkey.password_key.attributes.name|escape}}</button>
           </form>
+          <div id="formAlert{{subkey.oid}}" class="alert collapse">
+          </div>
         </td>
       </tr>
 			{% endfor %}
