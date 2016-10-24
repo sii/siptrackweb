@@ -36,10 +36,10 @@
       </tr>
       <tr id="collapse-{{subkey.oid}}" class="collapse out">
         <td colspan="3" class="center subkeyChildData">
-          <form class="form-inline">
+          <form class="form-inline" id="subkeyConnectForm{{subkey.oid}}">
             {% if user.username != username %}
             <div class="form-group">
-              <label for="subkeyUserPassword">User password (required if user has never logged in): </label>
+              <label for="userPassword">User password (required if user has never logged in): </label>
               <input type="password" class="form-control" id="userPassword" placeholder="User password">
             </div>
             {% endif %}
@@ -47,6 +47,8 @@
               <label class="sr-only" for="subkeyPassword">Key password</label>
               <input type="password" class="form-control" id="subkeyPassword" placeholder="Key password">
               <input type="text" hidden="true" id="subkeyOid" value="{{subkey.oid}}">
+              <input type="text" hidden="true" id="userOid" value="{{user.oid}}">
+              <input type="text" hidden="true" id="passwordKeyOid" value="{{subkey.password_key.oid}}">
             </div>
             <button type="submit" class="btn btn-danger">Re-connect {{subkey.password_key.attributes.name|escape}}</button>
           </form>

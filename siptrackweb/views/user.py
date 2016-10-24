@@ -373,7 +373,7 @@ def connectkey_post(request, oid):
 
 
 @helpers.authcheck
-def ajax_connectkey(request, oid):
+def ajax_connectkey(request):
     if request.method != 'POST':
         return HttpResponseServerError(
             json.dumps({
@@ -383,7 +383,8 @@ def ajax_connectkey(request, oid):
         )
 
     pm = helpers.PageManager(request, '')
-    user = pm.object_store.getOID(oid)
+    password_key = pm.object_store.getOID(request.POST.get('passwordKeyOid'))
+    user = pm.object_store.getOID(request.POST.get('userOid'))
 
     if pm.render_var['username'] != user.username:
         return HttpResponseServerError(
@@ -393,10 +394,15 @@ def ajax_connectkey(request, oid):
             content_type='application/json'
         )
 
-    password_key = pm.object_store.getOID(request.POST.get('oid'))
-    form_subkeyPassword = request.POST.get('subkeyPasswordInput')
+    keyPassword = request.POST.get('subkeyPassword')
+    userPassword = request.POST.get('userPassword')
 
     # TODO: Finish
+    print('{pwkey}, {pwkey_password}, {user_password}'.format(
+        pwkey=password_key.attributes.get('name'),
+        pwkey_password=keyPassword,
+        user_password=userPassword
+    ))
 
 
 @helpers.authcheck
@@ -426,7 +432,7 @@ def subkey_delete_post(request, oid):
 
 
 @helpers.authcheck
-def ajax_subkey_delete(request, oid):
+def ajax_subkey_delete(request):
     if request.method != 'POST':
         return HttpResponse(
             json.dumps({
@@ -437,6 +443,7 @@ def ajax_subkey_delete(request, oid):
         )
 
     pm = helpers.PageManager(request, '')
+    oid = request.POST.get('subkeyOid')
 
     try:
         subkey = pm.object_store.getOID(oid)
