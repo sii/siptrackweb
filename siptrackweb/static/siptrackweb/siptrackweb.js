@@ -8,7 +8,7 @@ function show_alert(alert_div, alert_type, alert_msg) {
                 ret_types.push('alert-'+valid_types[i]);
             }
         }
-        return ret_types;
+        return ret_types.join(' ');
     });
     alert_div.addClass('alert-'+alert_type);
     alert_div.html('<p><strong><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> '+alert_type+':</strong> '+alert_msg+'</p>');
@@ -69,6 +69,7 @@ $(document).ready(function () {
                     show_alert(alert_div, 'success', 'Reconnected key, this form is now unusable until page is refreshed.');
                     form_button.prop('disabled', true);
                 }).fail(function(xhr, textStatus) {
+                    console.log('Key was disconnected but not reconnected, fatality.');
                     json_data = $.parseJSON(xhr.responseText);
                     show_alert(alert_div, 'warning', json_data.error);
                 });
