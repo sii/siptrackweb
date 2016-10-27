@@ -202,7 +202,14 @@ def display(request, oid):
             subkey_list.append({'oid': subkey.oid, 'exists': False})
             continue
         subkey_list.append(subkey)
-    pm.render_var['subkey_list'] = subkey_list
+
+    # Sort the list of subkeys to easier find them
+    sorted_subkey_list = sorted(
+        subkey_list,
+        key=lambda k: k.password_key.attributes.get('name')
+    )
+
+    pm.render_var['subkey_list'] = sorted_subkey_list
     pm.path(user)
     return pm.render()
 
@@ -306,6 +313,16 @@ def update_password(request, oid):
     url = '/user/password/update/post/%s/' % (user.oid)
     pm.addForm(UserUpdatePasswordForm(), url, 'reset password')
     pm.path(user)
+
+    # The use of this form needs to be clearer
+    ldap_warning = ('If using LDAP/AD user manager you must use this form '
+                    'BEFORE you change your password in LDAP/AD. This form '
+                    'will not update the LDAP/AD password but it will '
+                    'reconnect all your subkeys to your new password to '
+                    'prepare them for the password change that will happen '
+                    'in the directory server.')
+    pm.render_var['form']['message'] = ldap_warning
+
     return pm.render()
 
 @helpers.authcheck
@@ -319,7 +336,7 @@ def update_password_post(request, oid):
     new_password = pm.form.cleaned_data['password']
     new_password_verify = pm.form.cleaned_data['validate']
     if len(new_password) == 0:
-        return pm.error('password to short')
+        return pm.error('password too short')
     if new_password != new_password_verify:
         return pm.error('passwords don\'t match')
     old_password = pm.form.cleaned_data['old_password']
