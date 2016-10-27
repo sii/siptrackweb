@@ -342,7 +342,11 @@ def update_password_post(request, oid):
     old_password = pm.form.cleaned_data['old_password']
     if not old_password:
         old_password = False
-    user.setPassword(new_password, old_password)
+    try:
+        user.setPassword(new_password, old_password)
+    except siptracklib.errors.SiptrackError as e:
+        pm.setVar('message', str(e))
+        return pm.render()
     return pm.redirect('user.display', (oid,))
 
 def _get_password_keys(view_tree):
