@@ -13,7 +13,30 @@
             {% endif %}
         </div>
     </div>
-	{% include "stweb/passwords/display_passwordkeys.html" %}
-	{% include "stweb/passwords/display_categories.html" %}
-	{% include "stweb/passwords/display_passwords.html" %}
+
+    <div role="tabpanel">
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+        <a href="#categories" aria-controls="home" role="tab" data-toggle="tab">Categories</a>
+        </li>
+        <li role="presentation">
+        <a href="#passwordkeys" aria-controls="passwordkeys" role="tab" data-toggle="tab">Password keys</a>
+        </li>
+        <li role="presentation">
+        <a href="#passwords" aria-controls="passwords" role="tab" data-toggle="tab">Passwords</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active" id="categories">
+      {% include "stweb/passwords/display_categories.html" %}
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="passwordkeys">
+      {% include "stweb/passwords/display_passwordkeys.html" %}
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="passwords">
+      {% include "stweb/passwords/display_passwords.html" %}
+      </div>
+    </div>
 {% endblock %}
