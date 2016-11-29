@@ -2,20 +2,18 @@
 <div class="content-header">
 	Categories
 </div>
+
 <div class="content-data">
 	<div id="display_password_categories">
 		{% if password_category_list %}
-		<table class="infotable">
-			<tr>
-				<th class="infotable">Name</th>
-				<th class="infotable">Description</th>
-			</tr>
+		<table class="table table-striped table-hover table-bordered infotable">
+      <thead>
+				<th>Name</th>
+				<th>Description</th>
+      </thead>
+
 			{% for category in password_category_list %}
-			{% if forloop.counter|divisibleby:"2" %}
-			<tr class="infotableeven">
-			{% else %}
-			<tr class="infotableodd">
-			{% endif %}
+      <tr>
 				<td>
 					<a href="/password/category/display/{{ category.oid|urlencode }}/">
 						{% if category.attributes.name %}
@@ -34,6 +32,5 @@
 		{% endif %}
 	</div>
 </div>
-<br/>
-<br/>
+
 {% endif %}

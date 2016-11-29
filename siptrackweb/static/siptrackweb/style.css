@@ -291,6 +291,7 @@ a.topbarlink:hover {
 	padding-right: 10px;
 	border-top: 1px solid #cccccc;
 	border-bottom: 1px solid #606060;
+	margin-bottom: 15px;
 }
 
 .content-legend {
@@ -564,4 +565,9 @@ div#menu-devicespec {
 
 .subkeyChildData {
 	padding:5px 8px 15px;
+}
+
+.tab-content {
+	padding-top:8px;
+	margin-top: 8px;
 }

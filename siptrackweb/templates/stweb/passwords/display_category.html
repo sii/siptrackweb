@@ -3,36 +3,70 @@
 {% block title %}siptrackweb - display password category{% endblock %}
 
 {% block content %}
+
     <div class="panel panel-default" style="background-color: #f0f0f0">
         <div class="panel-body">
             Actions:
             {% if write_access %}
-                <a class="btn btn-success" href="/password/category/add/{{ target.oid|urlencode }}/">Add category</a>
-                <a class="btn btn-success" href="/password/add/{{ target.oid|urlencode }}/">Add password</a>
-                <a class="btn btn-danger" href="/password/category/delete/{{ password_category.oid|urlencode }}/">Delete category</a>
+
+            <div class="btn-group">
+              <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                Add <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                <a href="/attribute/add/select/{{ target.oid|urlencode }}/">Attribute</a>
+                </li>
+              </ul>
+            </div>
+
+            <a class="btn btn-success" href="/password/category/add/{{ target.oid|urlencode }}/">Add category</a>
+            <a class="btn btn-success" href="/password/add/{{ target.oid|urlencode }}/">Add password</a>
+            <a class="btn btn-danger" href="/password/category/delete/{{ password_category.oid|urlencode }}/">Delete category</a>
+
             {% endif %}
         </div>
     </div>
-	<div class="content-header">
-		Category Information
-	</div>
-	<div class="content-data">
-		<div id="display_password_category">
-			<table class="faketable">
-				<tr>
-					<td>Name:</td>
-					<td>{{ password_category.attributes.name|escape }}</td>
-				</tr>
-				<tr>
-					<td>Description:</td>
-					<td>{{ password_category.attributes.description|escape }}</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<br/>
-	<br/>
-	<br/>
-	{% include "stweb/passwords/display_categories.html" %}
-	{% include "stweb/passwords/display_passwords.html" %}
+
+    <div class="content-header">
+      Category Information
+    </div>
+    <div class="content-data">
+      <div id="display_password_category">
+        <table class="faketable">
+          <tr>
+            <td>Name:</td>
+            <td>{{ password_category.attributes.name|escape }}</td>
+          </tr>
+          <tr>
+            <td>Description:</td>
+            <td>{{ password_category.attributes.description|escape }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    {% include "stweb/passwords/display_categories.html" %}
+
+    <div role="tabpanel">
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+        <a href="#category" aria-controls="home" role="tab" data-toggle="tab">Category</a>
+        </li>
+        <li role="presentation">
+        <a href="#attributes" aria-controls="attributes" role="tab" data-toggle="tab">Attributes</a>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="category">
+        {% include "stweb/passwords/display_passwords.html" %}
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="attributes">
+        {% include "stweb/attributes/display_attributes.html" %}
+        {% include "stweb/attributes/display_boxes.html" %}
+        </div>
+      </div>
+    </div>
+
 {% endblock %}
