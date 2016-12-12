@@ -94,10 +94,10 @@ class CounterSetForm(forms.Form):
 class PasswordAddForm(forms.Form):
     pw_username = forms.CharField(max_length = 50, label = 'Username',
             required = False)
-    pw_password = forms.CharField(max_length = 32, label = 'Password',
+    pw_password = forms.CharField(max_length = 250, label = 'Password',
             widget = forms.PasswordInput(), required = False,
-            help_text = 'Leave empty for generated password.')
-    validate = forms.CharField(max_length = 32, label = 'Password (again)',
+            help_text = 'Max length: 250, leave empty for generated password.')
+    validate = forms.CharField(max_length = 250, label = 'Password (again)',
             widget = forms.PasswordInput(), required = False)
     description = forms.CharField(max_length = 100, required = False,
             label = 'Description')
@@ -117,10 +117,10 @@ class PasswordAddForm(forms.Form):
 class PasswordUpdateForm(forms.Form):
     pw_username = forms.CharField(max_length = 50, label = 'Username',
             required = False)
-    pw_password = forms.CharField(max_length = 32, label = 'Password',
+    pw_password = forms.CharField(max_length = 250, label = 'Password',
             widget = forms.PasswordInput(), required = False,
-            help_text = 'Leave empty for generated password.')
-    validate = forms.CharField(max_length = 32, label = 'Password (again)',
+            help_text = 'Max length: 250, leave empty for generated password.')
+    validate = forms.CharField(max_length = 250, label = 'Password (again)',
             widget = forms.PasswordInput(), required = False)
     description = forms.CharField(max_length = 100, required = False,
             label = 'Description')
