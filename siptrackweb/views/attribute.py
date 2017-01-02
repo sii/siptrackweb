@@ -143,7 +143,7 @@ def update(request, oid):
         else:
             form = AttributeUpdateTextForm(args)
         if attribute.attributes.get('wikitext'):
-            msg = 'Uses Textile wiki <a href="https://en.wikipedia.org/wiki/Textile_(markup_language)/">syntax</a>.'
+            msg = 'Uses <a href="https://txstyle.org/doc">Textile syntax</a>.'
     elif attribute.atype == 'bool':
         args = {'value': attribute.value}
         form = AttributeUpdateBoolForm(args)
