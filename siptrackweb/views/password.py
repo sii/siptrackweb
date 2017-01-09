@@ -37,6 +37,22 @@ def key_display(request, oid):
 
     pk = pm.setVar('password_key', pm.object_store.getOID(oid))
     pm.path(pk)
+    if not request.session['administrator']:
+        is_admin = False
+    else:
+        is_admin = True
+    pm.render_var['is_admin'] = is_admin
+    view = pk.getParent('view')
+    for um in view.parent.listChildren(include = ['user manager local']):
+        user_manager = um.listChildren(include = ['user local','user ldap', 'user active directory'])
+        user_list = []
+        for users in user_manager:
+            for subkey in users.listChildren(include=['sub key']):
+                if subkey.password_key is pk:
+                    user_list.append(users)
+
+
+    pm.render_var['user_list'] = user_list
     pm.render_var['parent'] = pk.parent
     pm.render_var['password_key_list'] = pk.parent.listChildren(include = ['password key'])
     pm.render_var['attribute_list'] = attribute.parse_attributes(pk)
@@ -360,4 +376,3 @@ def update_post(request, oid):
         password.setPasswordKey(password_key)
 
     return pm.redirect('display.display', (password.parent.oid,))
-
