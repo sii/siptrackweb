@@ -202,7 +202,9 @@ def display(request, oid):
             subkey_list.append({
                 'oid': subkey.oid,
                 'exists': False,
-                'subkey': None
+                'subkey': None,
+                'name': '',
+                'description': ''
             })
             continue
 
