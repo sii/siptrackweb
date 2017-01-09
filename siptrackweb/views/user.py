@@ -199,14 +199,40 @@ def display(request, oid):
         try:
             pw_key = subkey.password_key
         except siptracklib.errors.NonExistent as e:
-            subkey_list.append({'oid': subkey.oid, 'exists': False})
+            subkey_list.append({
+                'oid': subkey.oid,
+                'exists': False,
+                'subkey': None
+            })
             continue
-        subkey_list.append(subkey)
+
+        if not pw_key:
+            continue
+
+        try:
+            name = subkey.password_key.attributes.get('name')
+            description = subkey.password_key.attributes.get('description')
+        except Exception as e:
+            pm.render_var['message'] = ('Failed to get name/description of'
+                                        'subkey: {error}').format(
+                                            error=str(e)
+                                        )
+            name = 'Unknown'
+            description = ''
+            pass
+
+        subkey_list.append({
+            'oid': subkey.oid,
+            'exists': True,
+            'subkey': subkey,
+            'name': name,
+            'description': description
+        })
 
     # Sort the list of subkeys to easier find them
     sorted_subkey_list = sorted(
         subkey_list,
-        key=lambda k: k.password_key.attributes.get('name')
+        key=lambda k: k['name']
     )
 
     pm.render_var['subkey_list'] = sorted_subkey_list
@@ -399,6 +425,8 @@ def connectkey_post(request, oid):
         user.connectPasswordKey(password_key, user_password, password_key_key)
     except siptracklib.errors.SiptrackError, e:
         return pm.error(str(e))
+    except Exception as e:
+        raise
 
     return pm.redirect('user.display', (oid,))
 

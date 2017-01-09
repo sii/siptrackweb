@@ -19,13 +19,12 @@
       </thead>
 			{% for subkey in subkey_list %}
       <tr>
-        {% if subkey.exists %}
+        {% if not subkey.exists %}
           <!-- Jinja2 will never display this. -->
-          <td>Password key deleted</td>
-          <td>Password key deleted</td>
+          <td colspan="3">Password key deleted</td>
         {% else %}
-          <td>{{ subkey.password_key.attributes.name|escape }}</td>
-          <td>{{ subkey.password_key.attributes.description|escape }}</td>
+          <td>{{ subkey.name | escape }}</td>
+          <td>{{ subkey.description | escape }}</td>
         {% endif %}
         <td>
           {% if write_access %}
@@ -34,6 +33,8 @@
           {% endif %}
         </td>
       </tr>
+
+      <!-- Collapsible table row for re-connect form. -->
       <tr id="collapse-{{subkey.oid}}" class="collapse out">
         <td colspan="3" class="center subkeyChildData">
           <form class="form-inline" id="subkeyConnectForm{{subkey.oid}}">
@@ -56,6 +57,7 @@
           </div>
         </td>
       </tr>
+
 			{% endfor %}
 		</table>
 		{% endif %}
