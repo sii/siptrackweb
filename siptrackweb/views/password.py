@@ -37,24 +37,22 @@ def key_display(request, oid):
 
     pk = pm.setVar('password_key', pm.object_store.getOID(oid))
     pm.path(pk)
-    if not request.session['administrator']:
-        is_admin = False
-    else:
-        is_admin = True
-    pm.render_var['is_admin'] = is_admin
 
     view = pk.getParent('view')
     view_tree = view.parent
     user_manager = view_tree.user_manager
     user_list = []
-    for users in user_manager.listChildren():
-        try:
-            username = users.username
-            for subkey in users.listChildren(include=['sub key']):
-                if subkey.password_key is pk:
-                    user_list.append(users)
-        except:
-            continue
+    
+    if request.session['administrator']:
+        for users in user_manager.listChildren():
+            try:
+                username = users.username
+                for subkey in users.listChildren(include=['sub key']):
+                    if subkey.password_key is pk:
+                        user_list.append(users)
+            except:
+                continue
+
     pm.render_var['user_list'] = user_list
     pm.render_var['parent'] = pk.parent
     pm.render_var['password_key_list'] = pk.parent.listChildren(include = ['password key'])
