@@ -245,6 +245,11 @@ urlpatterns = [
         name='siptrackweb.views.device.device_association.add_with_target'),
 
     url(r'^password/(?P<view_oid>[^/]+)/$', password.index, name='siptrackweb.views.password.index'),
+    url(
+        r'^password/display/(?P<oid>[^/]+)/$',
+        password.display,
+        name='siptrackweb.views.password.display'
+    ),
     url(r'^password/category/add/(?P<parent_oid>[^/]+)/$', password.category_add,
         name='siptrackweb.views.password.category_add'),
     url(r'^password/category/add/post/(?P<parent_oid>[^/]+)/$', password.category_add_post,

@@ -1,0 +1,39 @@
+{% extends "stweb/base.html" %}
+
+{% block title %}siptrackweb - display password{% endblock %}
+
+{% block content %}
+<div class="panel panel-default" style="background-color: #f0f0f0">
+  <div class="panel-body">
+      Actions:
+      {% if write_access %}
+          <a class="btn btn-danger" href="/password/delete/{{ password.oid|urlencode }}/">Delete password</a>
+          <a class="btn btn-success" href="/attribute/add/select/{{ password.oid|urlencode }}/">Add attribute</a>
+      {% endif %}
+  </div>
+</div>
+
+<div role="tabpanel">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+      <a href="#password" aria-controls="home" role="tab" data-toggle="tab">Password</a>
+    </li>
+    <li role="presentation">
+      <a href="#attributes" aria-controls="attributes" role="tab" data-toggle="tab">Attributes</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade in active" id="password">
+      {% include "stweb/passwords/display_password.html" %}
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade in" id="attributes">
+      {% include "stweb/attributes/display_attributes.html" %}
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

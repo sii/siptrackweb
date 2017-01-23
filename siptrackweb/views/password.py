@@ -31,6 +31,21 @@ def index(request, view_oid):
     return pm.render()
 
 @helpers.authcheck
+def display(request, oid):
+    pm = helpers.PageManager(
+        request,
+        'stweb/passwords/display.html',
+        'password'
+    )
+    pm.section('password')
+
+    password = pm.setVar('password', pm.object_store.getOID(oid))
+    pm.path(password)
+
+    pm.render_var['attribute_list'] = attribute.parse_attributes(password)
+    return pm.render()
+
+@helpers.authcheck
 def key_display(request, oid):
     pm = helpers.PageManager(request, 'stweb/passwords/display_passwordkey.html', 'password')
     pm.section('password')

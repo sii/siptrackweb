@@ -26,6 +26,7 @@ display_functions = {
     'device category': device.display,
     'device tree': device.display,
     'device specification': device.specification.display,
+    'password': password.display,
     'password key': password.key_display,
     'password category': password.category_display,
     'password tree': password.index,

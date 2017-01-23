@@ -7,7 +7,8 @@
 	{% endif %}
 	<a href="/attribute/display/{{ attribute.oid|urlencode }}/">display</a>
 </div>
-<div class="content-header"">
+<div class="content-header">
+  {% if attribute.class_id == 'ENCA' %}Encrypted{% endif %}
 	Attribute: {{ attribute.name }}
 </div>
 <div class="content-data">

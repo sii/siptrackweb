@@ -263,6 +263,9 @@ def make_browsable_path(node, end_parent = 'view tree', include_root = True):
         if node.class_name == 'counter':
             ent['path'] = '/counter/display/%s/' % (node.oid)
             ent['name'] = node.attributes.get('name', node.class_name)
+        if node.class_name == 'password':
+            ent['path'] = '/password/display/{oid}'.format(oid=node.oid)
+            ent['name'] = 'Display password'
         if node.class_name == 'password key':
             ent['path'] = '/password/key/display/%s/' % (node.oid)
             ent['name'] = node.attributes.get('name', node.class_name)
