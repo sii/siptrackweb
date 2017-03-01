@@ -1,39 +1,34 @@
+{% load staticfiles %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml11/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<title>siptrackweb login</title>
 		<link rel="stylesheet" href="/static/siptrackweb/style.css" />
+    <link type="text/css" href="{% static "siptrackweb/bootstrap-3.3.4-dist/css/bootstrap.min.css" %}" rel="stylesheet"/>
 	</head>
 
 	<body>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<div align="center">
-		<div class="loginbox">
-			{% if errormsg %}
-			{{ errormsg }}
-			<br/>
-			<br/>
-			{% endif %}
-			<form action="/login/" method="post">
-				<table style="margin: 0px auto;">
-					{{ form.as_table }}
-					<tr>
-						<td>&nbsp;</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td align="right">
-							<input type="submit" value="submit"/>
-						</td>
-					</tr>
-				</table>
-			</form>
-		</div>
+
+		<div class="container">
+      <div class="row">
+        <div class="center-login">
+          <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <h1 class="text-center login-title">Sign in to continue to Siptrack</h1>
+            {% if errormsg %}
+            <div class="alert alert-danger" role="alert">{{errormsg}}</div>
+            {% endif %}
+            <div class="account-wall">
+              <form class="form-signin" action="/login/" method="post">
+              <input name="username" type="text" class="form-control" placeholder="Username" required autofocus>
+              <input name="password" type="password" class="form-control" placeholder="Password" required>
+              <input class="btn btn-lg btn-primary btn-block" type="submit" value="Login">
+              </input>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 		</div>
 	</body>
 </html>
