@@ -196,29 +196,17 @@ def display(request, oid):
     pm.render_var['attribute_list'] = attribute.parse_attributes(user)
     subkey_list = []
     for subkey in user.listChildren(include=['sub key']):
-        try:
-            pw_key = subkey.password_key
-        except siptracklib.errors.NonExistent as e:
-            subkey_list.append({
-                'oid': subkey.oid,
-                'exists': False,
-                'subkey': None,
-                'name': '',
-                'description': ''
-            })
-            continue
-
-        if not pw_key:
-            continue
+        pw_key = subkey.password_key
 
         try:
             name = subkey.password_key.attributes.get('name')
             description = subkey.password_key.attributes.get('description')
         except Exception as e:
-            pm.render_var['message'] = ('Failed to get name/description of'
-                                        'subkey: {error}').format(
-                                            error=str(e)
-                                        )
+            pm.render_var['message'] = (
+                'Failed to get name/description of subkey: {error}'
+            ).format(
+                error=str(e)
+            )
             name = 'Unknown'
             description = ''
             pass

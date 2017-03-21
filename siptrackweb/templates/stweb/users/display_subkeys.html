@@ -50,7 +50,7 @@
               <input type="password" class="form-control" id="subkeyPassword" placeholder="Key password">
               <input type="text" hidden="true" id="subkeyOid" value="{{subkey.oid}}">
               <input type="text" hidden="true" id="userOid" value="{{user.oid}}">
-              <input type="text" hidden="true" id="passwordKeyOid" value="{{subkey.password_key.oid}}">
+              <input type="text" hidden="true" id="passwordKeyOid" value="{{subkey.subkey.password_key.oid}}">
             </div>
             <button type="submit" class="btn btn-danger">Re-connect {{subkey.password_key.attributes.name|escape}}</button>
           </form>
