@@ -55,16 +55,31 @@ def prototypejs(request):
 
 @helpers.authcheck
 def search(request):
+    searchstring = None
+    search_attribute = None
+
     pm = helpers.PageManager(request, 'stweb/views/search_results.html')
-    if 'searchstring' in request.GET:
+    if 'searchAttribute' in request.GET:
+        search_attribute = request.GET.get('searchAttribute')
+        search_value = request.GET.get('searchValue', '')
+    elif 'searchstring' in request.GET:
         searchstring = request.GET['searchstring']
     else:
         pm.setForm(ViewSearchForm(request.POST))
         if not pm.form.is_valid():
             return pm.render()
         searchstring = pm.form.cleaned_data['searchstring']
-    searchstring = searchstring.strip().lower()
-    searchresults = helpers.search(pm.object_store, searchstring)
+
+    if searchstring:
+        searchstring = searchstring.strip().lower()
+        searchresults = helpers.search(pm.object_store, searchstring)
+    else:
+        searchstring = search_value.strip().lower()
+        searchresults = helpers.search(
+            pm.object_store,
+            searchstring,
+            [search_attribute]
+        )
 
     # Go directly to the result for a single match.
     if searchresults['resultcount'] == 1:
@@ -79,6 +94,8 @@ def search(request):
                     (searchresults['singleresult'].oid,))
 
     pm.render_var['searchresults'] = searchresults
+    pm.render_var['searchstring'] = searchstring
+    pm.render_var['search_attribute'] = search_attribute
     return pm.render()
 
 @helpers.authcheck
