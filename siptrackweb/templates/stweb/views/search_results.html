@@ -3,6 +3,34 @@
 {% block title %}siptrackweb - search results{% endblock %}
 
 {% block content %}
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+	  <div class="panel panel-default">
+	    <div class="panel-heading" role="tab" id="headingOne">
+	      <h4 class="panel-title">
+	        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+	          Advanced search <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+	        </a>
+	      </h4>
+    	</div>
+	    <div id="collapseOne" class="panel-collapse collapse {{search_attribute|yesno:"in,none"}}" role="tabpanel" aria-labelledby="headingOne">
+	      <div class="panel-body">
+					<p>Input the exact name of an attribute, and optionally a pattern to search that attribute for. Pattern can take wildcards like <strong>*</strong> and <strong>?</strong>.</p>
+					<form id="advancedSearchForm" method="GET">
+						<div class="form-group">
+							<label for="inputAttribute">Attribute name</label>
+							<input type="text" class="form-control" id="inputAttribute" name="searchAttribute" placeholder="Attribute name" value="{{search_attribute}}">
+						</div>
+						<div class="form-group">
+							<label for="inputAttributeValue">Attribute value</label>
+							<input type="text" class="form-control" id="inputAttributeValue" name="searchValue" placeholder="Attribute value pattern like 'SAL?123*' for example" value="{{searchstring}}">
+						</div>
+						<button type="submit" class="btn btn-default">Search</button>
+					</form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
 	{% if searchresults.resultcount %}
 
 		{% if searchresults.devices %}

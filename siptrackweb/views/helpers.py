@@ -202,7 +202,7 @@ class PageManager(object):
                 self.render_var['section'] = 'password'
 
 
-def search(object_store, pattern):
+def search(object_store, pattern, default_fields=[]):
     searchresults = {
         'devices': [],
         'networks': [],
@@ -218,13 +218,23 @@ def search(object_store, pattern):
         'ipv4 network',
         'ipv6 network',
         'password category',
-        'password']
+        'password'
+    ]
+
 #    for result in object_store.view_tree.search(pattern, include = include):
+
     attr_limit = []
-    for result in object_store.quicksearch(pattern, attr_limit = attr_limit,
-                                           include = include, max_results=100,
-                                           default_fields=['name', 'username',
-                                                           'description']):
+
+    if not default_fields:
+        default_fields = ['name', 'username', 'description']
+    
+    search_args = {
+        'attr_limit': attr_limit,
+        'include': include,
+        'max_results': 100,
+        'default_fields': default_fields
+    }
+    for result in object_store.quicksearch(pattern, **search_args):
         if result.class_name == 'password category':
             searchresults['password_categories'].append(result)
         if result.class_name == 'password':
