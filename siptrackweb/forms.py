@@ -432,12 +432,12 @@ class TemplateRuleAssignNetworkAddForm(forms.Form):
                                   help_text = 'The priority of this rule when using the templates, lower value will be displayed first.')
 
 class NetworkAttributeAddSelectTypeForm(forms.Form):
-    ruletype = forms.ChoiceField(label = 'Rule type',
+    ruletype = forms.ChoiceField(label = 'Attribute type',
             choices = (('text', 'text'),
                 ('bool','boolean')))
 
 class AttributeAddSelectTypeForm(forms.Form):
-    ruletype = forms.ChoiceField(label = 'Rule type',
+    ruletype = forms.ChoiceField(label = 'Attribute type',
             choices = (
                 ('text', 'text'),
                 ('bool', 'boolean'),
