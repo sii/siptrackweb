@@ -436,6 +436,7 @@ class NetworkAttributeAddSelectTypeForm(forms.Form):
             choices = (('text', 'text'),
                 ('bool','boolean')))
 
+
 class AttributeAddSelectTypeForm(forms.Form):
     ruletype = forms.ChoiceField(label = 'Attribute type',
             choices = (
@@ -464,26 +465,49 @@ class AttributeUpdateLargeTextForm(forms.Form):
             widget = forms.Textarea(attrs={'cols':'100', 'rows': '20'}))
         self.fields['value'] = field
 
+
 class AttributeAddTextForm(forms.Form):
-    name = forms.CharField(max_length = 50, label = 'Name')
-    value = forms.CharField(max_length = 50, label = 'Value', required = False)
-    ruletype = forms.CharField(initial = 'text',
-            widget = forms.HiddenInput())
-    large = forms.BooleanField(label = 'Large attribute',
-            required = False,
-            help_text = 'If true, the attribute will have a separate display box.')
-    wikitext = forms.BooleanField(label = 'Wikitext attribute',
-            required = False,
-            help_text = 'If true, the attribute will be displayed using textile wikitext parsing, implies "large".')
-    hidden = forms.BooleanField(label = 'Hidden attribute',
-                                required = False,
-                                help_text = 'If true, the attribute will hidden per default if it is large/wikitext.')
-    important = forms.BooleanField(label = 'Important attribute',
-            required = False,
-            help_text = 'If true, the attribute will be displayed on a device/entities overview page.')
-    versions = forms.IntegerField(label = 'Versions',
-            min_value = 1, initial = 1,
-            help_text = 'If set to > 1 a versioned attribute will be created.')
+    name = forms.CharField(max_length=50, label='Name')
+    value = forms.CharField(max_length=50, label='Value', required=False)
+    ruletype = forms.CharField(
+            initial='text',
+            widget=forms.HiddenInput()
+    )
+    large = forms.BooleanField(
+            label='Large attribute',
+            required=False,
+            help_text='Attribute will have a separate display box.'
+    )
+    wikitext = forms.BooleanField(
+            label='Wikitext attribute',
+            required=False,
+            help_text='Attribute will be displayed using textile wikitext parsing, implies "large".'
+    )
+    hidden = forms.BooleanField(
+            label='Hidden attribute',
+            required=False,
+            help_text='Attribute will hidden per default if it is large/wikitext.'
+    )
+    important = forms.BooleanField(
+            label='Important attribute',
+            required=False,
+            help_text='Attribute will be displayed on a device/entities overview page.'
+    )
+    versions = forms.IntegerField(
+            label='Versions',
+            min_value=1,
+            initial=1,
+            help_text='If set to > 1 a versioned attribute will be created.'
+    )
+
+
+class PasswordAttributeAddTextForm(AttributeAddTextForm):
+    encrypted = forms.BooleanField(
+            label='Encrypted attribute',
+            required=False,
+            help_text='Attribute will be encrypted using the same key as the parent password.'
+    )
+
 
 class AttributeAddBoolForm(forms.Form):
     name = forms.CharField(max_length = 50, label = 'Name')

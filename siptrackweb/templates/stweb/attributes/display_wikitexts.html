@@ -8,7 +8,11 @@
 	<a href="/attribute/display/{{ wikitext.attribute.oid|urlencode }}/">display</a>
 </div>
 <div class="content-header">
+	{% if wikitext.attribute.class_name == 'encrypted attribute' %}
+	Encrypted Wikitext attribute: {{ wikitext.attribute.name }}
+	{% else %}
 	Wikitext attribute: {{ wikitext.attribute.name }}
+	{% endif %}
 </div>
 <div class="content-data">
 	<div id="display_wikitext_{{ wikitext.attribute.name }}">

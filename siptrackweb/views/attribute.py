@@ -60,6 +60,10 @@ def add_set(request, target_oid):
 
     if form.cleaned_data['ruletype'] == 'text':
         form = AttributeAddTextForm()
+
+        # Also add encrypted option for password attributes
+        if target.class_name == 'password':
+            form = PasswordAttributeAddTextForm()
     elif form.cleaned_data['ruletype'] == 'bool':
         form = AttributeAddBoolForm()
     elif form.cleaned_data['ruletype'] == 'int':
@@ -81,12 +85,17 @@ def add_post(request, target_oid):
     path = '/attribute/add/post/%s/' % (target_oid)
     if ruletype == 'text':
         form = AttributeAddTextForm(request.POST)
+
+        # Encrypted attribute for password attributes
+        if target.class_name == 'password':
+            form = PasswordAttributeAddTextForm(request.POST)
     elif ruletype == 'bool':
         form = AttributeAddBoolForm(request.POST)
     elif ruletype == 'int':
         form = AttributeAddIntForm(request.POST)
     else:
         return pm.error('bad, invalid ruletype')
+
     pm.addForm(form, path, 'add attribute')
     if not form.is_valid():
         return pm.error('')
@@ -94,11 +103,24 @@ def add_post(request, target_oid):
     attr_name = form.cleaned_data['name']
     if ruletype == 'text':
         attr_value = form.cleaned_data['value']
-        if form.cleaned_data['versions'] == 1:
-            attr = target.add('attribute', attr_name, 'text', attr_value)
+
+        if form.cleaned_data['versions'] > 1:
+            attr = target.add(
+                'versioned attribute',
+                attr_name,
+                'text',
+                attr_value,
+                form.cleaned_data['versions']
+            )
+        elif form.cleaned_data.get('encrypted', False):
+            attr = target.add(
+                'encrypted attribute',
+                attr_name,
+                'text',
+                attr_value
+            )
         else:
-            attr = target.add('versioned attribute', attr_name, 'text',
-                    attr_value, form.cleaned_data['versions'])
+            attr = target.add('attribute', attr_name, 'text', attr_value)
     elif ruletype == 'bool':
         attr_value = form.cleaned_data['value']
         if attr_value == 'true':
