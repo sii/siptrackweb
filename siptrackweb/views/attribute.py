@@ -65,7 +65,7 @@ def add_set(request, target_oid):
     elif form.cleaned_data['ruletype'] == 'int':
         form = AttributeAddIntForm()
     else:
-        return pm.error('bad, invalid ruletype')
+        return pm.error('bad, invalid attribute type')
     path = '/attribute/add/post/%s/' % (target_oid)
     pm.addForm(form, path, 'add attribute')
 
