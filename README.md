@@ -10,4 +10,3 @@ Other components include;
 # Documentation
 
 * See https://github.com/sii/siptrackweb/wiki for documentation.
-* See the [tools/ directory](tools/) for quick start instructions.
