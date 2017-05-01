@@ -153,7 +153,6 @@
         <!-- Tab panes -->
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="device">
-                <br/>
                 <div class="row">
                 {% if device_rack %}
                     <div class="col-md-8">
@@ -168,6 +167,7 @@
                         {% include "stweb/views/devices/display_rack.html" %}
                     </div>
                 {% else %}
+                    <div class="col-md-12">
                     {% include "stweb/views/devices/display_device.html" %}
                     {% include "stweb/attributes/display_boxes.html" %}
                     {% include "stweb/views/devices/display_rack.html" %}
@@ -175,30 +175,39 @@
                     {% include "stweb/views/devices/display_devices_extended.html" %}
                     {% include "stweb/views/devices/display_networks.html" %}
                     {% include "stweb/passwords/display_passwords.html" %}
+                    </div>
                 {% endif %}
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="attributes">
-                <br/>
+                <div class="row">
+                    <div class="col-md-12">
                 {% include "stweb/attributes/display_attributes.html" %}
                 {% include "stweb/attributes/display_boxes.html" %}
+                    </div>
+                </div>
             </div>
 			{% if device_config_list %}
-				<div role="tabpanel" class="tab-pane fade" id="device_config">
-					<br/>
-					{% include "stweb/views/devices/display_config_list.html" %}
-				</div>
+			<div role="tabpanel" class="tab-pane fade" id="device_config">
+                <div class="row">
+                    <div class="col-md-12">
+				{% include "stweb/views/devices/display_config_list.html" %}
+                    </div>
+                </div>
+			</div>
 			{% endif %}
 			{% if device_config_template_list %}
-				<div role="tabpanel" class="tab-pane fade" id="device_config_template">
-					<br/>
-					{% include "stweb/views/devices/display_config_template_list.html" %}
-				</div>
+			<div role="tabpanel" class="tab-pane fade" id="device_config_template">
+				{% include "stweb/views/devices/display_config_template_list.html" %}
+			</div>
 			{% endif %}
             <div role="tabpanel" class="tab-pane fade" id="other">
-                <br/>
+                <div class="row">
+                    <div class="col-md-12">
                 {% include "stweb/configs/display.html" %}
                 {% include "stweb/permissions/display_permissions.html" %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
