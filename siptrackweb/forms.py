@@ -4,103 +4,216 @@ class EmptyForm(forms.Form):
     pass
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length = 50, label = 'Username')
-    password = forms.CharField(max_length = 32, label = 'Password',
-            widget = forms.PasswordInput(), required = True)
+    username = forms.CharField(
+        max_length=50,
+        label='Username'
+    )
+    password = forms.CharField(
+        max_length=32,
+        label='Password',
+        widget=forms.PasswordInput(),
+        required=True
+    )
 
 class DeleteForm(forms.Form):
-    verify = forms.CharField(initial = 'true',
-                             widget = forms.HiddenInput())
+    verify = forms.CharField(
+        initial='true',
+        widget=forms.HiddenInput()
+    )
 
 class ConfirmForm(forms.Form):
-    verify = forms.CharField(initial = 'true',
-            widget = forms.HiddenInput())
+    verify = forms.CharField(
+        initial='true',
+        widget=forms.HiddenInput()
+    )
 
 class ViewAddForm(forms.Form):
-    name = forms.CharField(max_length = 50, label = 'Name')
-    description = forms.CharField(max_length = 100, required = False,
-            label = 'Description')
+    name = forms.CharField(
+        max_length=50,
+        label='Name'
+    )
+    description = forms.CharField(
+        max_length=100,
+        required=False,
+        label='Description'
+    )
 
 class ViewUpdateForm(forms.Form):
-    name = forms.CharField(max_length = 50, label = 'Name')
-    description = forms.CharField(max_length = 100, required = False,
-            label = 'Description')
+    name = forms.CharField(
+        max_length=50,
+        label='Name'
+    )
+    description = forms.CharField(
+        max_length=100,
+        required=False,
+        label='Description'
+    )
 
 class ViewSearchForm(forms.Form):
-    searchstring = forms.CharField(max_length = 50, required = True,
-            widget = forms.TextInput(attrs={'id': 'searchbox'}))
+    searchstring = forms.CharField(
+        max_length=50,
+        required=True,
+        widget=forms.TextInput(attrs={'id': 'searchbox'})
+    )
 
 class NetworkTreeAddForm(forms.Form):
-    name = forms.CharField(max_length = 50, label = 'Name')
-    protocol = forms.ChoiceField(label = 'Protocol',
-            choices = (('ipv4', 'ipv4'), ('ipv6', 'ipv6')))
+    name = forms.CharField(
+        max_length=50,
+        label='Name'
+    )
+    protocol = forms.ChoiceField(
+        label='Protocol',
+        choices=(('ipv4', 'ipv4'), ('ipv6', 'ipv6'))
+    )
 
 class NetworkAddForm(forms.Form):
-    name = forms.CharField(max_length = 50, label = 'Address', help_text='The network/address in CIDR form (x.x.x.x or x.x.x.x/xx)')
-    description = forms.CharField(max_length = 100, required = False,
-            label = 'Description')
+    name = forms.CharField(
+        max_length=50,
+        label='Address',
+        help_text='The network/address in CIDR form (x.x.x.x or x.x.x.x/xx)'
+    )
+    description = forms.CharField(
+        max_length=100,
+        required=False,
+        label='Description'
+    )
 
 class NetworkRangeAddForm(forms.Form):
-    range = forms.CharField(max_length = 50, label = 'Range')
-    description = forms.CharField(max_length = 100, required = False,
-            label = 'Description')
+    range = forms.CharField(
+        max_length=50,
+        label='Range'
+    )
+    description = forms.CharField(
+        max_length=100,
+        required=False,
+        label='Description'
+    )
 
 class NetworkDeleteForm(forms.Form):
-    recursive = forms.BooleanField(label = 'Recursive delete',
-            required = False)
+    recursive = forms.BooleanField(
+        label='Recursive delete',
+        required=False
+    )
 
 class PasswordKeyAddForm(forms.Form):
-    name = forms.CharField(max_length = 50, label = 'Name')
-    key = forms.CharField(max_length = 32, label = 'Key',
-            widget = forms.PasswordInput(), required = False)
-    validate = forms.CharField(max_length = 32, label = 'Key (again)',
-            widget = forms.PasswordInput(), required = False)
-    description = forms.CharField(max_length = 100, required = False,
-            label = 'Description')
+    name = forms.CharField(
+        max_length=50,
+        label='Name'
+    )
+    key = forms.CharField(
+        max_length=32,
+        label='Key',
+        widget=forms.PasswordInput(),
+        required=False
+    )
+    validate = forms.CharField(
+        max_length=32,
+        label='Key (again)',
+        widget=forms.PasswordInput(),
+        required=False
+    )
+    description = forms.CharField(
+        max_length=100,
+        required=False,
+        label='Description'
+    )
 
 class CounterAddBasicForm(forms.Form):
-    name = forms.CharField(max_length = 50, label = 'Name')
-    description = forms.CharField(max_length = 100, required = False,
-            label = 'Description')
+    name = forms.CharField(
+        max_length=50,
+        label='Name'
+    )
+    description = forms.CharField(
+        max_length=100,
+        required=False,
+        label='Description'
+    )
 
 class CounterAddLoopingForm(forms.Form):
-    name = forms.CharField(max_length = 50, label = 'Name')
-    description = forms.CharField(max_length = 100, required = False,
-            label = 'Description')
-    values = forms.CharField(max_length = 5000, label = 'Values',
-                help_text = 'one value per row',
-                widget = forms.Textarea(attrs={'cols':'30', 'rows': '5'}))
+    name = forms.CharField(
+        max_length=50,
+        label='Name'
+    )
+    description = forms.CharField(
+        max_length=100,
+        required=False,
+        label='Description'
+    )
+    values = forms.CharField(
+        max_length=5000,
+        label='Values',
+        help_text='one value per row',
+        widget=forms.Textarea(attrs={'cols':'30', 'rows': '5'})
+    )
 
 class CounterUpdateBasicForm(forms.Form):
-    name = forms.CharField(max_length = 50, label = 'Name')
-    description = forms.CharField(max_length = 100, required = False,
-            label = 'Description')
-    value = forms.DecimalField(min_value = 0, decimal_places = 0,
-            label = 'Value')
+    name = forms.CharField(
+        max_length=50,
+        label='Name'
+    )
+    description = forms.CharField(
+        max_length=100,
+        required=False,
+        label='Description'
+    )
+    value = forms.DecimalField(
+        min_value=0,
+        decimal_places=0,
+        label='Value'
+    )
 
 class CounterUpdateLoopingForm(forms.Form):
-    name = forms.CharField(max_length = 50, label = 'Name')
-    description = forms.CharField(max_length = 100, required = False,
-            label = 'Description')
-    value = forms.CharField(max_length = 50, label = 'Value')
-    values = forms.CharField(max_length = 5000, label = 'Values',
-                help_text = 'one value per row',
-                widget = forms.Textarea(attrs={'cols':'30', 'rows': '5'}))
+    name = forms.CharField(
+        max_length=50,
+        label='Name'
+    )
+    description = forms.CharField(
+        max_length=100,
+        required=False,
+        label='Description'
+    )
+    value = forms.CharField(
+        max_length=50,
+        label='Value'
+    )
+    values = forms.CharField(
+        max_length=5000,
+        label='Values',
+        help_text='one value per row',
+        widget=forms.Textarea(attrs={'cols':'30', 'rows': '5'})
+    )
 
 class CounterSetForm(forms.Form):
-    value = forms.DecimalField(min_value = 0, decimal_places = 0,
-            label = 'Value')
+    value = forms.DecimalField(
+        min_value=0,
+        decimal_places=0,
+        label='Value'
+    )
 
 class PasswordAddForm(forms.Form):
-    pw_username = forms.CharField(max_length = 50, label = 'Username',
-            required = False)
-    pw_password = forms.CharField(max_length = 250, label = 'Password',
-            widget = forms.PasswordInput(), required = False,
-            help_text = 'Max length: 250, leave empty for generated password.')
-    validate = forms.CharField(max_length = 250, label = 'Password (again)',
-            widget = forms.PasswordInput(), required = False)
-    description = forms.CharField(max_length = 100, required = False,
-            label = 'Description')
+    pw_username = forms.CharField(
+        max_length=50,
+        label='Username',
+        required=False
+    )
+    pw_password = forms.CharField(
+        max_length=250,
+        label='Password',
+        widget=forms.PasswordInput(),
+        required=False,
+        help_text='Max length: 250, leave empty for generated password.'
+    )
+    validate = forms.CharField(
+        max_length=250,
+        label='Password (again)',
+        widget=forms.PasswordInput(),
+        required=False
+    )
+    description = forms.CharField(
+        max_length=100,
+        required=False,
+        label='Description'
+    )
 
     def __init__(self, password_keys, *args, **kwargs):
         super(PasswordAddForm, self).__init__(*args, **kwargs)
@@ -111,7 +224,10 @@ class PasswordAddForm(forms.Form):
                 keylist.insert(0, value)
             else:
                 keylist.append(value)
-        field = forms.ChoiceField(label = 'Password key', choices = keylist)
+        field = forms.ChoiceField(
+            label='Password key',
+            choices=keylist
+        )
         self.fields['passwordkey'] = field
 
 class PasswordUpdateForm(forms.Form):
@@ -459,16 +575,36 @@ class AttributeUpdateIntForm(forms.Form):
 class AttributeUpdateLargeTextForm(forms.Form):
     def __init__(self, attribute, *args, **kwargs):
         super(AttributeUpdateLargeTextForm, self).__init__(*args, **kwargs)
-        field = forms.CharField(max_length = 5000, label = attribute.name,
-            initial = attribute.value,
-            required = False,
-            widget = forms.Textarea(attrs={'cols':'100', 'rows': '20'}))
+        field = forms.CharField(
+                max_length=5000,
+                label=attribute.name,
+                initial=attribute.value,
+                required=False,
+                widget=forms.Textarea(attrs={'cols':'100', 'rows': '20'})
+        )
         self.fields['value'] = field
 
 
 class AttributeAddTextForm(forms.Form):
-    name = forms.CharField(max_length=50, label='Name')
-    value = forms.CharField(max_length=50, label='Value', required=False)
+    name = forms.CharField(
+        max_length=50,
+        label='Name',
+        widget=forms.TextInput(
+                attrs={
+                        'placeholder': 'Name'
+                }
+        )
+    )
+    value = forms.CharField(
+        max_length=50,
+        label='Value',
+        required=False,
+        widget=forms.TextInput(
+                attrs={
+                        'placeholder': 'Value'
+                }
+        )
+    )
     ruletype = forms.CharField(
             initial='text',
             widget=forms.HiddenInput()
