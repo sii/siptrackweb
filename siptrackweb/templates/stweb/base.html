@@ -6,9 +6,9 @@
 <head>
     <title>{% block title %}siptrackweb{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static " siptrackweb/style.css " %}"/>
-    <link type="text/css" href="{% static " siptrackweb/bootstrap-3.3.4-dist/css/bootstrap.min.css " %}" rel="stylesheet" />
-    <link rel="shortcut icon" type="image/ico" href="{% static " siptrackweb/favicon.ico " %}"/>
+    <link rel="stylesheet" href="{% static "siptrackweb/style.css" %}"/>
+    <link type="text/css" href="{% static "siptrackweb/bootstrap-3.3.4-dist/css/bootstrap.min.css" %}" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/ico" href="{% static "siptrackweb/favicon.ico" %}"/>
 </head>
 
 <body>
@@ -112,9 +112,9 @@
         {% block content %}{% endblock %}
     </div>
 
-    <script src="{% static " siptrackweb/jquery-1.11.2.min.js " %}" type="text/javascript"></script>
-    <script src="{% static " siptrackweb/bootstrap-3.3.4-dist/js/bootstrap.min.js " %}" type="text/javascript"></script>
-    <script src="{% static " siptrackweb/siptrackweb.js " %}" type="text/javascript"></script>
+    <script src="{% static "siptrackweb/jquery-1.11.2.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "siptrackweb/bootstrap-3.3.4-dist/js/bootstrap.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "siptrackweb/siptrackweb.js" %}" type="text/javascript"></script>
     {% block js-includes %}{% endblock %}
 </body>
 
