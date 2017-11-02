@@ -15,8 +15,22 @@ function show_alert(alert_div, alert_type, alert_msg) {
     alert_div.show();
 }
 
+// Switch to the last viewed tab if there's a hash in url
+$(window).on("popstate", function() {
+    var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
+    $("a[href='" + anchor + "']").tab("show");
+});
+
 $(document).ready(function () {
     $('#searchinput').focus();
+
+    // Remember tabs across refresh
+    if (location.hash) {
+        $("a[href='" + location.hash + "']").tab("show");
+    }
+    $(document.body).on("click", "a[data-toggle]", function(event) {
+        location.hash = this.getAttribute("href");
+    });
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
