@@ -175,6 +175,15 @@ def display_device(request, pm, device):
     assoc_list = make_device_association_list(device)
     pm.render_var['device_association_list'] = assoc_list
     pm.render_var['device_rack'] = make_device_rack(device)
+    
+    device_password_assoc = {
+        'all': device.listAssociations(
+            include=['password', 'password category']
+        )
+    }
+    device_password_assoc['categories'] = [i for i in device_password_assoc['all'] if i.class_id == 'PC']
+    device_password_assoc['passwords'] = [i for i in device_password_assoc['all'] if i.class_id == 'P']
+    pm.render_var['device_password_associations'] = device_password_assoc
 
     pm.render_var['primary_network'] = None
     pm.render_var['default_gateway_guessed'] = True

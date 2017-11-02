@@ -146,7 +146,10 @@
 			{% endif %}
 			{% if device_config_template_list %}
 	            <li role="presentation"><a href="#device_config_template" aria-controls="device_config_template" role="tab" data-toggle="tab">Configuration templates</a></li>
-			{% endif %}
+            {% endif %}
+            {% if device_password_associations.all %}
+                <li role="presentation"><a href="#linkedpasswords" aria-controls="linkedpasswords" role="tab" data-toggle="tab">Linked passwords</a></li>
+            {% endif %}
             <li role="presentation"><a href="#other" aria-controls="other" role="tab" data-toggle="tab">Other</a></li>
         </ul>
 
@@ -179,6 +182,7 @@
                 {% endif %}
                 </div>
             </div>
+
             <div role="tabpanel" class="tab-pane fade" id="attributes">
                 <div class="row">
                     <div class="col-md-12">
@@ -187,6 +191,7 @@
                     </div>
                 </div>
             </div>
+
 			{% if device_config_list %}
 			<div role="tabpanel" class="tab-pane fade" id="device_config">
                 <div class="row">
@@ -195,12 +200,14 @@
                     </div>
                 </div>
 			</div>
-			{% endif %}
+            {% endif %}
+            
 			{% if device_config_template_list %}
 			<div role="tabpanel" class="tab-pane fade" id="device_config_template">
 				{% include "stweb/views/devices/display_config_template_list.html" %}
 			</div>
-			{% endif %}
+            {% endif %}
+            
             <div role="tabpanel" class="tab-pane fade" id="other">
                 <div class="row">
                     <div class="col-md-12">
@@ -209,6 +216,16 @@
                     </div>
                 </div>
             </div>
+
+            {% if device_password_associations.all %}
+            <div role="tabpanel" class="tab-pane fade" id="linkedpasswords">
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include "stweb/views/devices/display_password_associations.html" %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

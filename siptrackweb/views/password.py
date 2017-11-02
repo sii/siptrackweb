@@ -43,6 +43,11 @@ def display(request, oid):
     pm.path(password)
 
     pm.render_var['attribute_list'] = attribute.parse_attributes(password)
+
+    if pm.tagged_oid and pm.tagged_oid.oid != password.oid and \
+            pm.tagged_oid.class_name == 'device':
+        pm.render_var['valid_tag_target'] = True
+
     return pm.render()
 
 @helpers.authcheck
@@ -198,6 +203,11 @@ def category_display(request, oid):
     pm.render_var['attribute_list'] = attribute.parse_attributes(pc)
     pm.render_var['password_category_list'] = pc.listChildren(include = ['password category'])
     pm.render_var['password_list'] = pc.listChildren(include = ['password'])
+
+    if pm.tagged_oid and pm.tagged_oid.oid != pc.oid and \
+            pm.tagged_oid.class_name == 'device':
+        pm.render_var['valid_tag_target'] = True
+
     return pm.render()
 
 @helpers.authcheck

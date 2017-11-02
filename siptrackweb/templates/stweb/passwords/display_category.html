@@ -25,6 +25,21 @@
             <a class="btn btn-danger" href="/password/category/delete/{{ password_category.oid|urlencode }}/">Delete category</a>
 
             {% endif %}
+
+            {% if valid_tag_target %}
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Tag <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    {% if valid_tag_target %}
+                        <li>
+                            <a href="/device/association/add/{{ password_category.oid|urlencode }}/">Link with tagged object</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% endif %}
         </div>
     </div>
 

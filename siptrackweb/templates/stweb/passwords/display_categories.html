@@ -16,6 +16,7 @@
       <tr>
 				<td>
 					<a href="/password/category/display/{{ category.oid|urlencode }}/">
+						<span class="glyphicon glyphicon-folder-close"></span> 
 						{% if category.attributes.name %}
 							{{ category.attributes.name|escape }}
 						{% else %}
