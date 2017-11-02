@@ -60,6 +60,11 @@ urlpatterns = [
     url(r'^attribute/quickedit/(?P<attr_name>[^/]+)/post/(?P<oid>[^/]+)/$', attribute.quickedit_post,
         name='siptrackweb.views.attribute.quickedit_post'),
 
+    url(
+        r'^template/export/(?P<oid>[^/]+)/$',
+        template.export,
+        name='siptrackweb.views.template.export'
+    ),
     url(r'^template/apply/select/(?P<target_oid>[^/]+)/(?P<template_type>[^/]+)/$',
         template.apply_select, name='siptrackweb.views.template.apply_select'),
     url(r'^template/apply/set/(?P<target_oid>[^/]+)/(?P<template_type>[^/]+)/$', template.apply_set,

@@ -1,3 +1,5 @@
+from django.http import JsonResponse
+
 import siptracklib.errors
 from siptracklib import device
 
@@ -31,6 +33,79 @@ def display(request, oid):
             pm.render_var['valid_copy_target'] = True
     pm.path(template)
     return pm.render()
+
+
+@helpers.authcheck
+def export(request, oid):
+    pm = helpers.PageManager(request, 'stweb/templates/display.html')
+
+    template = pm.object_store.getOID(oid)
+    sorted_rules = sort_rules(template)
+    export_data = {}
+
+    for (class_id, rules) in sorted_rules.items():
+        if not len(rules):
+            continue
+
+        for rule in rules:
+            export_data[rule.class_name] = []
+
+            if rule.class_name == 'template rule text':
+                export_data[rule.class_name].append({
+                    'args': [
+                        rule.attr_name,
+                        rule.versions
+                    ]
+                })
+        
+            if rule.class_name == 'template rule fixed':
+                export_data[rule.class_name].append({
+                    'args': [
+                        rule.attr_name,
+                        rule.value,
+                        rule.variable_expansion,
+                        rule.versions
+                    ]
+                })
+        
+            if rule.class_name == 'template rule regmatch':
+                export_data[rule.class_name].append({
+                    'args': [
+                        rule.attr_name,
+                        rule.regexp,
+                        rule.versions
+                    ]
+                })
+        
+            if rule.class_name == 'template rule bool':
+                export_data[rule.class_name].append({
+                    'args': [
+                        rule.attr_name,
+                        rule.default_value,
+                        rule.versions
+                    ]
+                })
+        
+            if rule.class_name == 'template rule int':
+                export_data[rule.class_name].append({
+                    'args': [
+                        rule.attr_name,
+                        rule.default_value,
+                        rule.versions
+                    ]
+                })
+            
+    response = JsonResponse(
+        export_data,
+        content_type='application/force-download'
+    )
+    response['Content-Disposition'] = 'attachment; filename={filename}'.format(
+        filename='Template_{oid}.json'.format(
+            oid=oid
+        )
+    )
+    return response
+
 
 @helpers.authcheck
 def add(request, template_type, parent_oid):
