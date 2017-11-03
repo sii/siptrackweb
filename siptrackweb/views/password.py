@@ -28,6 +28,7 @@ def index(request, view_oid):
     pm.render_var['password_key_list'] = view.listChildren(include = ['password key'])
     pm.render_var['password_category_list'] = password_tree.listChildren(include = ['password category'])
     pm.render_var['password_list'] = password_tree.listChildren(include = ['password'])
+
     return pm.render()
 
 @helpers.authcheck
@@ -63,6 +64,7 @@ def key_display(request, oid):
     user_manager = view_tree.user_manager
     user_list = []
     
+    # Enumerate list of users connected to the key
     if request.session['administrator']:
         for users in user_manager.listChildren():
             try:

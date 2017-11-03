@@ -39,6 +39,8 @@ def valid_login(request, username, password):
     request.session['username'] = username
     session_user = st.getSessionUser()
     request.session['administrator'] = session_user.administrator
+    request.session['user_oid'] = session_user.oid
+
     return True
 
 def authcheck(func):
@@ -85,6 +87,7 @@ class PageManager(object):
         self.render_var['username'] = request.session['username']
         self.render_var['administrator'] = request.session['administrator']
         self.render_var['write_access'] = True
+        self.render_var['user_oid'] = request.session['user_oid']
         self.render_var['section'] = section
         
         if request.session.get('verbose', False) is True:
