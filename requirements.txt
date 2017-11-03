@@ -1,2 +1,2 @@
 Django
-textile
+textile==2.2.2
