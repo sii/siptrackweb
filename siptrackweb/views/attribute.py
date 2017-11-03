@@ -12,8 +12,7 @@ def parse_attributes(obj):
             value = attr.value
             if type(value) == str:
                 value = value.decode('utf-8')
-            converted = textile.textile(value,
-                    encoding = 'utf-8', output = 'utf-8')
+            converted = textile.textile(value)
             d = {'attribute': attr, 'converted': converted}
             attr_list['wikitext'].append(d)
         elif attr.attributes.get('large'):
