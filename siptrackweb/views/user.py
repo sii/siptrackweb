@@ -315,7 +315,7 @@ def reset_password_post(request, oid):
     new_password = pm.form.cleaned_data['password']
     new_password_verify = pm.form.cleaned_data['validate']
     if len(new_password) == 0:
-        return pm.error('password to short')
+        return pm.error('password too short')
     if new_password != new_password_verify:
         return pm.error('passwords don\'t match')
     user.resetPassword(new_password)
