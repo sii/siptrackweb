@@ -7,23 +7,48 @@
 	  <div class="panel panel-default">
 	    <div class="panel-heading" role="tab" id="headingOne">
 	      <h4 class="panel-title">
-	        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+	        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#advancedSearch" aria-expanded="true" aria-controls="advancedSearch">
 	          Advanced search <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 	        </a>
 	      </h4>
     	</div>
-	    <div id="collapseOne" class="panel-collapse collapse {{search_attribute|yesno:"in,none"}}" role="tabpanel" aria-labelledby="headingOne">
+	    <div id="advancedSearch" class="panel-collapse collapse {{search_attribute|yesno:"in,none"}}" role="tabpanel" aria-labelledby="headingOne">
 	      <div class="panel-body">
-					<p>Input the exact name of an attribute, and optionally a pattern to search that attribute for. Pattern can take wildcards like <strong>*</strong> and <strong>?</strong>.</p>
+					<p>Input the exact name of an attribute, and optionally a pattern to search that attribute for.</p>
+
 					<form id="advancedSearchForm" method="GET">
+
 						<div class="form-group">
 							<label for="inputAttribute">Attribute name</label>
 							<input type="text" class="form-control" id="inputAttribute" name="searchAttribute" placeholder="Attribute name" value="{{search_attribute}}">
 						</div>
+
 						<div class="form-group">
 							<label for="inputAttributeValue">Attribute value</label>
 							<input type="text" class="form-control" id="inputAttributeValue" name="searchValue" placeholder="Attribute value pattern like 'SAL?123*' for example" value="{{searchstring}}">
+							<p class="help-block">Pattern can take wildcards like <strong>*</strong> and <strong>?</strong>.</p>
 						</div>
+
+						<div class="form-group">
+							<label for="inputAttributesList">Attributes list</label>
+							<input type="text" class="form-control" id="inputAttributesList" name="attributesList" placeholder="model,serialnumber" value="{{attributes_list|join:', '}}">
+							<p class="help-block">
+								A comma-separated list of up to 5 attributes that will be shown in the search results.
+							</p>
+						</div>
+
+						<div class="form-group">
+							<label for="displayTypes">Display types</label>
+							<select name="displayTypes" multiple class="form-control">
+								<option {% if 'devices' in display_types %}selected {% endif %}>devices</option>
+								<option {% if 'device categories' in display_types %}selected {% endif %}>device categories</option>
+								<option {% if 'passwords' in display_types %}selected {% endif %}>passwords</option>
+								<option {% if 'password categories' in display_types %}selected {% endif %}>password categories</option>
+								<option {% if 'networks' in display_types %}selected {% endif %}>networks</option>
+							</select>
+							<p class="help-block">Determine which object types show up in results.</p>
+						</div>
+
 						<button type="submit" class="btn btn-default">Search</button>
 					</form>
 	      </div>
@@ -33,15 +58,18 @@
 
 	{% if searchresults.resultcount %}
 
-		{% if searchresults.devices %}
+		{% if searchresults.devices and 'devices' in display_types %}
 			<div class="content-header">
 				Device Matches
 			</div>
 			<div class="content-data">
-				<table class="table-hover table-striped infotable">
+				<table class="table table-hover table-striped infotable">
 					<tr>
-						<th class="infotable">Name</th>
-						<th class="infotable">Description</th>
+						<th>Name</th>
+						<th>Description</th>
+						{% for attribute_name in attributes_list %}
+						<th>{{attribute_name|escape}}</th>
+						{% endfor %}
 					</tr>
 					{% for device in searchresults.devices %}
 					<tr>
@@ -51,6 +79,12 @@
 						<td>
 							{{ device.attributes.description }}
 						</td>
+
+						{% for attribute_name in attributes_list %}
+						<td>
+							{{device.attributes | get_item:attribute_name | default:"" | escape }}
+						</td>
+						{% endfor %}
 					</tr>
 					{% endfor %}
 				</table>
@@ -59,15 +93,18 @@
 			<br/>
 		{% endif %}
 
-		{% if searchresults.device_categories %}
+		{% if searchresults.device_categories and 'device categories' in display_types %}
 			<div class="content-header">
 				Device Category Matches
 			</div>
 			<div class="content-data">
-				<table class="table-hover table-striped infotable">
+				<table class="table table-hover table-striped infotable">
 					<tr>
-						<th class="infotable">Name</th>
-						<th class="infotable">Description</th>
+						<th>Name</th>
+						<th>Description</th>
+						{% for attribute_name in attributes_list %}
+						<th>{{attribute_name|escape}}</th>
+						{% endfor %}
 					</tr>
 					{% for device_category in searchresults.device_categories %}
 					<tr>
@@ -77,6 +114,12 @@
 						<td>
 							{{ device_category.attributes.description }}
 						</td>
+
+						{% for attribute_name in attributes_list %}
+						<td>
+							{{device_category.attributes | get_item:attribute_name | default:"" | escape }}
+						</td>
+						{% endfor %}
 					</tr>
 					{% endfor %}
 				</table>
@@ -85,18 +128,18 @@
 			<br/>
 		{% endif %}
 
-    {% if searchresults.passwords %}
+    {% if searchresults.passwords and 'passwords' in display_types %}
       <div class="content-header">
         Password matches
       </div>
       <div class="content-data">
-        <table class="table-hover table-striped infotable">
+        <table class="table table-hover table-striped infotable">
           <tr>
-            <th class="infotable">Username</th>
-            <th class="infotable">Password</th>
-            <th class="infotable">Description</th>
-            <th class="infotable">Key</th>
-            <th class="infotable">Action</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Description</th>
+						<th>Key</th>
+            <th>Action</th>
           </tr>
           {% for password in searchresults.passwords %}
           <tr>
@@ -127,15 +170,18 @@
 			<br/>
     {% endif %}
 
-    {% if searchresults.password_categories %}
+    {% if searchresults.password_categories and 'password categories' in display_types %}
       <div class="content-header">
         Password category matches
       </div>
       <div class="content-data">
-        <table class="table-hover table-striped infotable">
+        <table class="table table-hover table-striped infotable">
           <tr>
-            <th class="infotable">Name</th>
-            <th class="infotable">Description</th>
+            <th>Name</th>
+						<th>Description</th>
+						{% for attribute_name in attributes_list %}
+						<th>{{attribute_name|escape}}</th>
+						{% endfor %}
           </tr>
           {% for category in searchresults.password_categories %}
           <tr>
@@ -144,7 +190,13 @@
             </td>
             <td>
               {{category.attributes.description}}
-            </td>
+						</td>
+
+						{% for attribute_name in attributes_list %}
+						<td>
+							{{category.attributes | get_item:attribute_name | default:"" | escape }}
+						</td>
+						{% endfor %}
           </tr>
           {% endfor %}
         </table>
@@ -153,15 +205,18 @@
 			<br/>
     {% endif %}
 
-		{% if searchresults.networks %}
+		{% if searchresults.networks and 'networks' in display_types %}
 			<div class="content-header">
 				Network Matches
 			</div>
 			<div class="content-data">
-				<table class="table-hover table-striped infotable">
+				<table class="table table-hover table-striped infotable">
 					<tr>
-						<th class="infotable">Name</th>
-						<th class="infotable">Description</th>
+						<th>Name</th>
+						<th>Description</th>
+						{% for attribute_name in attributes_list %}
+						<th>{{attribute_name|escape}}</th>
+						{% endfor %}
 					</tr>
 					{% for network in searchresults.networks %}
 					<tr>
@@ -171,6 +226,12 @@
 						<td>
 							{{ network.attributes.description }}
 						</td>
+
+						{% for attribute_name in attributes_list %}
+						<td>
+							{{network.attributes | get_item:attribute_name | default:"" | escape }}
+						</td>
+						{% endfor %}
 					</tr>
 					{% endfor %}
 				</table>

@@ -7,10 +7,18 @@ from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.http import (HttpResponse, HttpResponseRedirect)
 from django.conf import settings
+from django.template.defaulttags import register
 
 import siptracklib
 import siptracklib.errors
 from siptrackweb import forms
+
+
+# Custom jinja2 filter to lookup dict keys
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
+
 
 def get_siptrack_server():
     if not getattr(settings, 'SIPTRACK_SERVER', None):

@@ -2,13 +2,14 @@ from django.http import HttpResponse
 from django.template import Context, loader
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response                                 
+from django.shortcuts import render_to_response
 
 import siptracklib.errors
 
 import view
 import helpers
-from siptrackweb.forms import ViewSearchForm, LoginForm
+from siptrackweb.forms import ViewSearchForm, LoginForm, ViewAdvancedSearchForm
+
 
 def login(request):
     render_var = {'form': None, 'errormsg': ''}
@@ -56,19 +57,49 @@ def prototypejs(request):
 @helpers.authcheck
 def search(request):
     searchstring = None
-    search_attribute = None
+    search_attribute = 'name'
+    search_value = None
+    search_attributes = None
+    search_attributes_list = []
+    advanced_search = False
+    display_types = []
 
     pm = helpers.PageManager(request, 'stweb/views/search_results.html')
+
+    # Determine if we're using the advanced search form or not.
     if 'searchAttribute' in request.GET:
-        search_attribute = request.GET.get('searchAttribute')
-        search_value = request.GET.get('searchValue', '')
-    elif 'searchstring' in request.GET:
-        searchstring = request.GET['searchstring']
+        pm.setForm(ViewAdvancedSearchForm(request.GET))
+        advanced_search = True
     else:
         pm.setForm(ViewSearchForm(request.POST))
-        if not pm.form.is_valid():
-            return pm.render()
+
+    if not pm.form.is_valid():
+        return pm.render()
+
+    if advanced_search:
+        search_attribute = pm.form.cleaned_data['searchAttribute']
+        search_value = pm.form.cleaned_data['searchValue']
+        search_attributes = pm.form.cleaned_data['attributesList']
+        display_types = pm.form.cleaned_data['displayTypes']
+    else:
         searchstring = pm.form.cleaned_data['searchstring']
+        display_types = [
+            'devices',
+            'device categories',
+            'passwords',
+            'password categories',
+            'networks'
+        ]
+
+    if search_value:
+        search_value = search_value.strip().lower()
+
+    # Restrict number of attribute names we can show in the html table.
+    if search_attributes:
+        for attribute_name in search_attributes.split(',')[:5]:
+            search_attributes_list.append(
+                attribute_name.strip()
+            )
 
     if searchstring:
         searchstring = searchstring.strip().lower()
@@ -96,6 +127,14 @@ def search(request):
     pm.render_var['searchresults'] = searchresults
     pm.render_var['searchstring'] = searchstring
     pm.render_var['search_attribute'] = search_attribute
+    pm.render_var['attributes_list'] = search_attributes_list
+    pm.render_var['display_types'] = display_types
+
+    pm.render_var['browsable_path'] = [{
+        'name': 'Search results',
+        'path': '/search/'
+    }]
+
     return pm.render()
 
 @helpers.authcheck

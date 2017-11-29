@@ -56,6 +56,35 @@ class ViewSearchForm(forms.Form):
         widget=forms.TextInput(attrs={'id': 'searchbox'})
     )
 
+
+class ViewAdvancedSearchForm(forms.Form):
+    searchAttribute = forms.CharField(
+        max_length=50,
+        required=True
+    )
+
+    searchValue = forms.CharField(
+        max_length=50,
+        required=False
+    )
+
+    attributesList = forms.CharField(
+        max_length=256,
+        required=False
+    )
+
+    OPTIONS = (
+        ('devices', 'devices'),
+        ('device categories', 'device categories'),
+        ('passwords', 'passwords'),
+        ('password categories', 'password categories'),
+        ('networks', 'networks')
+    )
+
+    displayTypes = forms.MultipleChoiceField(
+        choices=OPTIONS
+    )
+
 class NetworkTreeAddForm(forms.Form):
     name = forms.CharField(
         max_length=50,
