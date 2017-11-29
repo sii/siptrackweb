@@ -1,0 +1,47 @@
+{% if attribute_list.files %}
+<div class="content-header">
+    Attached files
+</div>
+<div class="content-data">
+    <div id="display_attributes">
+        <table class="table table-striped table-hover table-bordered infotable">
+            <thead>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Action</th>
+            </thead>
+            {% for attr in attribute_list.files %}
+            <tr>
+                <td>
+                    <a href="/attribute/display/{{ attr.oid }}/">
+                        <span class="glyphicon glyphicon-glyphicon-file"></span>
+                        {{ attr.name|escape }}
+                    </a>
+                </td>
+                <td>{{ attr.value|escape }}</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Action buttons">
+                        {% if write_access %}
+                        <a class="btn btn-default" href="/attribute/update/{{ attr.oid }}/">edit</a>
+                        <a class="btn btn-default" href="/attribute/delete/{{ attr.oid }}/">delete</a>
+                        {% endif %}
+                        <a class="btn btn-default" href="/attribute/display/{{ attr.oid }}/">display</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+<br/>
+<br/> {% endif %}
+
+<div class="content-header">
+    Upload file
+</div>
+
+<div class="content-data">
+    <form id="fileAttributeForm">
+        hej
+    </form>
+</div>

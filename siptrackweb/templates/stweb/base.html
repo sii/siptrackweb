@@ -49,6 +49,7 @@
                     </li>
                 </ul>
                 <form class="navbar-form navbar-right" role="search" action="/search/" method="post">
+                    {% csrf_token %}
                     <div class="form-group">
                         <input id="searchinput" type="text" class="form-control" placeholder="Search" name="searchstring">
                     </div>

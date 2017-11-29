@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.template import Context, loader
+from django.template import Context, loader, RequestContext
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response                                 
@@ -25,7 +25,12 @@ def login(request):
         else:
             render_var['errormsg'] = 'Invalid username/password.'
     render_var['form'] = LoginForm()
-    return render_to_response('stweb/login.html', render_var)
+
+    return render_to_response(
+        'stweb/login.html',
+        render_var,
+        RequestContext(request)
+    )
 
 @helpers.authcheck
 def logout(request):

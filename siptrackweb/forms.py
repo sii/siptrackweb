@@ -554,12 +554,15 @@ class NetworkAttributeAddSelectTypeForm(forms.Form):
 
 
 class AttributeAddSelectTypeForm(forms.Form):
-    ruletype = forms.ChoiceField(label = 'Attribute type',
-            choices = (
-                ('text', 'text'),
-                ('bool', 'boolean'),
-                ('int', 'int')
-                ))
+    ruletype = forms.ChoiceField(
+        label='Attribute type',
+        choices=(
+            ('text', 'text'),
+            ('bool', 'boolean'),
+            ('int', 'int'),
+            ('file', 'file')
+        ))
+
 
 class AttributeUpdateTextForm(forms.Form):
     value = forms.CharField(max_length = 50, label = 'New value',
@@ -590,9 +593,9 @@ class AttributeAddTextForm(forms.Form):
         max_length=50,
         label='Name',
         widget=forms.TextInput(
-                attrs={
-                        'placeholder': 'Name'
-                }
+            attrs={
+                'placeholder': 'Name'
+            }
         )
     )
     value = forms.CharField(
@@ -600,9 +603,9 @@ class AttributeAddTextForm(forms.Form):
         label='Value',
         required=False,
         widget=forms.TextInput(
-                attrs={
-                        'placeholder': 'Value'
-                }
+            attrs={
+                'placeholder': 'Value'
+            }
         )
     )
     ruletype = forms.CharField(
@@ -661,14 +664,43 @@ class AttributeAddBoolForm(forms.Form):
 class AttributeAddIntForm(forms.Form):
     name = forms.CharField(max_length = 50, label = 'Name')
     value = forms.IntegerField(label = 'Integer Value', initial = 0)
-    ruletype = forms.CharField(initial = 'int',
-            widget = forms.HiddenInput())
-    versions = forms.IntegerField(label = 'Versions',
-            min_value = 1, initial = 1,
-            help_text = 'If set to > 1 a versioned attribute will be created.')
-    important = forms.BooleanField(label = 'Important attribute',
-                                   required = False,
-                                   help_text = 'If true, the attribute will be displayed on a device/entities overview page.')
+    ruletype = forms.CharField(
+        initial = 'int',
+        widget = forms.HiddenInput()
+    )
+    versions = forms.IntegerField(
+        label = 'Versions',
+        min_value = 1, initial = 1,
+        help_text = 'If set to > 1 a versioned attribute will be created.'
+    )
+    important = forms.BooleanField(
+        label = 'Important attribute',
+        required = False,
+        help_text = 'If true, the attribute will be displayed on a device/entities overview page.'
+    )
+
+
+class AttributeFileUploadForm(forms.Form):
+    name = forms.CharField(
+        max_length=50,
+        label='Name'
+    )
+    value = forms.FileField(
+        label='Value',
+        required=True
+    )
+    important = forms.BooleanField(
+        label='Important attribute',
+        required=False,
+        help_text='Attribute will be displayed on a device/entities overview page.'
+    )
+    versions = forms.IntegerField(
+        label='Versions',
+        min_value=1,
+        initial=1,
+        help_text='If set to > 1 a versioned attribute will be created.'
+    )
+
 
 class DeviceCategoryAddForm(forms.Form):
     name = forms.CharField(max_length = 50, label = 'Name')

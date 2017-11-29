@@ -4,6 +4,7 @@ import json
 import re
 
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.http import (HttpResponse, HttpResponseRedirect)
 from django.conf import settings
@@ -153,7 +154,11 @@ class PageManager(object):
         if self.request.session.get('error_msg') is not None:
             self.render_var['message'] = self.request.session['error_msg']
             del self.request.session['error_msg']
-        return render_to_response(path, self.render_var)
+        return render_to_response(
+            path,
+            self.render_var,
+            RequestContext(self.request)
+        )
 
     def renderJSON(self, data, http_headers = None):
         data = json.dumps(data, sort_keys=True, indent=2)

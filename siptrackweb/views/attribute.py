@@ -6,7 +6,14 @@ from siptrackweb.views import helpers
 from siptrackweb.forms import *
 
 def parse_attributes(obj):
-    attr_list = {'standard': [], 'important': [], 'wikitext': [], 'large': []}
+    attr_list = {
+        'standard': [],
+        'important': [],
+        'wikitext': [],
+        'large': [],
+        'files': []
+    }
+
     for attr in obj.attributes:
         if attr.attributes.get('wikitext'):
             value = attr.value
@@ -67,6 +74,8 @@ def add_set(request, target_oid):
         form = AttributeAddBoolForm()
     elif form.cleaned_data['ruletype'] == 'int':
         form = AttributeAddIntForm()
+    elif form.cleaned_data['ruletype'] == 'file':
+        form = AttributeFileUploadForm()
     else:
         return pm.error('bad, invalid attribute type')
     path = '/attribute/add/post/%s/' % (target_oid)
@@ -88,18 +97,23 @@ def add_post(request, target_oid):
         # Encrypted attribute for password attributes
         if target.class_name == 'password':
             form = PasswordAttributeAddTextForm(request.POST)
+
     elif ruletype == 'bool':
         form = AttributeAddBoolForm(request.POST)
     elif ruletype == 'int':
         form = AttributeAddIntForm(request.POST)
+    elif ruletype == 'file':
+        form = AttributeFileUploadForm(request.POST)
     else:
         return pm.error('bad, invalid ruletype')
 
     pm.addForm(form, path, 'add attribute')
+
     if not form.is_valid():
         return pm.error('')
 
     attr_name = form.cleaned_data['name']
+
     if ruletype == 'text':
         attr_value = form.cleaned_data['value']
 
@@ -120,6 +134,7 @@ def add_post(request, target_oid):
             )
         else:
             attr = target.add('attribute', attr_name, 'text', attr_value)
+
     elif ruletype == 'bool':
         attr_value = form.cleaned_data['value']
         if attr_value == 'true':
@@ -131,6 +146,7 @@ def add_post(request, target_oid):
         else:
             attr = target.add('versioned attribute', attr_name, 'bool',
                     attr_value, form.cleaned_data['versions'])
+
     if ruletype == 'int':
         attr_value = form.cleaned_data['value']
         if form.cleaned_data['versions'] == 1:
@@ -138,6 +154,10 @@ def add_post(request, target_oid):
         else:
             attr = target.add('versioned attribute', attr_name, 'int',
                     attr_value, form.cleaned_data['versions'])
+
+    if ruletype == 'file':
+        attr_file = ''
+
     if form.cleaned_data.get('wikitext', False):
          attr.attributes['wikitext'] = True
     if form.cleaned_data.get('large', False):

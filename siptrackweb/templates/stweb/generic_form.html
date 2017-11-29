@@ -15,6 +15,7 @@
             </div>
         {% endif %}
         <form action="{{ form.action }}" {{ form.extraelements|safe }} method="post">
+            {% csrf_token %}
 
             {% for argument in form.form %}
                 {% if argument.is_hidden %}
