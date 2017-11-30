@@ -4,34 +4,25 @@
 </div>
 <div class="content-data">
     <div id="display_views">
-        <table class="infotable">
+        <table class="table table-striped infotable">
             <tr>
-                <th class="infotable">Name</th>
-                <th class="infotable">Description</th>
+                <th>Name</th>
+                <th>Description</th>
             </tr>
             {% for view in view_list %}
-                {% if forloop.counter|divisibleby:"2" %}
-                    <tr class="infotableeven">
-                        {% else %}
-                    <tr class="infotableodd">
-                {% endif %}
-            <td>
+            <tr>
+              <td>
                 <a href="/view/display/{{ view.oid|urlencode }}/">
-                    {% if view.attributes.name %}
-                        {{ view.attributes.name|escape }}
-                    {% else %}
-                        [UNKNOWN]
-                    {% endif %}
+                  <span class="glyphicon glyphicon-folder-close"></span>
+                  {{ view.attributes.name| default:"[UNKNOWN]" | escape }}
                 </a>
-            </td>
-            <td>
-                {{ view.attributes.description }}
-            </td>
+              </td>
+              <td>
+                {{ view.attributes.description | escape }}
+              </td>
             </tr>
             {% endfor %}
         </table>
     </div>
 </div>
-<br/>
-<br/>
 {% endif %}

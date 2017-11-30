@@ -5,21 +5,17 @@
 <div class="content-data">
 	<div id="display_devices_standard">
 		{% if device_list %}
-		<table class="infotable">
+		<table class="table table-striped infotable">
 			<tr>
-				<th class="infotable">Name</th>
-                <th class="infotable">Class</th>
-				<th class="infotable">Description</th>
+				<th>Name</th>
+        <th>Class</th>
+				<th>Description</th>
 			</tr>
 			{% for cur_device in device_list %}
 				{% if cur_device.attributes.disabled %}
-					<tr class="infotabledisabled">
+        <tr class="infotabledisabled">
 				{% else %}
-					{% if forloop.counter|divisibleby:"2" %}
-						<tr class="infotableeven">
-					{% else %}
-						<tr class="infotableodd {% if cur_device.attributes.disabled %}bgred{% endif %}">
-					{% endif %}
+        <tr>
 				{% endif %}
 					<td>
 						{% if cur_device.attributes.name %}

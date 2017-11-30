@@ -14,7 +14,10 @@
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a data-toggle="tooltip" data-placement="bottom" title="This will delete this entire view including all devices, networks etc." href="/view/delete/{{ target.oid }}/">Delete view</a>
+                        <a data-toggle="tooltip" data-placement="bottom" title="This will delete this entire view including all devices, networks etc." href="/view/delete/{{ target.oid }}/">
+                          <span class="glyphicon glyphicon-trash"></span>
+                          Delete view
+                        </a>
                         </li>
                     </ul>
                 </div>

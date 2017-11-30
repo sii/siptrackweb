@@ -4,24 +4,23 @@
 </div>
 <div class="content-data">
 	<div id="display_categories">
-		<table class="infotable">
+		<table class="table table-striped infotable">
 			<tr>
-				<th class="infotable">Name</th>
-				<th class="infotable">Description</th>
+				<th>Name</th>
+				<th>Description</th>
 			</tr>
 			{% for cur_category in category_list %}
-				{% if forloop.counter|divisibleby:"2" %}
-				<tr class="infotableeven">
-				{% else %}
-				<tr class="infotableodd">
-				{% endif %}
+      <tr>
 					<td>
-						<a href="/device/display/{{ cur_category.oid|urlencode }}/">{{ cur_category.attributes.name|escape }}</a><br/>
+            <a href="/device/display/{{ cur_category.oid|urlencode }}/">
+              <span class="glyphicon glyphicon-folder-close"></span>
+              {{ cur_category.attributes.name| default:"[UNKNOWN]" | escape }}
+            </a>
 					</td>
 					<td>
 						{{ cur_category.attributes.description|escape }}
 					</td>
-				</tr>
+      </tr>
 			{% endfor %}
 		</table>
 	</div>

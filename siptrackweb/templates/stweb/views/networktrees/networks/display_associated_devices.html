@@ -4,21 +4,17 @@
 </div>
 <div class="content-data">
 	<div id="display_network_assoc_devices">
-                <table class="infotable">
+                <table class="table table-striped infotable">
                         <tr>
-                                <th class="infotable">Associated Device</th>
-                                <th class="infotable">Device Class</th>
-                                <th class="infotable">Action</th>
+                                <th>Associated Device</th>
+                                <th>Device Class</th>
+                                <th>Action</th>
                         </tr>
                         {% for assoc in device_association_list %}
 				{% if assoc.obj.attributes.disabled %}
 					<tr class="infotabledisabled">
 				{% else %}
-					{% if forloop.counter|divisibleby:"2" %}
-					<tr class="infotableeven">
-					{% else %}
-					<tr class="infotableodd">
-					{% endif %}
+        <tr>
 				{% endif %}
                                         <td>
                                                 {% for pathinfo in assoc.path %}

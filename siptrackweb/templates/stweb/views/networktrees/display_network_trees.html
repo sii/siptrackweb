@@ -4,18 +4,14 @@
 </div>
 <div class="content-data">
     <div id="display_network_trees">
-        <table class="infotable">
+        <table class="table table-striped infotable">
             <tr>
-                <th class="infotable">Name</th>
-                <th class="infotable">Protocol</th>
-                <th class="infotable">Description</th>
+                <th>Name</th>
+                <th>Protocol</th>
+                <th>Description</th>
             </tr>
             {% for network_tree in network_tree_list %}
-                {% if forloop.counter|divisibleby:"2" %}
-                    <tr class="infotableeven">
-                        {% else %}
-                    <tr class="infotableodd">
-                {% endif %}
+            <tr>
             <td><a href="/network/display/{{ network_tree.oid }}/">{{ network_tree.attributes.name|default:"[UNKNOWN]" }}</a></td>
             <td>{{ network_tree.protocol }}</td>
             <td>{{ network_tree.attributes.description }}</td>

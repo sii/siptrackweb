@@ -4,18 +4,14 @@
 </div>
 <div class="content-data">
 	<div id="display_networks">
-		<table class="infotable">
+		<table class="table table-striped infotable">
 			<tr>
-				<th class="infotable">Address</th>
-				<th class="infotable">Associated Devices</th>
-				<th class="infotable">Description</th>
+				<th>Address</th>
+				<th>Associated Devices</th>
+				<th>Description</th>
 			</tr>
 			{% for cur_net in network_list %}
-				{% if forloop.counter|divisibleby:"2" %}
-				<tr class="infotableeven{% if cur_net.unallocated %} unallocatednetwork{% endif %}">
-				{% else %}
-				<tr class="infotableodd{% if cur_net.unallocated %} unallocatednetwork{% endif %}">
-				{% endif %}
+      <tr>
 					<td>
 						{% if cur_net.unallocated %}
 							{{ cur_net }}
