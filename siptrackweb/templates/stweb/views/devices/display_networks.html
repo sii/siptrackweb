@@ -40,11 +40,7 @@
             {% endfor %}
             {% for interface, networks in interface_network_host_list %}
                 {% for network in networks %}
-                    {% if forloop.counter|divisibleby:"2" %}
-                        <tr class="infotableeven{% ifequal assigned_network network.oid%} infotablehighlight {% endifequal %}">
-                            {% else %}
-                        <tr class="infotableodd{% ifequal assigned_network network.oid %} infotablehighlight {% endifequal %}">
-                    {% endif %}
+                    <tr>
                     <td>
 						<a href="/display/{{ network.oid|urlencode }}/">{{ network.strAddress|escape }}</a>
                     </td>
@@ -72,19 +68,15 @@
 		</table>
 		{% endif %}
 		{% if network_subnet_list %}
-		<table class="infotable">
+		<table class="table table-striped infotable">
 			<tr>
-				<th class="infotable">Subnet/Range</th>
-				<th class="infotable">Description</th>
-				<th class="infotable">Auto-assign</th>
-				<th class="infotable">Action</th>
+				<th>Subnet/Range</th>
+				<th>Description</th>
+				<th>Auto-assign</th>
+				<th>Action</th>
 			</tr>
 			{% for network in network_subnet_list %}
-				{% if forloop.counter|divisibleby:"2" %}
-				<tr class="infotableeven">
-				{% else %}
-				<tr class="infotableodd">
-				{% endif %}
+				<tr>
 					<td>
 						<a href="/display/{{ network.oid|urlencode }}/">{{ network|escape }}</a>
 					</td>
