@@ -92,10 +92,10 @@ class PageManager(object):
 #        self.render_var['view_list'] = \
 #            self.view_tree.listChildren(include = ['view'])
         self.render_var['searchform'] = forms.ViewSearchForm()
-        self.render_var['username'] = request.session['username']
-        self.render_var['administrator'] = request.session['administrator']
+        self.render_var['username'] = request.session.get('username')
+        self.render_var['administrator'] = request.session.get('administrator')
         self.render_var['write_access'] = True
-        self.render_var['user_oid'] = request.session['user_oid']
+        self.render_var['user_oid'] = request.session.get('user_oid')
         self.render_var['section'] = section
         
         if request.session.get('verbose', False) is True:

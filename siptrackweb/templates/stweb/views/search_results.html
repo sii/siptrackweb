@@ -109,7 +109,10 @@
 					{% for device_category in searchresults.device_categories %}
 					<tr>
 						<td>
-							<a href="/device/display/{{ device_category.oid }}/">{{ device_category.attributes.name }}</a>
+							<a href="/device/display/{{ device_category.oid }}/">
+								<span class="glyphicon glyphicon-folder-close"></span>
+								{{ device_category.attributes.name }}
+							</a>
 						</td>
 						<td>
 							{{ device_category.attributes.description }}
@@ -186,7 +189,10 @@
           {% for category in searchresults.password_categories %}
           <tr>
             <td>
-              <a href="/display/{{category.oid}}/">{{category.attributes.name}}</a>
+							<a href="/display/{{category.oid}}/">
+								<span class="glyphicon glyphicon-folder-close"></span>
+								{{category.attributes.name}}
+							</a>
             </td>
             <td>
               {{category.attributes.description}}
