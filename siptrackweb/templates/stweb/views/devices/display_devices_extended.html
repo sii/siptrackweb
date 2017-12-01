@@ -5,18 +5,14 @@
 <div class="content-data">
 	<div id="display_devices_ext">
 		{% if device_list %}
-		<table class="infotable">
+		<table class="table table-striped infotable">
 			<tr>
-				<th class="infotable">Name</th>
-				<th class="infotable">Linked Devices</th>
-				<th class="infotable">Description</th>
+				<th>Name</th>
+				<th>Linked Devices</th>
+				<th>Description</th>
 			</tr>
 			{% for cur_device in device_list %}
-				{% if forloop.counter|divisibleby:"2" %}
-				<tr class="infotableeven">
-				{% else %}
-				<tr class="infotableodd">
-				{% endif %}
+				<tr>
 					<td>
 						{% if cur_device.attributes.name %}
 						<a {% if cur_device.attributes.disabled %} class="disabledbg" {% endif %} href="/device/display/{{ cur_device.oid|urlencode }}/">{{ cur_device.attributes.name|escape }}</a><br/>

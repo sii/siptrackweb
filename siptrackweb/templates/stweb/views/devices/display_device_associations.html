@@ -5,18 +5,14 @@
 <div class="content-data">
 	<div id="display_device_links">
 		{% if device_association_list %}
-		<table class="infotable">
+		<table class="table table-striped infotable">
 			<tr>
-				<th class="infotable">Associated Device</th>
-				<th class="infotable">Device Class</th>
-				<th class="infotable">Action</th>
+				<th>Associated Device</th>
+				<th>Device Class</th>
+				<th>Action</th>
 			</tr>
 			{% for assoc in device_association_list %}
-				{% if forloop.counter|divisibleby:"2" %}
-				<tr class="infotableeven">
-				{% else %}
-				<tr class="infotableodd">
-				{% endif %}
+				<tr>
 					<td>
 						{% for pathinfo in assoc.path %}
 						<a {% if pathinfo.disabled %} class="disabledbg" {% endif %} href="{{ pathinfo.path }}">{{ pathinfo.name }}</a>
