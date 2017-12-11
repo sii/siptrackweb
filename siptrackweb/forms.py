@@ -82,7 +82,8 @@ class ViewAdvancedSearchForm(forms.Form):
     )
 
     displayTypes = forms.MultipleChoiceField(
-        choices=OPTIONS
+        choices=OPTIONS,
+        required=False
     )
 
 class NetworkTreeAddForm(forms.Form):

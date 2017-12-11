@@ -58,11 +58,18 @@ def prototypejs(request):
 def search(request):
     searchstring = None
     search_attribute = 'name'
-    search_value = None
+    search_value = str()
     search_attributes = None
     search_attributes_list = []
     advanced_search = False
     display_types = []
+    default_display_types = [
+        'devices',
+        'device categories',
+        'passwords',
+        'password categories',
+        'networks'
+    ]
 
     pm = helpers.PageManager(request, 'stweb/views/search_results.html')
 
@@ -83,13 +90,7 @@ def search(request):
         display_types = pm.form.cleaned_data['displayTypes']
     else:
         searchstring = pm.form.cleaned_data['searchstring']
-        display_types = [
-            'devices',
-            'device categories',
-            'passwords',
-            'password categories',
-            'networks'
-        ]
+        display_types = default_display_types
 
     if search_value:
         search_value = search_value.strip().lower()
