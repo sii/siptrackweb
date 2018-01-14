@@ -29,7 +29,7 @@ Create devices quickly from templates.
 
 Siptrackweb visualizes devices of class "rack" and each Unit is a sub-device that can be linked to another device.
 
-[![Racks](https://i.imgur.com/MUigmP9.gifv)](https://i.imgur.com/MUigmP9.gifv)
+[![Racks](https://i.imgur.com/MUigmP9.gif)](https://i.imgur.com/MUigmP9.gif)
 
 ## Passwords
 
