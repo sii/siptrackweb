@@ -84,7 +84,7 @@ def search(request):
         return pm.render()
 
     if advanced_search:
-        search_attribute = pm.form.cleaned_data['searchAttribute']
+        search_attribute = pm.form.cleaned_data['searchAttribute'].replace(' ', '_').lower()
         search_value = pm.form.cleaned_data['searchValue']
         search_attributes = pm.form.cleaned_data['attributesList']
         display_types = pm.form.cleaned_data['displayTypes']
