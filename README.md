@@ -38,6 +38,18 @@ Edit ``stweb/stweb/settings.py`` and make sure the list ``INSTALLED_APPS`` has `
         'siptrackweb'
     ]
 
+Comment out the CSRF line in the list ``MIDDLEWARE`` so it looks like this.
+
+    MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        #'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ]
+
 Insert ``url(r'', include('siptrackweb.urls')),`` at the end of the ``urlpatterns`` list in ``stweb/stweb/urls.py``, and add include to the first import line so the file looks like this.
 
     from django.conf.urls import url, include
