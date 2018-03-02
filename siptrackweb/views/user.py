@@ -196,7 +196,12 @@ def display(request, oid):
     pm.render_var['attribute_list'] = attribute.parse_attributes(user)
     subkey_list = []
     for subkey in user.listChildren(include=['sub key']):
-        pw_key = subkey.password_key
+        pw_key_exists = True
+        try:
+            pw_key = subkey.password_key
+        except siptracklib.errors.NonExistent:
+            pw_key = None
+            pw_key_exists = False
 
         try:
             name = subkey.password_key.attributes.get('name')
@@ -213,7 +218,7 @@ def display(request, oid):
 
         subkey_list.append({
             'oid': subkey.oid,
-            'exists': True,
+            'exists': pw_key_exists,
             'subkey': subkey,
             'name': name,
             'description': description
@@ -383,7 +388,15 @@ def connectkey_selectkey(request, oid):
     if pm.render_var['username'] == user.username:
         require_user_password = False
     form = UserConnectKeyForm(password_keys, require_user_password)
-    pm.addForm(form, url, 'connect password key')
+    pm.addForm(
+        form,
+        url,
+        'connect password key',
+        'continue',
+        'POST',
+        'form',
+        form.message
+    )
     pm.path(user)
     return pm.render()
 
