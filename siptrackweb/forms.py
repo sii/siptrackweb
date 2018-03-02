@@ -937,12 +937,19 @@ class UserUpdatePasswordForm(forms.Form):
             help_text = 'Needs to be supplied if you are changing the password of a user other than your own.')
 
 class UserConnectKeyForm(forms.Form):
+
     password_key_key = forms.CharField(max_length = 32, label = 'Password key password',
             widget = forms.PasswordInput(), required = False,
             help_text = 'Required if the current active user doesn\'t have the selected password key connected.')
 
     def __init__(self, password_keys, require_user_password, *args, **kwargs):
         super(UserConnectKeyForm, self).__init__(*args, **kwargs)
+
+        self.message = '''
+        If you're connecting a password key for another user, keep in mind; that
+        user must logout and login to siptrack before the key will be connected.
+        '''
+
         keylist = []
         for key in password_keys:
             value = (key.oid, key.attributes['name'])
@@ -953,8 +960,13 @@ class UserConnectKeyForm(forms.Form):
         field = forms.ChoiceField(label = 'Password key', choices = keylist)
         self.fields['passwordkey'] = field
         if require_user_password:
-            field = forms.CharField(max_length = 32, label = 'User password, only required if the user has never logged in.',
-                    widget = forms.PasswordInput(), required = False)
+            field = forms.CharField(
+                max_length=32,
+                label='User\'s password',
+                help_text='Required to create the users keypair if they\'ve never logged in before.',
+                widget=forms.PasswordInput(),
+                required=False
+            )
             self.fields['user_password'] = field
 
 class UserManagerLocalAddForm(forms.Form):

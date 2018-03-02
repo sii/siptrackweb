@@ -10,10 +10,11 @@
     </div>
     <div class="content-data">
         {% if form.message %}
-            <div class="alert">
-                <p>{{ form.message|safe }}</p>
-            </div>
+        <div class="alert alert-info">
+            <p>{{ form.message|safe }}</p>
+        </div>
         {% endif %}
+
         <form action="{{ form.action }}" {{ form.extraelements|safe }} method="post">
 
             {% for argument in form.form %}
