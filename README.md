@@ -70,6 +70,10 @@ Now the siptrackweb GUI should be available on localhost:8000. First step should
 
 Of course this is just a quick example, in reality you might prefer sharing a virtualenv for all siptrack components.
 
+## P.S.
+
+Install pwgen on your system because siptrackweb uses it to generate passwords for user accounts when no other password is specified.
+
 # Documentation
 
 * See https://github.com/sii/siptrackweb/wiki for documentation.
