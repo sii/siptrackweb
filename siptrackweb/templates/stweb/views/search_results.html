@@ -61,7 +61,7 @@
 
 		{% if searchresults.devices and 'devices' in display_types %}
 			<div class="content-header">
-				Device Matches
+        Device Matches ({{searchresults.devices|length}})
 			</div>
 			<div class="content-data">
 				<table class="table table-hover table-striped infotable">
@@ -96,7 +96,7 @@
 
 		{% if searchresults.device_categories and 'device categories' in display_types %}
 			<div class="content-header">
-				Device Category Matches
+        Device Category Matches ({{searchresults.device_categories|length}})
 			</div>
 			<div class="content-data">
 				<table class="table table-hover table-striped infotable">
@@ -134,7 +134,7 @@
 
     {% if searchresults.passwords and 'passwords' in display_types %}
       <div class="content-header">
-        Password matches
+        Password matches ({{searchresults.passwords|length}})
       </div>
       <div class="content-data">
         <table class="table table-hover table-striped infotable">
@@ -176,7 +176,7 @@
 
     {% if searchresults.password_categories and 'password categories' in display_types %}
       <div class="content-header">
-        Password category matches
+        Password category matches ({{searchresults.password_categories|length}})
       </div>
       <div class="content-data">
         <table class="table table-hover table-striped infotable">
@@ -214,7 +214,7 @@
 
 		{% if searchresults.networks and 'networks' in display_types %}
 			<div class="content-header">
-				Network Matches
+        Network Matches ({{searchresults.networks|length}})
 			</div>
 			<div class="content-data">
 				<table class="table table-hover table-striped infotable">
