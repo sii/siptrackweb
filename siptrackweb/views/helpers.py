@@ -242,7 +242,7 @@ def search(object_store, pattern, default_fields=[]):
     search_args = {
         'attr_limit': attr_limit,
         'include': include,
-        'max_results': 100,
+        'max_results': 500,
         'default_fields': default_fields
     }
     for result in object_store.quicksearch(pattern, **search_args):
