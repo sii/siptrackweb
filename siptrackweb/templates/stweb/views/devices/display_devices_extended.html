@@ -13,17 +13,21 @@
 			</tr>
 			{% for cur_device in device_list %}
 				<tr>
-					<td>
+          {% if cur_device.attributes.disabled %}
+          <td class="danger">
+          {% else %}
+          <td>
+          {% endif %}
 						{% if cur_device.attributes.name %}
-						<a {% if cur_device.attributes.disabled %} class="disabledbg" {% endif %} href="/device/display/{{ cur_device.oid|urlencode }}/">{{ cur_device.attributes.name|escape }}</a><br/>
+						<a {% if cur_device.attributes.disabled %} class="danger" {% endif %} href="/device/display/{{ cur_device.oid|urlencode }}/">{{ cur_device.attributes.name|escape }}</a><br/>
 						{% else %}
-						<a {% if cur_device.attributes.disabled %} class="disabledbg" {% endif %} href="/device/display/{{ cur_device.oid|urlencode }}/">[UNKNOWN]</a><br/>
+						<a {% if cur_device.attributes.disabled %} class="danger" {% endif %} href="/device/display/{{ cur_device.oid|urlencode }}/">[UNKNOWN]</a><br/>
 						{% endif %}
 					</td>
 					<td>
 						{% for assoc_device in cur_device.links %}
 						{% for pathinfo in assoc_device.path %}
-						<a {% if pathinfo.disabled %} class="disabledbg" {% endif %} href="{{ pathinfo.path }}">{{ pathinfo.name }}</a>
+						<a {% if pathinfo.disabled %} class="text-danger" {% endif %} href="{{ pathinfo.path }}">{{ pathinfo.name }}</a>
 						{% if not forloop.last %}
 						/
 						{% endif %}

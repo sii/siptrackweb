@@ -12,10 +12,14 @@
 				<th>Action</th>
 			</tr>
 			{% for assoc in device_association_list %}
-				<tr>
+        {% if assoc.obj.attributes.disabled %}
+        <tr class="danger">
+        {% else %}
+        <tr>
+        {% endif %}
 					<td>
 						{% for pathinfo in assoc.path %}
-						<a {% if pathinfo.disabled %} class="disabledbg" {% endif %} href="{{ pathinfo.path }}">{{ pathinfo.name }}</a>
+						<a href="{{ pathinfo.path }}">{{ pathinfo.name }}</a>
 						{% if not forloop.last %}
 						/
 						{% endif %}

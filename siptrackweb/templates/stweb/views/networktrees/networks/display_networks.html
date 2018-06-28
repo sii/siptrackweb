@@ -23,7 +23,7 @@
 						{% if not cur_net.unallocated %}
 								{% for assoc in cur_net.device_association_list %}
 								{% for pathinfo in assoc.path %}
-								<a {% if pathinfo.disabled %} class="disabledbg" {% endif %} href="{{ pathinfo.path }}">{{ pathinfo.name }}</a>{% if not forloop.last %} /{% endif %}
+								<a {% if pathinfo.disabled %} class="text-danger" {% endif %} href="{{ pathinfo.path }}">{{ pathinfo.name }}</a>{% if not forloop.last %} /{% endif %}
 								{% endfor %}
 								{% if not forloop.last %}|{% endif %}
 								{% endfor %}

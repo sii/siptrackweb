@@ -4,7 +4,7 @@
 </div>
 <div class="content-data">
 	<div id="display_network_assoc_devices">
-                <table class="table table-striped infotable">
+                <table class="table table-striped table-hover infotable">
                         <tr>
                                 <th>Associated Device</th>
                                 <th>Device Class</th>
@@ -12,13 +12,13 @@
                         </tr>
                         {% for assoc in device_association_list %}
 				{% if assoc.obj.attributes.disabled %}
-					<tr class="infotabledisabled">
+					<tr class="danger">
 				{% else %}
         <tr>
 				{% endif %}
                                         <td>
                                                 {% for pathinfo in assoc.path %}
-												<a {% if pathinfo.disabled %} class="disabledbg" {% endif %} href="{{ pathinfo.path }}">{{ pathinfo.name }}</a>
+												<a href="{{ pathinfo.path }}">{{ pathinfo.name }}</a>
                                                 {% if not forloop.last %}
                                                 /
                                                 {% endif %}
