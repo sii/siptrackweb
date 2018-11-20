@@ -1,4 +1,5 @@
 {% extends "stweb/base.html" %}
+{% load myfilters %}
 
 {% block title %}siptrackweb - search results{% endblock %}
 
@@ -6,13 +7,23 @@
 	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 	  <div class="panel panel-default">
 	    <div class="panel-heading" role="tab" id="headingOne">
+
 	      <h4 class="panel-title">
-	        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#advancedSearch" aria-expanded="true" aria-controls="advancedSearch">
+          <a role="button" 
+            data-toggle="collapse" 
+            data-parent="#accordion" 
+            href="#advancedSearch" 
+            aria-expanded="true" 
+            aria-controls="advancedSearch">
+
 	          Advanced search <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 	        </a>
 	      </h4>
+
     	</div>
-	    <div id="advancedSearch" class="panel-collapse collapse {{search_attribute|yesno:"in,none"}}" role="tabpanel" aria-labelledby="headingOne">
+      <div id="advancedSearch" 
+        class="panel-collapse collapse {{search_attribute|yesno:"in,none"}}" 
+        role="tabpanel" aria-labelledby="headingOne">
 	      <div class="panel-body">
 					<p>Input the exact name of an attribute, and optionally a pattern to search that attribute for.</p>
 
@@ -20,19 +31,34 @@
 
 						<div class="form-group">
 							<label for="inputAttribute">Attribute name</label>
-							<input type="text" class="form-control" id="inputAttribute" name="searchAttribute" placeholder="Attribute name" value="{{search_attribute}}">
+              <input type="text" 
+                class="form-control" 
+                id="inputAttribute" 
+                name="searchAttribute" 
+                placeholder="Attribute name" 
+                value="{{search_attribute}}">
 							<p class="help-block">Spaces will be replaced by underlines.</p>
 						</div>
 
 						<div class="form-group">
 							<label for="inputAttributeValue">Attribute value</label>
-							<input type="text" class="form-control" id="inputAttributeValue" name="searchValue" placeholder="Attribute value pattern like 'SAL?123*' for example" value="{{searchstring}}">
+              <input type="text" 
+                class="form-control" 
+                id="inputAttributeValue" 
+                name="searchValue" 
+                placeholder="Attribute value pattern like 'SAL?123*' for example" 
+                value="{{searchstring}}">
 							<p class="help-block">Can use wildcards like <strong>*</strong> and <strong>?</strong>.</p>
 						</div>
 
 						<div class="form-group">
 							<label for="inputAttributesList">Attributes list</label>
-							<input type="text" class="form-control" id="inputAttributesList" name="attributesList" placeholder="model,serialnumber" value="{{attributes_list|join:', '}}">
+              <input type="text" 
+                class="form-control" 
+                id="inputAttributesList" 
+                name="attributesList" 
+                placeholder="model,serialnumber" 
+                value="{{attributes_list|join:', '}}">
 							<p class="help-block">
 								A comma-separated list of up to 5 attributes that will be shown in the search results.
 							</p>
@@ -41,11 +67,21 @@
 						<div class="form-group">
 							<label for="displayTypes">Display types</label>
 							<select name="displayTypes" multiple class="form-control">
-								<option {% if 'devices' in display_types %}selected {% endif %}>devices</option>
-								<option {% if 'device categories' in display_types %}selected {% endif %}>device categories</option>
-								<option {% if 'passwords' in display_types %}selected {% endif %}>passwords</option>
-								<option {% if 'password categories' in display_types %}selected {% endif %}>password categories</option>
-								<option {% if 'networks' in display_types %}selected {% endif %}>networks</option>
+                <option {% if 'devices' in display_types %}selected {% endif %}>
+                  devices
+                </option>
+                <option {% if 'device categories' in display_types %}selected {% endif %}>
+                  device categories
+                </option>
+                <option {% if 'passwords' in display_types %}selected {% endif %}>
+                  passwords
+                </option>
+                <option {% if 'password categories' in display_types %}selected {% endif %}>
+                  password categories
+                </option>
+                <option {% if 'networks' in display_types %}selected {% endif %}>
+                  networks
+                </option>
 							</select>
 							<p class="help-block">Determine which object types show up in results.</p>
 						</div>
@@ -63,11 +99,13 @@
 			<div class="content-header">
         Device Matches ({{searchresults.devices|length}})
 			</div>
+
 			<div class="content-data">
 				<table class="table table-hover table-striped infotable">
 					<tr>
 						<th>Name</th>
 						<th>Description</th>
+            <th>Created</th>
 						{% for attribute_name in attributes_list %}
 						<th>{{attribute_name|escape}}</th>
 						{% endfor %}
@@ -80,6 +118,10 @@
 						<td>
 							{{ device.attributes.description }}
 						</td>
+
+            <td>
+              {{ device.ctime | date_from_timestamp | date:'c' }}
+            </td>
 
 						{% for attribute_name in attributes_list %}
 						<td>
@@ -103,6 +145,7 @@
 					<tr>
 						<th>Name</th>
 						<th>Description</th>
+            <th>Created</th>
 						{% for attribute_name in attributes_list %}
 						<th>{{attribute_name|escape}}</th>
 						{% endfor %}
@@ -118,6 +161,10 @@
 						<td>
 							{{ device_category.attributes.description }}
 						</td>
+
+            <td>
+              {{ device_category.ctime | date_from_timestamp | date:'c' }}
+            </td>
 
 						{% for attribute_name in attributes_list %}
 						<td>
@@ -142,6 +189,7 @@
             <th>Username</th>
             <th>Password</th>
             <th>Description</th>
+            <th>Created</th>
 						<th>Key</th>
             <th>Action</th>
           </tr>
@@ -154,6 +202,11 @@
             <td>
               {{password.attributes.description}}
             </td>
+
+            <td>
+              {{ password.ctime | date_from_timestamp | date:'c' }}
+            </td>
+
             <td class="center">
               {% if password.key %}
               <a href="/password/key/display/{{password.key.oid|urlencode}}/">{{password.key.attributes.name}}</a>
@@ -183,6 +236,7 @@
           <tr>
             <th>Name</th>
 						<th>Description</th>
+            <th>Created</th>
 						{% for attribute_name in attributes_list %}
 						<th>{{attribute_name|escape}}</th>
 						{% endfor %}
@@ -198,6 +252,10 @@
             <td>
               {{category.attributes.description}}
 						</td>
+
+            <td>
+              {{ category.ctime | date_from_timestamp | date:'c' }}
+            </td>
 
 						{% for attribute_name in attributes_list %}
 						<td>
@@ -221,6 +279,7 @@
 					<tr>
 						<th>Name</th>
 						<th>Description</th>
+            <th>Created</th>
 						{% for attribute_name in attributes_list %}
 						<th>{{attribute_name|escape}}</th>
 						{% endfor %}
@@ -233,6 +292,10 @@
 						<td>
 							{{ network.attributes.description }}
 						</td>
+
+            <td>
+              {{ network.ctime | date_from_timestamp | date:'c' }}
+            </td>
 
 						{% for attribute_name in attributes_list %}
 						<td>
