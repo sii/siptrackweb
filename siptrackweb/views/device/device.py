@@ -163,6 +163,9 @@ def display_device(request, pm, device):
         else:
             device_config.stats['pretty_latest_timestamp'] = 'Nothing received'
     pm.render_var['device_config_template_list'] = device.listChildren(include = ['device config template'])
+    pm.render_var['event_log_list'] = device.listChildren(include = ['event log'])
+    pm.render_var['event_log_list'].sort(cmp=lambda x, y: cmp(x.ctime, y.ctime))
+
     if 'assigned network' in request.session:
         pm.render_var['assigned_network'] = request.session['assigned network']
         del request.session['assigned network']
