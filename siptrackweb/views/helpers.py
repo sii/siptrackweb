@@ -97,7 +97,6 @@ class PageManager(object):
         self.render_var['write_access'] = True
         self.render_var['user_oid'] = request.session.get('user_oid')
         self.render_var['section'] = section
-        
         if request.session.get('verbose', False) is True:
             self.render_var['verbose'] = True
 
@@ -238,7 +237,7 @@ def search(object_store, pattern, default_fields=[]):
 
     if not default_fields:
         default_fields = ['name', 'username', 'description']
-    
+
     search_args = {
         'attr_limit': attr_limit,
         'include': include,
@@ -393,4 +392,3 @@ def device_letter_number_sorter(x, y):
     if ret == 0:
         ret = cmp(x_number, y_number)
     return ret
-

@@ -350,7 +350,7 @@ table.infotable {
 
 /* Simpler way to style all th tags within infotable tables. */
 .infotable th {
-	background-color: #e0e0ff;
+	background-color: #da98e0;
 	color: #404040;
 }
 
@@ -495,7 +495,7 @@ div#menu-devicespec {
 }
 
 .navbar-default {
-    background-color: #a0c0ff !important;
+    background-color: #ab2292 !important;
     border-color: #a0c0ff !important;
 }
 .navbar-default .navbar-nav > li > a {
