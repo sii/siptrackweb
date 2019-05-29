@@ -178,6 +178,7 @@ def display_device(request, pm, device):
     assoc_list = make_device_association_list(device)
     pm.render_var['device_association_list'] = assoc_list
     pm.render_var['device_rack'] = make_device_rack(device)
+    
     device_password_assoc = {
         'all': device.listAssociations(
             include=['password', 'password category']
