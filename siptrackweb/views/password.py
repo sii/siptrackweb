@@ -65,7 +65,6 @@ def key_display(request, oid):
     view_tree = view.parent
     user_manager = view_tree.user_manager
     user_list = []
-    
     # Enumerate list of users connected to the key
     if request.session['administrator']:
         for users in user_manager.listChildren():

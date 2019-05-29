@@ -19,14 +19,32 @@
         <td>
           {% if event_log.event_type == "create device" %}
           Created device
+          {% elif event_log.event_type == "device user removed" %}
+          Removed user "{{ event_log.event_data.device_user }}"
+          {% elif event_log.event_type == "device password updated" %}
+          Password updated for the user "{{ event_log.event_data.device_user }}"
+          {% elif event_log.event_type == "password key updated" %}
+          Password key updated for the user "{{ event_log.event_data.device_user }}" from "{{ event_log.event_data.old_password_key_name }}" to "{{ event_log.event_data.new_password_key_name }}"
+          {% elif event_log.event_type == "password key updated" and not event_log.event_data.old_password_key_name %}
+          Password key updated for the user "{{ event_log.event_data.device_user }}" from None to "{{ event_log.event_data.new_password_key_name }}"
+          {% elif event_log.event_type == "device user added" and not event_log.event_data.password_key_name %}
+          Added user "{{ event_log.event_data.device_user }}" with password key None
+          {% elif event_log.event_type == "device user added" and event_log.event_data.password_key_name %}
+          Added user "{{ event_log.event_data.device_user }}" with password key "{{ event_log.event_data.password_key_name }}"
           {% elif event_log.event_type == "relocate device" %}
           Moved device from {{ event_log.event_data.src_name }} to {{ event_log.event_data.dst_name }}
+          {% elif event_log.event_type == "create attribute" and event_log.event_data.name == "disabled" %}
+          Disabled device
+          {% elif event_log.event_type == "remove attribute" and event_log.event_data.name == "disabled" %}
+          Enabled device
           {% elif event_log.event_type == "create attribute" %}
           Created attribute {{ event_log.event_data.name }}
           {% elif event_log.event_type == "update attribute" %}
           Updated attribute {{ event_log.event_data.name }}
           {% elif event_log.event_type == "remove attribute" %}
           Removed attribute {{ event_log.event_data.name }}
+          {% elif event_log.event_type == "added device password" %}
+          Added new password {{ event_log.event_data.password }}
           {% endif %}
         </td>
         <td>
