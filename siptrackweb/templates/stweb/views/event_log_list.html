@@ -20,7 +20,7 @@
           {% if event_log.event_type == "create device" %}
           Created device
           {% elif event_log.event_type == "remove device" %}
-          Removed device {{event_log.event_data.device_name }}{{event_log.event_data.name }}
+          Removed device {{event_log.event_data.name }}
           {% endif %}
 
         </td>
