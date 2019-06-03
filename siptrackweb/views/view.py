@@ -32,6 +32,9 @@ def display(request, oid):
     pm.render_var['permission_list'] = view.listChildren(include = ['permission'])
     pm.render_var['network_tree_list'] = list(view.listChildren(include = ['network tree']))
     device_tree = view.getChildByName('default', include = ['device tree'])
+    for event_log in view.listChildren(include = ['event log tree']):
+        pm.render_var['event_log_tree_list'] = event_log.listChildren(include=['event log'])
+        pm.render_var['event_log_tree_list'].sort(cmp=lambda x, y: cmp(x.ctime, y.ctime))
     pm.render_var['device_list'] = device_tree.listChildren(include = ['device'])
     pm.render_var['category_list'] = device_tree.listChildren(include = ['device category'])
     pm.path(view)
@@ -117,4 +120,3 @@ def delete_post(request, oid):
     view.delete()
 
     return pm.redirect('view.index')
-
