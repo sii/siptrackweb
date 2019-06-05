@@ -37,6 +37,7 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#view" aria-controls="home" role="tab" data-toggle="tab">View</a></li>
+            <li role="presentation"><a href="#eventlogtree" aria-controls="eventlogtree" role="tab" data-toggle="tab">Event Log Tree</a></li>
             <li role="presentation"><a href="#other" aria-controls="other" role="tab" data-toggle="tab">Other</a></li>
         </ul>
 
@@ -48,6 +49,10 @@
                 {% include "stweb/views/devices/categories/display_categories.html" %}
                 {% include "stweb/views/devices/display_devices_standard.html" %}
                 {% include "stweb/views/networktrees/display_network_trees.html" %}
+            </div>
+            <div role="tabpanel" class="tab-pane fade in active" id="eventlogtree">
+                <br/>
+                {% include "stweb/views/event_log_list.html" %}
             </div>
             <div role="tabpanel" class="tab-pane fade" id="other">
                 <br/>
